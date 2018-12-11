@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    tools:context=".registration.providers.PhoneCodeFragment">
+
+    <TextView
+        android:text="@string/confirmSMSCode"
+        android:fontFamily="@font/ubuntu_bold"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/smsCode"
+        android:hint="@string/confirmSMSHint"
+        android:inputType="number"
+        android:gravity="center"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/transparent"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/confirmSmsCode"
+        android:text="@string/confirm"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

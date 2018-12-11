@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".registration.profiles.OperatorGroupFragment">
+
+
+    <LinearLayout
+        android:id="@+id/test"
+        android:background="@color/facebook_blue"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="Che tipo di registrazione vuoi effettuare ?"
+            android:gravity="center"
+            android:padding="16dp"
+            android:fontFamily="@font/ubuntu_bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/homeServiceProfileButton"
+            android:text="Assistenza Domiciliare"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:padding="16dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/doctorProfileButton"
+            android:text="Dottore"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:padding="16dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/structureProfileButton"
+            android:text="Struttura Sanitaria"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:padding="16dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "780231323022",
+    "firebase_url": "https://sanitalia-e9b58.firebaseio.com",
+    "project_id": "sanitalia-e9b58",
+    "storage_bucket": "sanitalia-e9b58.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:780231323022:android:6972d141928da53a",
+        "android_client_info": {
+          "package_name": "com.hub.toolbox.mtg.sanitalia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "780231323022-d7t2crid7r5thclsa139aqh4uor407ql.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hub.toolbox.mtg.sanitalia",
+            "certificate_hash": "a1e9477f61e90e445221d463c5c9722b1b295251"
+          }
+        },
+        {
+          "client_id": "780231323022-7pcnnen7gvdeqnga154gunn4tl7o3irs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvGMZsvzQVSF8gOwwX2ASQR9-IMA391yA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "780231323022-7pcnnen7gvdeqnga154gunn4tl7o3irs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

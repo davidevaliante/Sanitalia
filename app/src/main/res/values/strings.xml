@@ -1,0 +1,21 @@
+<resources>
+
+
+    <string name="app_name">Sanitalia</string>
+    <string name="try_again">Riprova</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="warning">Attenzione</string>
+    <string name="settings">Impostazioni</string>
+
+    <string name="confirmPhone">Conferma</string>
+    <string name="phoneInputMessage">Numero di cellulare</string>
+    <string name="waitingForSMSCode">Attendi l\'SMS di conferma per proseguire la registrazione</string>
+    <string name="confirmSMSCode">"Inserisci il codice di conferma ricevuto nell'SMS"</string>
+    <string name="confirmSMSHint">"Codice di conferma"</string>
+    <string name="confirm">Conferma</string>
+    <string name="emailFragTitle">Inserisci la tua Email ed una Password di almeno 8 caratteri</string>
+    <string name="confirm_permission">Consenti</string>
+    <string name="cant_proceed_without_location_permission">Non possiamo proseguire senza conoscere la tua posizione</string>
+
+
+</resources>

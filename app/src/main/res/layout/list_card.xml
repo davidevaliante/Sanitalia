@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:layout_marginTop="8dp"
+    app:cardCornerRadius="4dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    app:cardElevation="12dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:id="@+id/cardContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/cardProfileImage"
+            android:layout_width="76dp"
+            android:layout_height="76dp"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center"
+            app:civ_border_color="@color/colorPrimaryDark"
+            app:srcCompat="@drawable/user_icon_white"
+            app:civ_border_width="3dp"/>
+        <TextView
+            android:id="@+id/cardProfileDistance"
+            android:text="570 m"
+            android:padding="8dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@drawable/base_gradient"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/cardProfileName"
+            android:text="Nome Cognome"
+            android:textColor="@color/white"
+            android:padding="16dp"
+            android:fontFamily="@font/ubuntu_bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/cardProfileAdress"
+            android:textColor="@color/white"
+            android:text="via fortini n°2"
+            android:textSize="@dimen/smallFontSize"
+            android:paddingStart="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="Aggiunto ai preferiti da 35 utenti"
+            android:textColor="@color/white"
+            android:textSize="@dimen/smallFontSize"
+            android:fontFamily="@font/ubuntu_italic"
+            android:gravity="center"
+            android:layout_marginTop="26dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</LinearLayout>
+    <View
+        android:background="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/cardContainer"
+        android:layout_height="2dp"/>
+</RelativeLayout>
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".home.HomeContentFragment">
+
+    <RelativeLayout
+        android:id="@+id/firstFilterButton"
+        android:background="@drawable/ic_fbg"
+        android:transitionName="first_bg"
+        android:layout_weight="0.33"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <LinearLayout
+            android:id="@+id/btnGroupOne"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/test"
+            android:textSize="@dimen/bigFontSize"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:text="Assistenza Domiciliare"
+            android:transitionName="transition_name_test"
+            android:layout_alignParentStart="true"
+            android:paddingBottom="24dp"
+            android:fontFamily="@font/ubuntu_bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:text="Ci sono 32 operatori nella provincia di Isernia"
+            android:textSize="@dimen/smallFontSize"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:gravity="center"
+            android:paddingBottom="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        </LinearLayout>
+        <ImageView
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:srcCompat="@drawable/ic_house_pin"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="@color/grey"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/secondFilterButton"
+        android:background="@drawable/ic_sbg"
+        android:layout_weight="0.33"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <LinearLayout
+            android:id="@+id/btnGroupTwo"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/test2"
+            android:text="Medici"
+            android:textSize="@dimen/bigFontSize"
+            android:layout_alignParentStart="true"
+            android:paddingBottom="24dp"
+            android:fontFamily="@font/ubuntu_bold"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="Ci sono 16 medici nella provincia di Isernia"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:textSize="@dimen/smallFontSize"
+            android:gravity="center"
+            android:paddingBottom="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+        <ImageView
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:srcCompat="@drawable/ic_stethoscope"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="@color/grey"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/thirdFilterButton"
+        android:background="@drawable/ic_tbg"
+        android:layout_weight="0.33"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <ImageView
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:srcCompat="@drawable/ic_hospital"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/test3"
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/bigFontSize"
+                android:text="Strutture"
+                android:layout_alignParentStart="true"
+                android:paddingBottom="24dp"
+                android:gravity="center"
+                android:fontFamily="@font/ubuntu_bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:textSize="@dimen/smallFontSize"
+                android:text="Ci sono 4 strutture nella provincia di Isernia"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="16dp"
+                android:gravity="center"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".profiles.ProfileActivity">
+
+    <ImageView
+        android:id="@+id/mapIcon"
+        android:transitionName="mapIcon"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="12dp"
+        app:srcCompat="@drawable/ic_matrix_menu"
+        android:layout_width="24dp"
+        android:layout_height="24dp" />
+
+    <ImageView
+        android:id="@+id/backArrow"
+        android:transitionName="backArrow"
+        android:layout_alignParentStart="true"
+        android:layout_margin="12dp"
+        app:srcCompat="@drawable/ic_return_arrow_blue"
+        android:layout_width="24dp"
+        android:layout_height="24dp" />
+
+
+
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:id="@+id/profileImage"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/user_icon_white"
+        android:transitionName="profileImage"
+        app:civ_border_color="@color/colorPrimaryDarkest"
+        app:civ_border_width="3dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="60dp"
+        android:layout_toRightOf="@+id/profileImage"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/profileName"
+            android:transitionName="profileName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ubuntu_bold"
+            android:text="Davide Valiante" />
+
+        <TextView
+            android:id="@+id/profileCategory"
+            android:transitionName="profileCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ubuntu_italic"
+            android:text="Fisioterapista" />
+
+        <LinearLayout
+            android:id="@+id/profileAdressGroup"
+            android:transitionName="profileAdress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:srcCompat="@drawable/ic_location_pin_blue" />
+
+            <TextView
+                android:id="@+id/profileAdress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/ubuntu_light"
+                android:text="Isernia, via Fortini"
+                android:textSize="@dimen/smallFontSize" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_below="@id/profileImage"
+        android:id="@+id/metaInfo"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="36dp"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:padding="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Visualizzazioni Profilo:"
+                android:textSize="@dimen/smallFontSize"
+                android:fontFamily="@font/ubuntu_light"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="1327"
+                android:layout_marginStart="6dp"
+                android:fontFamily="@font/ubuntu_bold"
+                android:textSize="@dimen/bigFontSize"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:padding="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Preferito da:"
+                android:textSize="@dimen/smallFontSize"
+                android:fontFamily="@font/ubuntu_light"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="47 utenti"
+                android:layout_marginStart="6dp"
+                android:fontFamily="@font/ubuntu_bold"
+                android:textSize="@dimen/smallFontSize"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            android:padding="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Numero Telefonico:"
+                android:textSize="@dimen/smallFontSize"
+                android:fontFamily="@font/ubuntu_light"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="328 9751097"
+                android:fontFamily="@font/ubuntu_bold"
+                android:textSize="@dimen/smallFontSize"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/contactsGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/metaInfo"
+        android:layout_marginTop="36dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/additionalContacts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ubuntu_bold"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="Contatti Aggiuntivi"
+            android:textColor="@color/white" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/additionalContacts"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/profileFacebookButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="36dp"
+                android:transitionName="facebookIcon"
+                app:srcCompat="@drawable/com_facebook_button_icon_white" />
+
+            <ImageView
+                android:id="@+id/profileMailButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:transitionName="mailIcon"
+                app:srcCompat="@drawable/ic_mail_white" />
+
+            <ImageView
+                android:id="@+id/profileWhatsAppButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="36dp"
+                android:transitionName="whatsappIcon"
+                app:srcCompat="@drawable/ic_whatsapp_white" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginTop="46dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/contactsGroup"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="Prenota"
+            android:padding="14dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/shape_rounded_full_white"
+            android:layout_width="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/smallFontSize"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/profileInfoBtn"
+            android:padding="14dp"
+            android:text="Informazioni"
+            android:gravity="center"
+            android:transitionName="profileInfoText"
+            android:textColor="@color/white"
+            android:textSize="@dimen/smallFontSize"
+            android:background="@drawable/shape_hollow_round_white"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="16dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

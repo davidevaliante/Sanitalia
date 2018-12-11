@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--            APP COLORS              -->
+    <color name="colorPrimaryLight">#db6304</color>
+    <color name="colorPrimary">#80D8FF</color>
+    <color name="colorPrimaryDark">#27a0eb</color>
+    <color name="colorPrimaryDarkest">#e1e1e1</color>
+    <color name="colorAccent">#EA80FC</color>
+
+    <!--            GROUP COLORS              -->
+    <color name="groupOneColor">#00b1c7</color>
+    <color name="groupTwoColor">#008db3</color>
+    <color name="groupThreeColor">#006b9e</color>
+
+
+    <!--           FONTS COLORS             -->
+    <color name="defaultTextColor">#111615</color>
+
+    <!--            BASIC COLORS            -->
+    <color name="white">#ffffff</color>
+    <color name="lightest_grey">#f4f4f4</color>
+    <color name="background_white">#FAFAFA</color>
+
+    <color name="black">#000000</color>
+    <color name="grey">#303030</color>
+    <color name="transparent">#00000000</color>
+    <color name="shaded10">#10000000</color>
+    <color name="shaded30">#30000000</color>
+    <color name="shaded70">#70000000</color>
+    <color name="shaded90">#70000000</color>
+
+
+    <!--            BRANDS COLOR            -->
+    <color name="brand_blue">#80D8FF</color>
+    <color name="brand_purple">#EA80FC</color>
+    <color name="brand_green">#73dd8c</color>
+    <color name="brand_grey">#b3b3b3</color>
+    <color name="facebook_blue">#3B5998</color>
+    <color name="google_red">#dd4b39</color>
+    <color name="brand_clickable_blue">#00b1c7</color>
+
+</resources>

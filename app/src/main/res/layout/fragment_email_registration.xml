@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".registration.providers.EmailRegistrationFragment">
+
+    <TextView
+        android:text="@string/emailFragTitle"
+        android:fontFamily="@font/ubuntu_light"
+        android:padding="32dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/emailInput"
+        android:padding="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:drawableLeft="@drawable/ic_mail_closed_brand_grey"
+        android:drawablePadding="16dp"
+        android:inputType="textEmailAddress"
+        android:hint="Email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/passInput"
+        android:padding="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:drawableLeft="@drawable/ic_lock_brand_grey"
+        android:drawablePadding="16dp"
+        android:inputType="textPassword"
+        android:hint="Password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/confirPassInput"
+        android:padding="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:inputType="textPassword"
+        android:hint="Conferma Password"
+        android:drawableLeft="@drawable/ic_checked"
+        android:drawablePadding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:background="@drawable/app_gradient"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"/>
+
+    <Button
+        android:id="@+id/submitEmailAndPass"
+        android:text="Registrati"
+        android:padding="18dp"
+        android:background="@color/background_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

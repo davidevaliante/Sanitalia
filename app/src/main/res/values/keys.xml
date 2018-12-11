@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Chiavi Facebook -->
+    <string name="facebook_app_id">292903061529378</string>
+    <string name="fb_login_protocol_scheme">fb292903061529378</string>
+
+    <!-- Chiavi di Google -->
+    <string name="google_web_client_id">780231323022-7pcnnen7gvdeqnga154gunn4tl7o3irs.apps.googleusercontent.com</string>
+
+</resources>

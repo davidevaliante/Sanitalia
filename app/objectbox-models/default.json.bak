@@ -1,0 +1,78 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:3911441828806893294",
+      "lastPropertyId": "13:5965219788850387894",
+      "name": "Operator",
+      "properties": [
+        {
+          "id": "1:8337389876827412051",
+          "name": "localId"
+        },
+        {
+          "id": "2:4872953487361553104",
+          "name": "firstName"
+        },
+        {
+          "id": "3:6521001598611588961",
+          "name": "lastName"
+        },
+        {
+          "id": "4:7999013103140744200",
+          "name": "timeStamp"
+        },
+        {
+          "id": "5:6370767015231151261",
+          "name": "phone"
+        },
+        {
+          "id": "6:3783617676621068570",
+          "name": "email"
+        },
+        {
+          "id": "7:6711004204765293058",
+          "name": "image"
+        },
+        {
+          "id": "8:2698714609498154886",
+          "name": "zone"
+        },
+        {
+          "id": "9:4022255373983855966",
+          "name": "staticAdress"
+        },
+        {
+          "id": "10:1338262757821508617",
+          "name": "staticLat"
+        },
+        {
+          "id": "11:2084330388746791942",
+          "name": "staticLon"
+        },
+        {
+          "id": "12:5837506533131320991",
+          "name": "authProvider"
+        },
+        {
+          "id": "13:5965219788850387894",
+          "name": "type"
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "1:3911441828806893294",
+  "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 4,
+  "modelVersionParserMinimum": 4,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}

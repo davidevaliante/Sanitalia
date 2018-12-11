@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <Button
+        android:id="@+id/profileLogOut"
+        android:layout_alignParentEnd="true"
+        android:text="Log out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        tools:context=".registration.profiles.BaseProfileFragment">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/ownProfileImage"
+            android:layout_marginTop="16dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/com_facebook_profile_picture_blank_portrait"
+            app:civ_border_color="@color/colorPrimary"
+            app:civ_border_width="3dp" />
+
+        <EditText
+            android:id="@+id/firstNameField"
+            android:hint="Nome"
+            android:gravity="center"
+            android:padding="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+        android:id="@+id/lastNameField"
+        android:hint="Cognome"
+        android:gravity="center"
+        android:padding="16dp"
+        android:background="@color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/emailField"
+            android:hint="Email"
+            android:gravity="center"
+            android:padding="16dp"
+            android:background="@color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/phoneField"
+            android:hint="Numero telefonico"
+            android:gravity="center"
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="Cerca il tuo indirizzo lavorativo"
+            android:layout_marginTop="16dp"
+            android:padding="8dp"
+            android:gravity="center"
+            android:fontFamily="@font/ubuntu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+            <fragment
+                android:id="@+id/place_autocomplete_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:name="com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment"
+                />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/baseProfileNext"
+        android:text="Avanti"
+        android:fontFamily="@font/ubuntu"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:padding="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

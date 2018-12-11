@@ -1,0 +1,40 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/ubuntu</item>
+        <item name="android:textSize">@dimen/defaultFontSize</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDarkest</item>
+    </style>
+
+    <style name="fullRoundButtonDark">
+        <item name="android:background">@drawable/shape_rounded_darkest</item>
+        <item name="android:layout_marginStart">32dp</item>
+        <item name="android:layout_marginEnd">32dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:fontFamily">@font/ubuntu_bold</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="hollowRoundButton">
+        <item name="android:background">@drawable/shape_rounded_countour_white_primarydark</item>
+        <item name="android:layout_marginStart">32dp</item>
+        <item name="android:layout_marginEnd">32dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:fontFamily">@font/ubuntu_bold</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
+
+
+
+</resources>

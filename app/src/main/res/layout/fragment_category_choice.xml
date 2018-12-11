@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/groupOneColor"
+    android:transitionName="first_bg"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".home.CategoryChoiceFragment">
+
+    <TextView
+        android:id="@+id/firstCategoryTitle"
+        android:padding="32dp"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/ubuntu_bold"
+        android:transitionName="transition_name_test"
+        android:text="Assistenza domiciliare"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/firstCategoryRecyclerView"
+        android:layout_below="@id/firstCategoryTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</RelativeLayout>

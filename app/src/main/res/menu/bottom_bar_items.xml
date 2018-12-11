@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/firstBottomItem"
+        android:title="Home"
+        android:icon="@drawable/ic_home"
+        />
+
+    <item
+        android:id="@+id/secondBottomItem"
+        android:title="Posizione"
+        android:icon="@drawable/ic_world"
+        />
+
+    <item
+        android:id="@+id/thirdBottomItem"
+        android:title="Preferiti"
+        android:icon="@drawable/ic_star"
+        />
+
+    <item
+        android:id="@+id/fourthBottomItem"
+        android:title="Profilo"
+        android:icon="@drawable/user_icon_white"
+        />
+</menu>

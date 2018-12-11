@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".registration.providers.PhoneInputFragment">
+
+    <TextView
+        android:text="Inserisci il numero di cellulare che utilizzi per il lavoro"
+        android:gravity="center"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:textSize="18sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/phoneInput"
+        android:hint="@string/phoneInputMessage"
+        android:gravity="center"
+        android:background="@color/transparent"
+        android:drawableStart="@drawable/ic_smarthphone_brand_purple"
+        android:layout_gravity="center"
+        android:inputType="phone"
+        android:layout_margin="16dp"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:background="@drawable/app_gradient"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"/>
+
+    <Button
+        android:id="@+id/confirmPhoneButton"
+        android:text="Registrati"
+        android:textColor="@color/grey"
+        android:background="@color/background_white"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>

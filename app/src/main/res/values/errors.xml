@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="facebook_login_cancel">"Facebook login cancellato"</string>
+    <string name="facebook_login_error">"Non siamo riusciti a collegarci al tuo account Facebook, vuoi riprovare ?"</string>
+    <string name="invalid_phone">"Controlla il numero di telefono e riprova"</string>
+    <string name="email_not_matching">"Inserisci una Email valida e riprova"</string>
+    <string name="pass_not_long_enough">"Controlla il numero di telefono e riprova"</string>
+    <string name="pass_not_matching">"Le due password non corrispondono !"</string>
+
+</resources>
