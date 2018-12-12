@@ -1,4 +1,4 @@
-package com.hub.toolbox.mtg.sanitalia.registration.profiles
+package com.hub.toolbox.mtg.sanitalia.registration.standard
 
 
 import android.Manifest
@@ -25,18 +25,13 @@ import aqua.extensions.goTo
 import aqua.extensions.showMessage
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.places.Place
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment
 import com.google.android.gms.location.places.ui.PlaceSelectionListener
 import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment
-import com.google.firebase.auth.FirebaseAuth
-import com.hub.toolbox.mtg.sanitalia.data.Operator
-import com.hub.toolbox.mtg.sanitalia.data.Operator_.*
 import com.hub.toolbox.mtg.sanitalia.data.Zuldru
-import com.hub.toolbox.mtg.sanitalia.profiles.ProfileActivity
 import com.hub.toolbox.mtg.sanitalia.registration.RegistrationActivity
 import com.google.android.gms.location.places.Places as Places
 import com.squareup.picasso.Picasso
-import java.io.ObjectStreamException
+import kotlinx.android.synthetic.main.activity_operator_profile.*
 
 
 class BaseProfileFragment : Fragment() {
@@ -109,7 +104,7 @@ class BaseProfileFragment : Fragment() {
             }
             viewModel.incompleteProfile.postValue(ph)
             viewModel.goToCategoryFragment()
-
+            (activity as OperatorProfileActivity).step_view.go(1, true)
             // viewModel.pushOperator()
         }
 

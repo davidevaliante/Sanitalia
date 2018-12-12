@@ -1,4 +1,4 @@
-package com.hub.toolbox.mtg.sanitalia.registration.profiles
+package com.hub.toolbox.mtg.sanitalia.registration.standard
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -30,6 +30,8 @@ class OperatorProfileActivity : AppCompatActivity() {
         viewModel.message.observe(this, Observer { newMessage ->
             showSnackBar(newMessage)
         })
+
+        step_view.setSteps(listOf("Anagrafica", "Professione", "Dettagli"))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

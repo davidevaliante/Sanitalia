@@ -8,6 +8,7 @@
 
     <TextView
         android:text="Inserisci il numero di cellulare che utilizzi per il lavoro"
+        android:fontFamily="@font/ubuntu_light"
         android:gravity="center"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
@@ -38,7 +39,7 @@
     <Button
         android:id="@+id/confirmPhoneButton"
         android:text="Registrati"
-        android:textColor="@color/grey"
+        android:textColor="@color/colorPrimaryDark"
         android:background="@color/background_white"
         android:padding="16dp"
         android:layout_width="match_parent"

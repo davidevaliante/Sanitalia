@@ -10,7 +10,7 @@
 
     <TextView
         android:text="Google"
-        android:textColor="@color/google_red"
+        android:textColor="@color/colorPrimary"
         android:fontFamily="@font/ubuntu"
         android:textSize="@dimen/defaultFontSize"
         android:layout_width="wrap_content"

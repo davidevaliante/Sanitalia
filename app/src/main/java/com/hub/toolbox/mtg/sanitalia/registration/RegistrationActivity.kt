@@ -6,10 +6,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import aqua.extensions.*
-import com.google.common.net.HttpHeaders.FROM
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
@@ -19,7 +17,7 @@ import com.hub.toolbox.mtg.sanitalia.constants.RegistrationProviders
 import kotlinx.android.synthetic.main.registration_container.*
 import com.hub.toolbox.mtg.sanitalia.constants.RegistrationStage
 import com.hub.toolbox.mtg.sanitalia.extensions.log
-import com.hub.toolbox.mtg.sanitalia.registration.profiles.OperatorProfileActivity
+import com.hub.toolbox.mtg.sanitalia.registration.standard.OperatorProfileActivity
 import com.hub.toolbox.mtg.sanitalia.registration.providers.*
 import getViewModelOf
 

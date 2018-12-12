@@ -1,4 +1,4 @@
-package com.hub.toolbox.mtg.sanitalia.registration.profiles
+package com.hub.toolbox.mtg.sanitalia.registration.standard
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModelProviders
 import aqua.extensions.showMessage
 import com.hub.toolbox.mtg.sanitalia.R
 import com.hub.toolbox.mtg.sanitalia.constants.OperatorProfileState
 import getViewModelOf
+import kotlinx.android.synthetic.main.activity_operator_profile.*
 import kotlinx.android.synthetic.main.fragment_operator_category.*
 
 class OperatorGroupFragment : Fragment() {
@@ -30,5 +30,6 @@ class OperatorGroupFragment : Fragment() {
         }
         doctorProfileButton.setOnClickListener { viewModel.profileState.value = OperatorProfileState.REGISTERING_AS_HOME_SERVICES }
         structureProfileButton.setOnClickListener { viewModel.profileState.value = OperatorProfileState.REGISTERING_AS_HOME_SERVICES }
+        testNext.setOnClickListener { (activity as OperatorProfileActivity).step_view.go(2, true) }
     }
 }

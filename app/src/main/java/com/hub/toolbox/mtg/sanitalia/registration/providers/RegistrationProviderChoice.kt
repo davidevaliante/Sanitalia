@@ -8,15 +8,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import aqua.extensions.Do
 import aqua.extensions.inflate
 import com.facebook.CallbackManager
 import com.hub.toolbox.mtg.sanitalia.R
 import kotlinx.android.synthetic.main.activity_auth.*
-import kotlinx.android.synthetic.main.facebook_auth_button.*
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
 import com.facebook.FacebookCallback
 import com.facebook.FacebookSdk
+import com.github.florent37.kotlin.pleaseanimate.please
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -27,6 +29,7 @@ import com.hub.toolbox.mtg.sanitalia.constants.RegistrationProviders
 import com.hub.toolbox.mtg.sanitalia.constants.RegistrationStage
 import com.hub.toolbox.mtg.sanitalia.registration.RegistrationViewModel
 import getViewModelFromParentActivity
+import kotlinx.android.synthetic.main.activity_auth.view.*
 
 
 class RegistrationProviderChoice : Fragment() {
@@ -34,12 +37,15 @@ class RegistrationProviderChoice : Fragment() {
     private val GOOGLE_SIGN_IN_RC = 1
 
     lateinit var registrationViewModel: RegistrationViewModel
-    lateinit var facebookCallbackManager : CallbackManager
-    lateinit var googleSignInClient : GoogleSignInClient
+    private lateinit var facebookCallbackManager : CallbackManager
+    private lateinit var googleSignInClient : GoogleSignInClient
 
     override fun onCreateView(i: LayoutInflater, c: ViewGroup?, b: Bundle?): View? {
         registrationViewModel = getViewModelFromParentActivity()
-        return inflate(R.layout.activity_auth)
+        val rootView = inflate(R.layout.activity_auth) as ViewGroup
+        // animazioni di preparazione
+        prepareViewsForEnterAnimation(rootView)
+        return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,6 +54,7 @@ class RegistrationProviderChoice : Fragment() {
         googleButton.setOnClickListener { tryGoogleLogin() }
         phoneButton.setOnClickListener { tryPhoneLogin() }
         mailButton.setOnClickListener { tryEmailLogin() }
+        startEnterAnimation()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -116,5 +123,78 @@ class RegistrationProviderChoice : Fragment() {
                 }
             })
         }
+    }
+
+    // --------------------------------------ANIMAZIONI-------------------------------------------------
+    private fun prepareViewsForEnterAnimation(rootView : ViewGroup){
+        rootView.let{
+            please {
+                animate(it.providersPageAppLogo) toBe {
+                    invisible()
+                }
+                animate(it.headerGroup) toBe {
+                    centerInParent(vertical = true, horizontal = true)
+                }
+                animate(it.providersButtonGroup) toBe {
+                    scale(0f,0f)
+                    invisible()
+                }
+                animate(it.facebookButton) toBe {
+                    scale(0.6f, 0.6f)
+                    invisible()
+                }
+                animate(it.googleButton) toBe {
+                    scale(0.6f, 0.6f)
+                    invisible()
+                }
+                animate(it.mailButton) toBe {
+                    scale(0.6f, 0.6f)
+                    invisible()
+                }
+                animate(it.phoneButton) toBe {
+                    scale(0.6f, 0.6f)
+                    invisible()
+                }
+            }.now()
+        }
+    }
+    private fun startEnterAnimation(){
+        val duration = 100L
+        val enterAnimation =
+        please(duration = 400L, interpolator = FastOutSlowInInterpolator()){
+            animate(headerGroup) toBe {
+                originalPosition()
+            }
+        }.setStartDelay(700L).thenCouldYou(duration = 500L) {
+            animate(providersPageAppLogo) toBe {
+                visible()
+            }
+        }.thenCouldYou(duration = 500L) {
+            animate(providersButtonGroup) toBe {
+                visible()
+                originalScale()
+            }
+        }.thenCouldYou(duration = duration){
+            animate(facebookButton) toBe {
+                visible()
+                originalScale()
+            }
+        }.thenCouldYou(duration = duration) {
+            animate(googleButton) toBe {
+                visible()
+                originalScale()
+            }
+        }.thenCouldYou(duration = duration) {
+            animate(mailButton) toBe {
+                visible()
+                originalScale()
+            }
+        }.thenCouldYou(duration = duration) {
+            animate(phoneButton) toBe {
+                visible()
+                originalScale()
+            }
+        }
+        enterAnimation.start()
     }
 }

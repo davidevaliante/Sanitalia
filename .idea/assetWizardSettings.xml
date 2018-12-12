@@ -19,8 +19,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_checked" />
-                            <entry key="sourceFile" value="C:\Users\akain\Downloads\checked.svg" />
+                            <entry key="outputName" value="primary_separator" />
+                            <entry key="sourceFile" value="C:\Users\akain\Downloads\separator.svg" />
                           </map>
                         </option>
                       </PersistentState>

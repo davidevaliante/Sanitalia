@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:id="@+id/emailRegistrationRoot"
     tools:context=".registration.providers.EmailRegistrationFragment">
 
     <TextView
@@ -13,6 +15,15 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+
+
+    <!--<include-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_marginStart="16dp"-->
+        <!--android:layout_marginEnd="16dp"-->
+        <!--layout="@layout/separator" />-->
 
     <EditText
         android:id="@+id/emailInput"
@@ -62,6 +73,7 @@
         android:id="@+id/submitEmailAndPass"
         android:text="Registrati"
         android:padding="18dp"
+        android:textColor="@color/colorPrimaryDark"
         android:background="@color/background_white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

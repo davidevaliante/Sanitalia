@@ -2,20 +2,12 @@ package com.hub.toolbox.mtg.sanitalia
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.ActionMode
 import aqua.extensions.goTo
-import aqua.extensions.showMessage
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.hub.toolbox.mtg.sanitalia.R.id.*
 import com.hub.toolbox.mtg.sanitalia.data.Zuldru
-import com.hub.toolbox.mtg.sanitalia.extensions.log
 import com.hub.toolbox.mtg.sanitalia.home.HomeActivity
-import com.hub.toolbox.mtg.sanitalia.profiles.ProfileActivity
 import com.hub.toolbox.mtg.sanitalia.registration.RegistrationActivity
-import com.hub.toolbox.mtg.sanitalia.registration.profiles.OperatorProfileActivity
-import kotlinx.android.synthetic.main.activity_dispatcher.*
+import com.hub.toolbox.mtg.sanitalia.registration.standard.OperatorProfileActivity
 
 class DispatcherActivity : AppCompatActivity() {
 

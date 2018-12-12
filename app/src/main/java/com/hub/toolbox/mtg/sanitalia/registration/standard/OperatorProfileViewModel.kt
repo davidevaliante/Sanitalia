@@ -1,4 +1,4 @@
-package com.hub.toolbox.mtg.sanitalia.registration.profiles
+package com.hub.toolbox.mtg.sanitalia.registration.standard
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

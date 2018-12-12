@@ -6,10 +6,12 @@
 
     <Button
         android:id="@+id/profileLogOut"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
         android:text="Log out"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -17,18 +19,22 @@
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
-        tools:context=".registration.profiles.BaseProfileFragment">
+        tools:context=".registration.standard.BaseProfileFragment">
 
-        <com.mikhaellopez.circularimageview.CircularImageView
-            android:layout_gravity="center_horizontal"
+        <xyz.schwaab.avvylib.AvatarView
             android:id="@+id/ownProfileImage"
-            android:layout_marginTop="16dp"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/com_facebook_profile_picture_blank_portrait"
-            app:civ_border_color="@color/colorPrimary"
-            app:civ_border_width="3dp" />
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            app:avvy_border_color="@color/grey"
+            android:layout_gravity="center_horizontal"
+            app:avvy_border_highlight_color="@color/colorPrimary"
+            app:avvy_border_highlight_color_end="@color/colorAccent"
+            app:avvy_border_thickness="2dp"
+            app:avvy_border_thickness_highlight="3dp"
+            app:avvy_distance_to_border="5dp"
+            app:avvy_highlighted="true"
+            app:avvy_loading_arches="5"
+            app:avvy_loading_arches_degree_area="90"/>
 
         <EditText
             android:id="@+id/firstNameField"

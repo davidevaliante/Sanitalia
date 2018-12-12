@@ -2,10 +2,13 @@
 <resources>
     <!--            APP COLORS              -->
     <color name="colorPrimaryLight">#db6304</color>
-    <color name="colorPrimary">#80D8FF</color>
     <color name="colorPrimaryDark">#27a0eb</color>
-    <color name="colorPrimaryDarkest">#e1e1e1</color>
+    <color name="colorPrimary">#80D8FF</color>
+    <color name="colorAccentDark">#ae6eea</color>
     <color name="colorAccent">#EA80FC</color>
+
+
+    <color name="colorPrimaryDarkest">#e1e1e1</color>
 
     <!--            GROUP COLORS              -->
     <color name="groupOneColor">#00b1c7</color>

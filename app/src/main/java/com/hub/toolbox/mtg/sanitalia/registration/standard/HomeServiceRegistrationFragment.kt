@@ -1,4 +1,4 @@
-package com.hub.toolbox.mtg.sanitalia.registration.profiles
+package com.hub.toolbox.mtg.sanitalia.registration.standard
 
 
 import android.os.Bundle
@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import aqua.extensions.showMessage
-import com.asksira.dropdownview.DropDownView
 import com.asksira.dropdownview.OnDropDownSelectionListener
 
 import com.hub.toolbox.mtg.sanitalia.R

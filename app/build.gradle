@@ -70,6 +70,7 @@ dependencies {
     implementation "xyz.schwaab:avvylib:0.0.1"
     implementation 'com.asksira.android:dropdownview:1.0.3'
     implementation "com.andkulikov:transitionseverywhere:1.8.0"
+    implementation 'com.shuhart.stepview:stepview:1.4.0'
 
     // auth
     implementation 'com.facebook.android:facebook-android-sdk:[4,5)'

@@ -3,7 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
         <solid android:color="@color/white"/>
-        <stroke android:color="@color/facebook_blue" android:width="2dp" />
+        <stroke android:color="@color/colorPrimaryDark" android:width="2dp" />
         <!--corners allow us to make the rounded corners button-->
         <corners android:radius="30dp" />
 </shape>
