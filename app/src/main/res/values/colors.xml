@@ -8,7 +8,7 @@
     <color name="colorAccent">#EA80FC</color>
 
 
-    <color name="colorPrimaryDarkest">#e1e1e1</color>
+    <color name="colorPrimaryDarkest">#dcdcdc</color>
 
     <!--            GROUP COLORS              -->
     <color name="groupOneColor">#00b1c7</color>
@@ -18,6 +18,7 @@
 
     <!--           FONTS COLORS             -->
     <color name="defaultTextColor">#111615</color>
+    <color name="light_text_color">#808080</color>
 
     <!--            BASIC COLORS            -->
     <color name="white">#ffffff</color>

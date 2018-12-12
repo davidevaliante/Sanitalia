@@ -19,8 +19,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="primary_separator" />
-                            <entry key="sourceFile" value="C:\Users\akain\Downloads\separator.svg" />
+                            <entry key="outputName" value="ic_cross" />
+                            <entry key="sourceFile" value="C:\Users\akain\Downloads\cross.svg" />
                           </map>
                         </option>
                       </PersistentState>

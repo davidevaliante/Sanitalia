@@ -12,21 +12,21 @@ class OperatorProfileViewModel : ViewModel(){
 
     var temporaryOperatorProfile = MutableLiveData<Operator>()
     var profileImage = MutableLiveData<String>()
-    var incompleteProfile = MutableLiveData<Operator>()
+    var profileFromLocal = MutableLiveData<Operator>()
     var profileState = MutableLiveData<OperatorProfileState>()
     var message = MutableLiveData<String>()
 
     var something = MutableLiveData<String>()
 
     init {
-        incompleteProfile.postValue(Zuldru.getOperatorProfileFromLocal())
+        profileFromLocal.postValue(Zuldru.getOperatorProfileFromLocal())
         temporaryOperatorProfile.postValue((Zuldru.getOperatorProfileFromLocal()))
         profileImage.postValue(Zuldru.getOperatorProfileFromLocal().image)
         profileState.postValue(OperatorProfileState.INITIAL)
     }
 
     fun pushOperator(){
-        val operatorToPush = incompleteProfile.value
+        val operatorToPush = profileFromLocal.value
         log(operatorToPush.toString())
         Zuldru.pushOperatorToFirebase(operatorToPush!!, object : PushListener{
             override fun onPushSuccess() {
@@ -48,7 +48,7 @@ class OperatorProfileViewModel : ViewModel(){
     fun updateTemporaryProfile(operator: Operator) = temporaryOperatorProfile.postValue(operator)
 
     fun updateProfilePictureLocally(location : String){
-        val updates = incompleteProfile.value
+        val updates = profileFromLocal.value
         updates?.let {
             updates.image = location
             Zuldru.updateOperatorLocallyWithId(updates)

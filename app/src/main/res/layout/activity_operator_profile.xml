@@ -9,7 +9,10 @@
         android:id="@+id/step_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:paddingEnd="32dp"
+        android:paddingStart="32dp"
+        android:paddingBottom="16dp"
+        android:paddingTop="8dp"
         app:sv_selectedCircleColor="@color/colorAccent"
         app:sv_selectedTextColor="@color/colorAccent"
         app:sv_stepLineWidth="1dp"
@@ -27,6 +30,10 @@
         app:sv_stepNumberTextSize="14sp"
         app:sv_animationType="All"
         app:sv_typeface="@font/ubuntu_light"/>
+
+
+
+
     <FrameLayout
         android:id="@+id/operatorProfileContainer"
         android:layout_below="@+id/step_view"
@@ -34,5 +41,6 @@
         android:layout_height="match_parent">
 
     </FrameLayout>
+
 
 </RelativeLayout>

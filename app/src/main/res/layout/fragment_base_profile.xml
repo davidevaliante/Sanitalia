@@ -1,101 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.cardview.widget.CardView android:layout_width="match_parent"
+    android:id="@+id/baseProfileRoot"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginStart="24dp"
+    android:layout_marginEnd="24dp"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="8dp"
+    android:layout_marginTop="8dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/profileLogOut"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:text="Log out"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <!--<Button-->
+    <!--android:id="@+id/profileLogOut"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:text="Log out" />-->
 
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_height="wrap_content"
+        android:paddingTop="32dp"
         android:orientation="vertical"
         tools:context=".registration.standard.BaseProfileFragment">
 
-        <xyz.schwaab.avvylib.AvatarView
-            android:id="@+id/ownProfileImage"
-            android:layout_width="128dp"
-            android:layout_height="128dp"
-            app:avvy_border_color="@color/grey"
+        <RelativeLayout
             android:layout_gravity="center_horizontal"
-            app:avvy_border_highlight_color="@color/colorPrimary"
-            app:avvy_border_highlight_color_end="@color/colorAccent"
-            app:avvy_border_thickness="2dp"
-            app:avvy_border_thickness_highlight="3dp"
-            app:avvy_distance_to_border="5dp"
-            app:avvy_highlighted="true"
-            app:avvy_loading_arches="5"
-            app:avvy_loading_arches_degree_area="90"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <xyz.schwaab.avvylib.AvatarView
+                android:id="@+id/ownProfileImage"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:scaleType="centerCrop"
+                app:avvy_border_color="@color/grey"
+                android:layout_centerHorizontal="true"
+                app:avvy_border_highlight_color="@color/colorPrimary"
+                app:avvy_border_highlight_color_end="@color/colorAccent"
+                app:avvy_border_thickness="2dp"
+                app:avvy_border_thickness_highlight="3dp"
+                app:avvy_distance_to_border="5dp"
+                app:avvy_highlighted="true"
+                app:avvy_loading_arches="5"
+                app:avvy_loading_arches_degree_area="90" />
+
+            <ImageView
+                android:id="@+id/cameraIcon"
+                app:srcCompat="@drawable/ic_camera_grey"
+                android:layout_marginStart="4dp"
+                android:layout_toEndOf="@+id/ownProfileImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
 
         <EditText
             android:id="@+id/firstNameField"
-            android:hint="Nome"
-            android:gravity="center"
-            android:padding="16dp"
-            android:layout_marginTop="16dp"
-            android:background="@color/transparent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@color/transparent"
+            android:fontFamily="@font/ubuntu_light"
+            android:gravity="center"
+            android:hint="Nome"
+            android:padding="18dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginEnd="48dp"
+            android:background="@drawable/app_gradient" />
 
         <EditText
-        android:id="@+id/lastNameField"
-        android:hint="Cognome"
-        android:gravity="center"
-        android:padding="16dp"
-        android:background="@color/transparent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+            android:id="@+id/lastNameField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:fontFamily="@font/ubuntu_light"
+            android:gravity="center"
+            android:hint="Cognome"
+            android:padding="18dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginEnd="48dp"
+            android:background="@drawable/app_gradient" />
 
         <EditText
             android:id="@+id/emailField"
-            android:hint="Email"
-            android:gravity="center"
-            android:padding="16dp"
-            android:background="@color/transparent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:fontFamily="@font/ubuntu_light"
+            android:gravity="center"
+            android:hint="Email"
+            android:padding="18dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginEnd="48dp"
+            android:background="@drawable/app_gradient" />
 
         <EditText
             android:id="@+id/phoneField"
-            android:hint="Numero telefonico"
-            android:gravity="center"
-            android:padding="16dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:fontFamily="@font/ubuntu_light"
+            android:gravity="center"
+            android:hint="Numero telefonico"
+            android:padding="18dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginEnd="48dp"
+            android:background="@drawable/app_gradient" />
+
+        <fragment
+            android:id="@+id/place_autocomplete_fragment"
+            android:name="com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" />
 
         <TextView
-            android:text="Cerca il tuo indirizzo lavorativo"
-            android:layout_marginTop="16dp"
-            android:padding="8dp"
+            android:id="@+id/anagraphicNextButton"
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp"
             android:gravity="center"
-            android:fontFamily="@font/ubuntu"
+            android:text="Avanti"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
-            <fragment
-                android:id="@+id/place_autocomplete_fragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:name="com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment"
-                />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/baseProfileNext"
-        android:text="Avanti"
-        android:fontFamily="@font/ubuntu"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:padding="32dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 </RelativeLayout>
+</androidx.cardview.widget.CardView>

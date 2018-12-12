@@ -11,7 +11,7 @@ import com.andrognito.flashbar.anim.FlashAnim
 import com.hub.toolbox.mtg.sanitalia.R
 import com.hub.toolbox.mtg.sanitalia.data.Zuldru
 
-infix fun String.log(string : String) = Log.d(this,string)
+infix fun String.log(tag : String) = Log.d(tag,this)
 
 
 
@@ -26,6 +26,8 @@ fun Context.showMessage(message : String, duration : Int = Toast.LENGTH_SHORT){
 fun Fragment.showMessage(message : String, duration : Int = Toast.LENGTH_SHORT){
     Toast.makeText(requireActivity(), "$message", duration).show()
 }
+
+
 
 fun Zuldru.log(string : String) = Log.d("ZULDRU_LOG",string)
 
