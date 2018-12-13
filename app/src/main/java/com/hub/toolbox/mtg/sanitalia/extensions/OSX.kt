@@ -1,5 +1,6 @@
 package aqua.extensions
 
+import android.annotation.SuppressLint
 import android.app.Activity
 
 import android.content.Context
@@ -15,6 +16,10 @@ import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.hub.toolbox.mtg.sanitalia.R
+import android.view.WindowManager
+import android.os.Build
+
+
 
 
 inline fun <reified T : Activity> AppCompatActivity.goTo(bundle : Bundle? = null ){
@@ -22,6 +27,10 @@ inline fun <reified T : Activity> AppCompatActivity.goTo(bundle : Bundle? = null
     if(bundle == null) startActivity(intent) else startActivity(intent, bundle)
 }
 
+fun AppCompatActivity.makeActivityFullScreen(){
+        val w = window
+        w.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+}
 
 
 

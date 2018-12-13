@@ -7,29 +7,36 @@ import androidx.lifecycle.Observer
 import aqua.extensions.*
 import com.hub.toolbox.mtg.sanitalia.R
 import com.hub.toolbox.mtg.sanitalia.constants.OperatorProfileState
+import com.hub.toolbox.mtg.sanitalia.data.Zuldru
+import com.hub.toolbox.mtg.sanitalia.registration.RegistrationActivity
 import getViewModelOf
 import kotlinx.android.synthetic.main.activity_operator_profile.*
-import kotlinx.android.synthetic.main.fragment_base_profile.*
 
 class OperatorProfileActivity : AppCompatActivity() {
 
     private val viewModel by lazy { getViewModelOf<OperatorProfileViewModel>(this) }
-
+    private val operatorFrag = OperatorGroupFragment()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_operator_profile)
+        makeActivityFullScreen()
 
         viewModel.profileFromLocal.observe(this, Observer { newValue ->
             newValue.toString() log "LOGGER"
         })
 
         viewModel.profileState.observe(this, Observer { newProfileState ->
-            showMessage(newProfileState.name)
+            // showMessage(newProfileState.name)
             when(newProfileState){
-                OperatorProfileState.INITIAL -> addFragment(operatorProfileContainer, BaseProfileFragment())
+                OperatorProfileState.INITIAL -> {
+                    step_view.go(0, true)
+                    removeAllFragments()
+                    replaceFrag(operatorProfileContainer, BaseProfileFragment())
+                }
                 OperatorProfileState.PICKING_A_GROUP -> {
                     step_view.go(1, true)
-                    replaceFrag(operatorProfileContainer, OperatorGroupFragment())
+                    removeAllFragments()
+                    replaceFrag(operatorProfileContainer, operatorFrag)
                 }
                 OperatorProfileState.REGISTERING_AS_HOME_SERVICES -> replaceFragWithAnimation(operatorProfileContainer, HomeServiceRegistrationFragment())
             }
@@ -41,7 +48,13 @@ class OperatorProfileActivity : AppCompatActivity() {
 
         step_view.setSteps(listOf("Anagrafica", "Professione", "Dettagli"))
         step_view.setOnStepClickListener { index ->
-            step_view.go(index, true)
+            if(index == 2){
+                Zuldru.signOutCurrentUser {  }
+                goTo<RegistrationActivity>()
+                finish()
+            }else {
+                step_view.go(index, true)
+            }
         }
 
 //        baseProfileNext.setOnClickListener {
@@ -64,5 +77,11 @@ class OperatorProfileActivity : AppCompatActivity() {
         findFragmentOfType<BaseProfileFragment>()?.onActivityResult(requestCode, resultCode, data)
     }
 
-
+    override fun onBackPressed() {
+        when(viewModel.profileState.value){
+            OperatorProfileState.INITIAL -> showMessage("Dove lo mandiamo ?")
+            OperatorProfileState.PICKING_A_GROUP -> viewModel.profileState.postValue(OperatorProfileState.INITIAL)
+            else -> showMessage("dunno")
+        }
+    }
 }

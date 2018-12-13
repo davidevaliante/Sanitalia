@@ -3,13 +3,13 @@ package com.hub.toolbox.mtg.sanitalia.registration.providers
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
-import aqua.extensions.Do
 import aqua.extensions.inflate
 import com.facebook.CallbackManager
 import com.hub.toolbox.mtg.sanitalia.R
@@ -155,6 +155,9 @@ class RegistrationProviderChoice : Fragment() {
                     scale(0.6f, 0.6f)
                     invisible()
                 }
+                animate(it.providersChoiceFooter) toBe {
+                    outOfScreen(Gravity.BOTTOM)
+                }
             }.now()
         }
     }
@@ -193,6 +196,10 @@ class RegistrationProviderChoice : Fragment() {
             animate(phoneButton) toBe {
                 visible()
                 originalScale()
+            }
+        }.thenCouldYou {
+            animate(providersChoiceFooter) toBe {
+                originalPosition()
             }
         }
         enterAnimation.start()

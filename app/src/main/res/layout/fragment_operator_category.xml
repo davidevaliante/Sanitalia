@@ -1,57 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".registration.standard.OperatorGroupFragment">
-
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="24dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="24dp"
+    android:animateLayoutChanges="true"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="6dp">
 
     <LinearLayout
-        android:id="@+id/test"
-        android:background="@color/facebook_blue"
-        android:orientation="vertical"
+        android:id="@+id/groupChoiceContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
 
         <TextView
-            android:text="Che tipo di registrazione vuoi effettuare ?"
-            android:gravity="center"
-            android:padding="16dp"
-            android:fontFamily="@font/ubuntu_bold"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ubuntu_light"
+            android:gravity="center"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:text="Scegli la categoria che ti identifica professionalmente"
+            android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/homeServiceProfileButton"
-            android:text="Assistenza Domiciliare"
-            android:gravity="center"
+        <View
             android:layout_width="match_parent"
-            android:padding="16dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="2dp"
+            android:background="@drawable/app_gradient" />
 
-        <TextView
-            android:id="@+id/doctorProfileButton"
-            android:text="Dottore"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:padding="16dp"
-            android:layout_height="wrap_content" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/homeServiceGroupButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            app:cardElevation="4dp">
 
-        <TextView
-            android:id="@+id/structureProfileButton"
-            android:text="Struttura Sanitaria"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:padding="16dp"
-            android:layout_height="wrap_content" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp">
+
+                <xyz.schwaab.avvylib.AvatarView
+                    android:id="@+id/homePinIcon"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/ic_house_colored"
+                    android:visibility="invisible"
+                    app:avvy_border_color="@color/grey"
+                    app:avvy_border_highlight_color="@color/colorPrimary"
+                    app:avvy_border_highlight_color_end="@color/colorAccent"
+                    app:avvy_border_thickness="2dp"
+                    app:avvy_border_thickness_highlight="3dp"
+                    app:avvy_distance_to_border="5dp"
+                    app:avvy_highlighted="true"
+                    app:avvy_loading_arches="5"
+                    app:avvy_loading_arches_degree_area="90" />
+
+                <TextView
+                    android:id="@+id/homeServiceProfileButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/homePinIcon"
+                    android:gravity="center"
+                    android:paddingTop="8dp"
+                    android:text="Assistenza Domiciliare" />
+
+                <TextView
+                    android:id="@+id/homeServicesDescriptionList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/homeServiceProfileButton"
+                    android:gravity="center"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="Fisioterapisti, Infermieri, OSS..."
+                    android:textColor="@color/brand_grey"
+                    android:textSize="12sp"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:cardElevation="4dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp">
+
+                <xyz.schwaab.avvylib.AvatarView
+                    android:id="@+id/groupDoctorIcon"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="16dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/doctor_colored"
+                    android:visibility="invisible"
+                    app:avvy_border_color="@color/grey"
+                    app:avvy_border_highlight_color="@color/colorPrimary"
+                    app:avvy_border_highlight_color_end="@color/colorAccent"
+                    app:avvy_border_thickness="2dp"
+                    app:avvy_border_thickness_highlight="3dp"
+                    app:avvy_distance_to_border="5dp"
+                    app:avvy_highlighted="true"
+                    app:avvy_loading_arches="5"
+                    app:avvy_loading_arches_degree_area="90" />
+
+                <TextView
+                    android:id="@+id/testB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/groupDoctorIcon"
+                    android:gravity="center"
+                    android:paddingTop="8dp"
+                    android:text="Medico" />
+
+                <TextView
+                    android:id="@+id/doctorsDescriptionList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/testB"
+                    android:gravity="center"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="Qualsiasi Specializzazione"
+                    android:textColor="@color/brand_grey"
+                    android:textSize="12sp"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:cardElevation="4dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp">
+
+                <xyz.schwaab.avvylib.AvatarView
+                    android:id="@+id/groupStructureIcon"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="16dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_hospital_colored"
+                    android:visibility="invisible"
+                    app:avvy_border_color="@color/grey"
+                    app:avvy_border_highlight_color="@color/colorPrimary"
+                    app:avvy_border_highlight_color_end="@color/colorAccent"
+                    app:avvy_border_thickness="2dp"
+                    app:avvy_border_thickness_highlight="3dp"
+                    app:avvy_distance_to_border="5dp"
+                    app:avvy_highlighted="true"
+                    app:avvy_loading_arches="5"
+                    app:avvy_loading_arches_degree_area="90" />
+
+                <TextView
+                    android:id="@+id/testDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/groupStructureIcon"
+                    android:gravity="center"
+                    android:paddingTop="8dp"
+                    android:text="Struttura" />
+
+                <TextView
+                    android:id="@+id/structuresDescriptionList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/testDesc"
+                    android:gravity="center"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="Case di riposo, Centri di riabilitazione..."
+                    android:textColor="@color/brand_grey"
+                    android:textSize="12sp"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/testNext"
-        android:layout_alignParentBottom="true"
-        android:text="Avanti"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</RelativeLayout>
+</androidx.cardview.widget.CardView>

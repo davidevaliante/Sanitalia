@@ -105,6 +105,7 @@
             android:background="@color/transparent"
             android:fontFamily="@font/ubuntu_light"
             android:gravity="center"
+            android:inputType="textEmailAddress"
             android:hint="Email"
             android:padding="18dp" />
 
@@ -117,6 +118,7 @@
 
         <EditText
             android:id="@+id/phoneField"
+            android:inputType="phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/transparent"
@@ -140,15 +142,27 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp" />
 
-        <TextView
-            android:id="@+id/anagraphicNextButton"
-            android:paddingTop="8dp"
-            android:paddingBottom="16dp"
-            android:gravity="center"
-            android:text="Avanti"
-            android:textColor="@color/colorPrimaryDark"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/anagraphicNextButton"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:gravity="center"
+                android:text="AVANTI"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <ImageView
+                app:srcCompat="@drawable/right_arrow_primary_dark"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="32dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp" />
+        </RelativeLayout>
+
     </LinearLayout>
 </RelativeLayout>
 </androidx.cardview.widget.CardView>

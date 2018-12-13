@@ -3,6 +3,7 @@
     <!--            APP COLORS              -->
     <color name="colorPrimaryLight">#db6304</color>
     <color name="colorPrimaryDark">#27a0eb</color>
+    <color name="colorPrimaryMedium">#4aabe7</color>
     <color name="colorPrimary">#80D8FF</color>
     <color name="colorAccentDark">#ae6eea</color>
     <color name="colorAccent">#EA80FC</color>

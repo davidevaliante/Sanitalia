@@ -6,6 +6,7 @@ import aqua.extensions.log
 import com.facebook.AccessToken
 import com.facebook.GraphRequest
 import com.facebook.internal.ImageRequest
+import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.*
@@ -49,6 +50,7 @@ object Zuldru {
 
     fun signOutCurrentUser(callback : () -> Unit = {}){
         firebaseAuth.signOut()
+        LoginManager.getInstance().logOut()
         callback()
     }
 

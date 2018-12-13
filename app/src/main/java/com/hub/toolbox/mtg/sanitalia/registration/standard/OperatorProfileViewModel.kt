@@ -1,5 +1,6 @@
 package com.hub.toolbox.mtg.sanitalia.registration.standard
 
+import android.util.Patterns
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import aqua.extensions.log
@@ -37,6 +38,38 @@ class OperatorProfileViewModel : ViewModel(){
                 message.postValue("Non siamo riusciti a caricare il profilo, riprova")
             }
         })
+    }
+
+    fun updateOperatorAnagraphic(firstName:String, lastName : String, email : String, phoneNumber : String){
+        var canContinue = true
+        if(firstName.isEmpty()){
+            message.postValue("Inserisci un nome valido")
+            canContinue = false
+        }
+
+        if(lastName.isEmpty()){
+            message.postValue("Inserisci un cognome valido")
+            canContinue = false
+        }
+
+        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            message.postValue("Inserisci una email valida")
+            canContinue = false
+        }
+
+        if(phoneNumber.isEmpty()){
+            message.postValue("Inserisci un numero di telefono valido")
+            canContinue = false
+        }
+        val temp = temporaryOperatorProfile.value
+        if(temp?.fullAdress.isNullOrBlank() || temp?.lat == null || temp?.lon == null){
+
+        }
+
+    }
+
+    fun setOperatorAsHomeService(){
+
     }
 
     fun goToCategoryFragment() = profileState.postValue(OperatorProfileState.PICKING_A_GROUP)

@@ -3,10 +3,7 @@ package com.hub.toolbox.mtg.sanitalia.helpers
 import android.app.Activity
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
-import com.hub.toolbox.mtg.sanitalia.data.Macro
 import com.hub.toolbox.mtg.sanitalia.data.Operator
-import com.hub.toolbox.mtg.sanitalia.extensions.log
-import com.livinglifetechway.k4kotlin.logD
 import random
 
 class Fakes(val activity : Activity) {
@@ -70,9 +67,9 @@ class Fakes(val activity : Activity) {
                     email = "emailfinta$counter@provider.com",
                     image = randomImage,
                     zone =  ph.getPositionFromLatLon(x.first, x.second)?.subAdminArea?.split("Provincia di ")?.last(),
-                    staticAdress = ph.getPositionFromLatLon(x.first, x.second)?.getAddressLine(0),
-                    staticLat = x.first,
-                    staticLon = x.second,
+                    fullAdress = ph.getPositionFromLatLon(x.first, x.second)?.getAddressLine(0),
+                    lat = x.first,
+                    lon = x.second,
                     authProvider = fakeAuthProviders[(0..3).random()],
                     type = operatorType
             )

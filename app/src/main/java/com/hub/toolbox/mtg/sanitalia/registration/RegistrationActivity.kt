@@ -32,6 +32,7 @@ class RegistrationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.registration_container)
+        makeActivityFullScreen()
 
         registrationViewModel.isLoading.observe(this, Observer { isLoading ->
             if(isLoading) registrationActivityLoader.visibility= View.VISIBLE

@@ -71,8 +71,8 @@ class CategoryListFrag : Fragment() {
             fun bind(data : Operator){
 
                 val operatorLocation = Location("operator")
-                operatorLocation.latitude = data.staticLat!!
-                operatorLocation.longitude = data.staticLon!!
+                operatorLocation.latitude = data.lat!!
+                operatorLocation.longitude = data.lon!!
 
                 val selfLocation = Location("userLocation")
                 selfLocation.latitude = viewModel.userLat.value!!
@@ -82,7 +82,7 @@ class CategoryListFrag : Fragment() {
                 itemView.apply {
                     Picasso.get().load(data.image).into(cardProfileImage)
                     cardProfileName.text = "${data.firstName} ${data.lastName}"
-                    cardProfileAdress.text = data.staticAdress
+                    cardProfileAdress.text = data.fullAdress
                     cardProfileDistance.text = selfLocation.distanceTo(operatorLocation).toString().split(".")[0]+" m"
                     setOnClickListener {
                         (activity as AppCompatActivity).goTo<ProfileActivity>()
