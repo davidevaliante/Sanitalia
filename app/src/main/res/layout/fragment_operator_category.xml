@@ -34,6 +34,7 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/homeServiceGroupButton"
+            android:transitionName="homeServiceCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -49,6 +50,7 @@
 
                 <xyz.schwaab.avvylib.AvatarView
                     android:id="@+id/homePinIcon"
+                    android:transitionName="homePinIcon"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_centerHorizontal="true"
@@ -66,7 +68,8 @@
                     app:avvy_loading_arches_degree_area="90" />
 
                 <TextView
-                    android:id="@+id/homeServiceProfileButton"
+                    android:id="@+id/homeServiceDescriptionHeader"
+                    android:transitionName="homeHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/homePinIcon"
@@ -78,7 +81,7 @@
                     android:id="@+id/homeServicesDescriptionList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/homeServiceProfileButton"
+                    android:layout_below="@+id/homeServiceDescriptionHeader"
                     android:gravity="center"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"

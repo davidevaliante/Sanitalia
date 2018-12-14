@@ -1,5 +1,6 @@
 package com.hub.toolbox.mtg.sanitalia.registration.standard
 
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,21 +14,19 @@ class OperatorProfileViewModel : ViewModel(){
 
     var temporaryOperatorProfile = MutableLiveData<Operator>()
     var profileImage = MutableLiveData<String>()
-    var profileFromLocal = MutableLiveData<Operator>()
     var profileState = MutableLiveData<OperatorProfileState>()
     var message = MutableLiveData<String>()
 
     var something = MutableLiveData<String>()
 
     init {
-        profileFromLocal.postValue(Zuldru.getOperatorProfileFromLocal())
         temporaryOperatorProfile.postValue((Zuldru.getOperatorProfileFromLocal()))
         profileImage.postValue(Zuldru.getOperatorProfileFromLocal().image)
         profileState.postValue(OperatorProfileState.INITIAL)
     }
 
     fun pushOperator(){
-        val operatorToPush = profileFromLocal.value
+        val operatorToPush = Zuldru.getOperatorProfileFromLocal()
         log(operatorToPush.toString())
         Zuldru.pushOperatorToFirebase(operatorToPush!!, object : PushListener{
             override fun onPushSuccess() {
@@ -40,30 +39,44 @@ class OperatorProfileViewModel : ViewModel(){
         })
     }
 
-    fun updateOperatorAnagraphic(firstName:String, lastName : String, email : String, phoneNumber : String){
-        var canContinue = true
-        if(firstName.isEmpty()){
-            message.postValue("Inserisci un nome valido")
-            canContinue = false
-        }
+    fun updateOperatorAnagraphic(firstName:String, lastName : String, email : String, phoneNumber : String, thenDo : ()->Unit){
+        val profileToUpdate = temporaryOperatorProfile.value
+        if(profileToUpdate != null) {
+            if(firstName.isEmpty()){
+                message.postValue("Inserisci un nome valido")
+                return
+            } else profileToUpdate.firstName = firstName
 
-        if(lastName.isEmpty()){
-            message.postValue("Inserisci un cognome valido")
-            canContinue = false
-        }
+            if(lastName.isEmpty()){
+                message.postValue("Inserisci un cognome valido")
+                return
+            } else profileToUpdate.lastName = lastName
 
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            message.postValue("Inserisci una email valida")
-            canContinue = false
-        }
+            if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                message.postValue("Inserisci una email valida")
+                return
+            } else profileToUpdate.email = email
 
-        if(phoneNumber.isEmpty()){
-            message.postValue("Inserisci un numero di telefono valido")
-            canContinue = false
-        }
-        val temp = temporaryOperatorProfile.value
-        if(temp?.fullAdress.isNullOrBlank() || temp?.lat == null || temp?.lon == null){
+            if(phoneNumber.isEmpty()){
+                message.postValue("Inserisci un numero di telefono valido")
+                return
+            } else profileToUpdate.phone = phoneNumber
 
+            if(profileToUpdate.zoneId.isNullOrBlank() ||
+                    profileToUpdate.zone.isNullOrBlank() ||
+                    profileToUpdate.region.isNullOrBlank() ||
+                    profileToUpdate.adressName.isNullOrBlank() ||
+                    profileToUpdate.fullAdress.isNullOrBlank() ||
+                    profileToUpdate.lat == null ||
+                    profileToUpdate.lon == null){
+                message.postValue("Inserisci un indirizzo di riferimento principale")
+                return
+            }
+            Log.d("TEMP_PROFILE", profileToUpdate.toString())
+            Zuldru.updateOperatorLocallyWithId(profileToUpdate)
+            thenDo()
+        } else {
+            message.postValue("C'è stato un errore imprevisto nel caricamento dei dati")
         }
 
     }
@@ -73,15 +86,14 @@ class OperatorProfileViewModel : ViewModel(){
     }
 
     fun goToCategoryFragment() = profileState.postValue(OperatorProfileState.PICKING_A_GROUP)
+    fun homeServicePickedAsAGroup() = profileState.postValue(OperatorProfileState.HOME_SERVICE_PICKED_AS_A_GROUP)
 
-    fun procUiChange() {
-        profileState.postValue(OperatorProfileState.REGISTERING_AS_HOME_SERVICES)
-    }
+
 
     fun updateTemporaryProfile(operator: Operator) = temporaryOperatorProfile.postValue(operator)
 
     fun updateProfilePictureLocally(location : String){
-        val updates = profileFromLocal.value
+        val updates = temporaryOperatorProfile.value
         updates?.let {
             updates.image = location
             Zuldru.updateOperatorLocallyWithId(updates)

@@ -39,7 +39,7 @@ import java.lang.Exception
 
 class BaseProfileFragment : Fragment() {
 
-    private val quickPermissionsOption by lazy {QuickPermissionsOptions(
+    private val quickPermissionsOption by lazy { QuickPermissionsOptions(
             handleRationale = false,
             rationaleMessage = getString(R.string.ask_for_external_storage_message),
             permanentlyDeniedMessage = "Custom permanently denied message",
@@ -47,43 +47,49 @@ class BaseProfileFragment : Fragment() {
             permanentDeniedMethod = { req ->  }
     )}
     private val viewModel by lazy {  getViewModelOf<OperatorProfileViewModel>(activity as FragmentActivity) }
+    private val autoComplete by lazy { childFragmentManager.findFragmentById(R.id.place_autocomplete_fragment) as SupportPlaceAutocompleteFragment }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        // osserva cambiamenti nell'Uri dell'immagine ed aggiorna
+        viewModel.profileImage.observe(this, Observer { newImage -> updateProfilePic(newImage) })
+
+        viewModel.temporaryOperatorProfile.observe(this, Observer { newTemporaryProfileFromLocal ->
+            newTemporaryProfileFromLocal.apply {
+                if(firstName!=null) firstNameField.setText(firstName!!.capitalize())
+                if(lastName!=null) lastNameField.setText(lastName!!.capitalize())
+                if(email!=null) emailField.setText(email)
+                if(phone!=null) phoneField.setText(phone)
+                if(adressName!=null)  autoComplete.setText(adressName!!.capitalize())
+            }
+        })
+
+        viewModel.temporaryOperatorProfile.observe(this, Observer { tempOperator ->
+            tempOperator?.let {
+                Log.d("TEMP_PROFILE", tempOperator.toString())
+            }
+        })
         return inflate(R.layout.fragment_base_profile)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         prepareViewsForEnterAnimation()
-        setupAutocompleteFrament()
+        setupAutocompleteFragment()
 
         // setta immagine iniziale se presente
         updateProfilePic(viewModel.profileImage.value)
-        // osserva cambiamenti nell'Uri dell'immagine ed aggiorna
-        viewModel.profileImage.observe(this, Observer { updateProfilePic(it) })
-
-        viewModel.profileFromLocal.observe(this, Observer { newValue ->
-            newValue.let {
-                firstNameField.setText(it.firstName)
-                lastNameField.setText(it.lastName)
-                emailField.setText(it.email)
-                phoneField.setText(it.phone)
-            }
-        })
-
-        viewModel.temporaryOperatorProfile.observe(this, Observer { newValue ->
-            Log.d("BASE_PROFILE", newValue.toString())
-        })
-
-        // ------------------------CLICKS-------------------------------------------------
-
         anagraphicNextButton.setOnClickListener {
-            startExitAnimation()
+            viewModel.updateOperatorAnagraphic(
+                    firstName = firstNameField.text.toString().trim().toLowerCase(),
+                    lastName = lastNameField.text.toString().trim().toLowerCase(),
+                    email = emailField.text.toString().trim(),
+                    phoneNumber = phoneField.text.toString().trim(),
+                    thenDo = {
+                        startExitAnimationWithEndAction{  viewModel.goToCategoryFragment() }
+                    }
+            )
         }
-
         cameraIcon.setOnClickListener { changeProfileImageWithPermissions() }
-
         ownProfileImage.setOnClickListener { changeProfileImageWithPermissions() }
     }
 
@@ -102,35 +108,45 @@ class BaseProfileFragment : Fragment() {
 
 
 
-    private fun setupAutocompleteFrament(){
+    private fun setupAutocompleteFragment(){
         val autoCompleteFilters = AutocompleteFilter.Builder().setTypeFilter(AutocompleteFilter.TYPE_FILTER_ADDRESS).setCountry("IT").build()
-        val autoComplete = childFragmentManager.findFragmentById(R.id.place_autocomplete_fragment) as SupportPlaceAutocompleteFragment
-        autoComplete.setHint("Indirizzo lavorativo")
-        autoComplete.setFilter(autoCompleteFilters)
+        autoComplete.apply {
+            setHint("Indirizzo lavorativo")
+            setFilter(autoCompleteFilters)
+        }
         val autoCompleteEditText = autoComplete.view?.findViewById<EditText>(R.id.place_autocomplete_search_input)
-        autoCompleteEditText?.textSize = 18.0f
-        autoCompleteEditText?.typeface = ResourcesCompat.getFont(requireContext(), R.font.ubuntu_light)
-        autoCompleteEditText?.setHintTextColor(activity!!.findColor(R.color.light_text_color))
-        autoComplete.setOnPlaceSelectedListener(object : PlaceSelectionListener{
-            override fun onPlaceSelected(place: Place?) {
-                Log.d("PICKED_PLACE", place.toString())
-                val province = place?.address?.toString()?.split(",")?.get(1)?.split(" ")?.last()
-                Log.d("PICKED_PLACE", "Codice provincia : ${province}, Valore Stringa : ${Provinces.get(province)?.first} , Regione : ${Provinces.get(province)?.second}")
+        autoCompleteEditText?.apply {
+            textSize = 18.0f
+            typeface = ResourcesCompat.getFont(requireContext(), R.font.ubuntu_light)
+            setHintTextColor(activity!!.findColor(R.color.light_text_color))
+        }
 
-                place?.let {
-                    var currentUserState = viewModel.profileFromLocal.value
-                    currentUserState?.let{
-                        it.fullAdress = place.address.toString()
-                        it.lat = place.latLng.latitude
-                        it.lon = place.latLng.longitude
+        autoComplete.setOnPlaceSelectedListener(object : PlaceSelectionListener{
+            override fun onPlaceSelected(pickedPlace: Place?) {
+                val provinceId = pickedPlace?.address?.toString()?.split(",")?.get(1)?.split(" ")?.last()
+
+                Log.d("PICKED_PLACE", pickedPlace.toString())
+                Log.d("PICKED_PLACE", "Codice provincia : $provinceId, " +
+                                      "Valore Stringa : ${Provinces[provinceId]?.first} , " +
+                                      "Regione : ${Provinces[provinceId]?.second}")
+                pickedPlace?.let {
+                    val currentUserState = viewModel.temporaryOperatorProfile.value
+                    currentUserState?.let{ userState ->
+                        userState.zoneId = provinceId
+                        userState.zone = Provinces[provinceId]?.first?.toLowerCase()
+                        userState.region = Provinces[provinceId]?.second?.toLowerCase()
+                        userState.adressName = pickedPlace.name.toString().toLowerCase()
+                        userState.fullAdress = pickedPlace.address.toString().toLowerCase()
+                        userState.lat = pickedPlace.latLng.latitude
+                        userState.lon = pickedPlace.latLng.longitude
+                        viewModel.updateTemporaryProfile(currentUserState)
                     }
-                    viewModel.updateTemporaryProfile(currentUserState!!)
                 }
 
             }
 
             override fun onError(error: Status?) {
-                Log.i("PLACES_AUTO_ERR", error.toString())
+                viewModel.message.postValue("C'è stato un errore nella ricerca, riprova")
             }
 
         })
@@ -141,7 +157,6 @@ class BaseProfileFragment : Fragment() {
             override fun onError(e: Exception?) {
 
             }
-
             override fun onSuccess() {
                 please(duration = 200L) {
                     animate(ownProfileImage) toBe {
@@ -149,7 +164,6 @@ class BaseProfileFragment : Fragment() {
                     }
                 }.start()
             }
-
         })
     }
 
@@ -170,13 +184,13 @@ class BaseProfileFragment : Fragment() {
         }.now()
     }
 
-    private fun startExitAnimation(){
+    private fun startExitAnimationWithEndAction( endAction : () -> Unit){
         please(duration = 300L) {
             animate(baseProfileRoot) toBe {
                 outOfScreen(Gravity.START)
             }
         }.start().withEndAction {
-            viewModel.goToCategoryFragment()
+            endAction()
         }
     }
 }

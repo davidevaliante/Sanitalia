@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:3911441828806893294",
-      "lastPropertyId": "17:1388603642038195090",
+      "lastPropertyId": "22:1870120338841307732",
       "name": "Operator",
       "properties": [
         {
@@ -41,18 +41,6 @@
           "name": "zone"
         },
         {
-          "id": "9:4022255373983855966",
-          "name": "staticAdress"
-        },
-        {
-          "id": "10:1338262757821508617",
-          "name": "staticLat"
-        },
-        {
-          "id": "11:2084330388746791942",
-          "name": "staticLon"
-        },
-        {
           "id": "12:5837506533131320991",
           "name": "authProvider"
         },
@@ -75,6 +63,26 @@
         {
           "id": "17:1388603642038195090",
           "name": "description"
+        },
+        {
+          "id": "18:3078392880286245490",
+          "name": "zoneId"
+        },
+        {
+          "id": "19:4855758811396650805",
+          "name": "adressName"
+        },
+        {
+          "id": "20:7469221340463657712",
+          "name": "fullAdress"
+        },
+        {
+          "id": "21:3613247230700675385",
+          "name": "lat"
+        },
+        {
+          "id": "22:1870120338841307732",
+          "name": "lon"
         }
       ],
       "relations": []
@@ -88,7 +96,11 @@
   "modelVersionParserMinimum": 4,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    4022255373983855966,
+    1338262757821508617,
+    2084330388746791942
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

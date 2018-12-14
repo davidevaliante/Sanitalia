@@ -10,23 +10,28 @@ import io.objectbox.annotation.Id
 data class Operator(
         @Id(assignable = true)
         var localId : Long?=null,
+        // anagrafica
         var firstName : String?=null,
         var lastName : String?=null,
         var timeStamp : Long?=null,
         var phone : String?=null,
         var email : String?=null,
         var image : String?=null,
-        var zone : String?=null,
+        var authProvider : String?=null,
+        // location
         var zoneId : String?=null,
+        var zone : String?=null,
+        var region : String?=null,
         var adressName : String?=null,
         var fullAdress : String?=null,
         var lat : Double?=null,
         var lon : Double?=null,
-        var authProvider : String?=null,
+        // professione
         var type : String?="0",
         var group : Int?=null,
         var category : Int?=null,
         var spec : Int?=null,
+        // extra
         var description : String?=null
 )
 

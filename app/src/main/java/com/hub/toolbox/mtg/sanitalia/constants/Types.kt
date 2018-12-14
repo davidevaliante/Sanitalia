@@ -86,7 +86,7 @@ val Provinces = hashMapOf(
         Pair("RE", Pair("Reggio-Emilia", "Emilia-Romagna")),
         Pair("RI", Pair("Rieti", "Lazio")),
         Pair("RN", Pair("Rimini", "Emilia-Romagna")),
-        Pair("Roma", Pair("Roma", "Lazio")),
+        Pair("RM", Pair("Roma", "Lazio")),
         Pair("RO", Pair("Rovigo", "Veneto")),
         Pair("SA", Pair("Salerno", "Campania")),
         Pair("SS", Pair("Sassari", "Sardegna")),

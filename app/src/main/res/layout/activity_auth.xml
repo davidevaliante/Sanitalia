@@ -1,63 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".registration.RegistrationActivity">
 
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/providersPageAppLogo"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/app_logo" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/headerGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:elevation="8dp"
-        android:orientation="vertical">
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/providersButtonGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/providersPageAppLogo"
+        app:layout_constraintVertical_bias="0.0">
 
-        <ImageView
-            android:id="@+id/providersPageAppLogo"
+        <View
+            android:id="@+id/view"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            app:srcCompat="@drawable/app_logo" />
+            android:layout_height="2dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/app_gradient"
+            app:layout_constraintBottom_toBottomOf="@+id/authHeader"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/authHeader" />
 
-        <RelativeLayout
-            android:layout_marginTop="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/app_gradient" />
-            <TextView
-                android:id="@+id/authHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/ubuntu_light"
-                android:background="#FAFAFA"
-                android:padding="16dp"
-                android:layout_centerHorizontal="true"
-                android:text="Accedi a Sanitalia"
-                android:textSize="23dp" />
-        </RelativeLayout>
-
-    </LinearLayout>
-
+        <TextView
+            android:id="@+id/authHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="#FAFAFA"
+            android:fontFamily="@font/ubuntu_light"
+            android:padding="16dp"
+            android:text="Accedi a Sanitalia"
+            android:textSize="23dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <androidx.cardview.widget.CardView
         android:id="@+id/providersButtonGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/headerGroup"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="36dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="92dp"
         android:elevation="6dp"
-        app:cardCornerRadius="8dp">
+        app:cardCornerRadius="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/providersPageAppLogo">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -75,46 +90,75 @@
                 android:layout_marginBottom="4dp"
                 android:fontFamily="@font/ubuntu_italic"
                 android:gravity="center"
+                android:paddingBottom="8dp"
                 android:text="Utilizza il metodo di accesso che preferisci"
                 android:textSize="14sp" />
 
-            <include
+            <TextView
                 android:id="@+id/facebookButton"
-                layout="@layout/facebook_auth_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
+                android:layout_marginStart="28dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="32dp" />
+                android:layout_marginEnd="28dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/shape_rounded_facebook"
+                android:elevation="4dp"
+                android:fontFamily="@font/ubuntu"
+                android:gravity="center"
+                android:padding="14dp"
+                android:text="Facebook"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/defaultFontSize" />
 
-            <include
+            <TextView
                 android:id="@+id/googleButton"
-                layout="@layout/google_auth_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="32dp" />
+                android:layout_marginStart="28dp"
+                android:layout_marginEnd="28dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/shape_rounded_google"
+                android:elevation="4dp"
+                android:fontFamily="@font/ubuntu"
+                android:gravity="center"
+                android:padding="14dp"
+                android:text="Google"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/defaultFontSize" />
 
 
-            <include
+            <TextView
                 android:id="@+id/mailButton"
-                layout="@layout/mail_auth_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="32dp" />
+                android:layout_marginStart="28dp"
+                android:layout_marginEnd="28dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/shape_rounded_mail"
+                android:elevation="4dp"
+                android:fontFamily="@font/ubuntu"
+                android:gravity="center"
+                android:padding="14dp"
+                android:text="Email"
+                android:textColor="@color/colorAccentDark"
+                android:textSize="@dimen/defaultFontSize" />
 
-            <include
+            <TextView
                 android:id="@+id/phoneButton"
-                layout="@layout/phone_auth_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginStart="28dp"
+                android:layout_marginEnd="28dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/shape_rounded_phone"
+                android:elevation="4dp"
+                android:fontFamily="@font/ubuntu"
+                android:gravity="center"
+                android:padding="14dp"
+                android:text="Telefono"
+                android:textColor="@color/brand_purple"
+                android:textSize="@dimen/defaultFontSize" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -125,30 +169,41 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:orientation="horizontal"
-        android:padding="32dp">
+        android:padding="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/providersButtonGroup">
 
         <TextView
             android:id="@+id/contactsRegistrationButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Contattaci"
-            android:textSize="12sp"
-            android:textColor="@color/brand_clickable_blue" />
+            android:textColor="@color/brand_clickable_blue"
+            android:textSize="12sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:fontFamily="@font/ubuntu_italic"
-            android:textSize="12sp"
-            android:text="se hai bisogno di assistenza" />
+            android:text="se hai bisogno di assistenza"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/realFacebookLoginButton"
-        android:visibility="invisible"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="4dp"
+        android:layout_height="1dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/providersChoiceFooter"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

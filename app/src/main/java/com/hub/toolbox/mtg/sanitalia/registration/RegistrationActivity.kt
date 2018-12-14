@@ -42,7 +42,7 @@ class RegistrationActivity : AppCompatActivity() {
         registrationViewModel.registrationStage.observe(this, Observer { newStage ->
             log(newStage.toString(), "MY_VIEW")
             when(newStage){
-                RegistrationStage.PICKING_A_PROVIDER -> addFragment(registration_container, RegistrationProviderChoice())
+                RegistrationStage.PICKING_A_PROVIDER -> replaceFragWithAnimation(registration_container, RegistrationProviderChoice())
                 RegistrationStage.PROVIDER_PICKED -> snackBarForProviderPicked()
                 RegistrationStage.WAITING_FOR_PHONE_VERIFICATION -> showUiForPhoneVerification()
                 RegistrationStage.EMAIL_AND_PASSWORD_SUBMITTED -> removeEmailInputUI()

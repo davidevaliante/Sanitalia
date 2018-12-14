@@ -63,6 +63,7 @@ object Zuldru {
         }
     }
     fun getOperatorProfileFromLocal() : Operator = operatorBox.get(1)
+
     fun getListOfFisioterapisti(callback  : (List<Operator>) -> Unit) {
         fireStore.collection("Operators").whereEqualTo("type","Fisioterapista").get().addOnCompleteListener { 
             if(it.isSuccessful){
@@ -97,6 +98,10 @@ object Zuldru {
 
     // ------------------------------------------UPDATE--------------------------------------------------------
     fun updateOperatorLocallyWithId(operator : Operator) = operatorBox.put(operator)
+
+    // ------------------------------------------DELETE--------------------------------------------------------
+    fun deleteOwnOperatorProfileLocally() = operatorBox.remove(1)
+
 
     // ---------------------------------------REGISTRAZIONE----------------------------------------------------
     fun startPhoneNumberVerification(phone : String, caller : Activity){
