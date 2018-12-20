@@ -44,18 +44,6 @@ class SpecializationDetailFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_specialization_detail, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
-//        Do after 100 milliseconds {
-//            val t = Fade()
-//            t.duration = 1000
-//            TransitionManager.beginDelayedTransition(specDetailProfileRoot, t)
-//            specDetailBg.visibility = View.VISIBLE
-//        }
-    }
-
     companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =

@@ -3,7 +3,7 @@ package com.hub.toolbox.mtg.sanitalia.helpers
 import android.app.Activity
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
-import com.hub.toolbox.mtg.sanitalia.data.Operator
+import com.hub.toolbox.mtg.sanitalia.data.OperatorRegistration
 import random
 
 class Fakes(val activity : Activity) {
@@ -59,7 +59,7 @@ class Fakes(val activity : Activity) {
             val randomPhone = (0..9999999).random()
             val randomImage = fakeImages[(0..11).random()]
 
-            val o = Operator(
+            val o = OperatorRegistration(
                     firstName = "Operatore finto",
                     lastName = "N° $counter",
                     timeStamp = System.currentTimeMillis(),

@@ -3,9 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/app_bg_hexagon_with_overlay_05"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".registration.standard.OperatorProfileActivity">
     <LinearLayout
+        android:id="@+id/stepsBackground"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -17,7 +19,6 @@
             android:background="@color/colorAccent"
             android:layout_width="match_parent"
             android:layout_height="3dp" />
-
     </LinearLayout>
 
 
@@ -47,8 +48,6 @@
         app:sv_animationType="All"
         app:sv_textSize="16sp"
         app:sv_typeface="@font/ubuntu_light"/>
-
-
 
 
     <FrameLayout

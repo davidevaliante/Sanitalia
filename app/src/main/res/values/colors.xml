@@ -29,6 +29,7 @@
     <color name="black">#000000</color>
     <color name="grey">#303030</color>
     <color name="transparent">#00000000</color>
+    <color name="shaded05">#05000000</color>
     <color name="shaded10">#10000000</color>
     <color name="shaded30">#30000000</color>
     <color name="shaded70">#70000000</color>

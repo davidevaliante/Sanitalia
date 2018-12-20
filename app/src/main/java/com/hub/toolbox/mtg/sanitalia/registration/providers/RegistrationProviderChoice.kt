@@ -70,7 +70,7 @@ class RegistrationProviderChoice : Fragment() {
         // se si sta effettuando il login con Google
         if(requestCode == GOOGLE_SIGN_IN_RC){
             val task : Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
-            if(task.isSuccessful && task?.result != null)
+            if(task.isSuccessful && task.result != null)
                 registrationViewModel.startGoogleLoginFlow(task.result)
             else
                 registrationViewModel.reportError(RegistrationError.GOOGLE_INTENT_FAILED)

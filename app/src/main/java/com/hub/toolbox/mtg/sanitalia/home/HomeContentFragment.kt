@@ -54,7 +54,7 @@ class HomeContentFragment : Fragment() {
         positionHelper.checkGpsStatusAnd(
             onGpsAlreadyActive = {
                 positionHelper.startTrackingPosition { newPosition ->
-                    newPosition?.let {
+                    newPosition.let {
                         if(viewModel.isLoading.value==true) viewModel.hideLoading()
                         if(it.lat != null && it.lon != null){
                             val decodedAdress = positionHelper.getPositionFromLatLon(newPosition.lat!!,newPosition.lon!!)
@@ -88,7 +88,7 @@ class HomeContentFragment : Fragment() {
         if(requestCode==PositionHelper.GPS_ACTIVATION_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             // tutto ok si può iniziare ad ascoltare le risposte
             positionHelper.startTrackingPosition { newPosition ->
-                newPosition?.let {
+                newPosition.let {
                     if(viewModel.isLoading.value==true) viewModel.hideLoading()
                     if(newPosition.lat != null && newPosition.lon != null){
                         val decodedAdress = positionHelper.getPositionFromLatLon(newPosition.lat!!,newPosition.lon!!)

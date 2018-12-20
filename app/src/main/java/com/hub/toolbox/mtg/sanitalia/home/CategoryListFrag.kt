@@ -16,7 +16,7 @@ import aqua.extensions.goTo
 import com.hub.toolbox.mtg.sanitalia.profiles.ProfileActivity
 
 import com.hub.toolbox.mtg.sanitalia.R
-import com.hub.toolbox.mtg.sanitalia.data.Operator
+import com.hub.toolbox.mtg.sanitalia.data.OperatorRegistration
 import com.squareup.picasso.Picasso
 import getViewModelOf
 import kotlinx.android.synthetic.main.fragment_category_list.*
@@ -51,7 +51,7 @@ class CategoryListFrag : Fragment() {
 
     }
 
-    class CategoryListAdapter(var list : List<Operator>,val activity : FragmentActivity, val viewModel: HomeViewModel) : RecyclerView.Adapter<CategoryListAdapter.ViewHolder>(){
+    class CategoryListAdapter(var list : List<OperatorRegistration>, val activity : FragmentActivity, val viewModel: HomeViewModel) : RecyclerView.Adapter<CategoryListAdapter.ViewHolder>(){
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             return ViewHolder(LayoutInflater.from(activity).inflate(R.layout.list_card, parent, false), activity, viewModel)
         }
@@ -62,13 +62,13 @@ class CategoryListFrag : Fragment() {
             holder.bind(list[position])
         }
 
-        fun updateList(newList : List<Operator>){
+        fun updateList(newList : List<OperatorRegistration>){
             this.list = newList
             notifyDataSetChanged()
         }
 
         class ViewHolder(itemView : View,val activity: Activity, val viewModel: HomeViewModel) : RecyclerView.ViewHolder(itemView){
-            fun bind(data : Operator){
+            fun bind(data : OperatorRegistration){
 
                 val operatorLocation = Location("operator")
                 operatorLocation.latitude = data.lat!!

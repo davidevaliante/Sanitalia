@@ -43,7 +43,4 @@ class ProfileActivity : AppCompatActivity() {
                 .commit()
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
 }

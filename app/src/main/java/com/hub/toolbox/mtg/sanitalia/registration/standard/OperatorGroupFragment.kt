@@ -80,7 +80,7 @@ class OperatorGroupFragment : Fragment() {
                     homeServicesDescriptionList.visibility=View.VISIBLE
                     originalPosition()
                 }
-            }.setStartDelay(200L).thenCouldYou {
+            }.setStartDelay(100L).setDuration(150L).thenCouldYou {
                 animate(groupDoctorIcon) toBe {
                     groupDoctorIcon.visibility=View.VISIBLE
                     originalRotation()
@@ -90,7 +90,7 @@ class OperatorGroupFragment : Fragment() {
                     doctorsDescriptionList.visibility=View.VISIBLE
                     originalPosition()
                 }
-            }.setStartDelay(200L).thenCouldYou {
+            }.setStartDelay(120L).setDuration(150L).thenCouldYou {
                 animate(groupStructureIcon) toBe {
                     groupStructureIcon.visibility=View.VISIBLE
                     originalRotation()
@@ -100,7 +100,7 @@ class OperatorGroupFragment : Fragment() {
                     structuresDescriptionList.visibility=View.VISIBLE
                     originalPosition()
                 }
-            }.setStartDelay(200L).start()
+            }.setStartDelay(140L).setDuration(150L).start()
         }
     }
 

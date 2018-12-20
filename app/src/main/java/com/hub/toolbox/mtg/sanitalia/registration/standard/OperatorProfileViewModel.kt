@@ -7,12 +7,12 @@ import androidx.lifecycle.ViewModel
 import aqua.extensions.log
 import com.hub.toolbox.mtg.sanitalia.constants.OperatorProfileState
 import com.hub.toolbox.mtg.sanitalia.data.Zuldru
-import com.hub.toolbox.mtg.sanitalia.data.Operator
+import com.hub.toolbox.mtg.sanitalia.data.OperatorRegistration
 import com.hub.toolbox.mtg.sanitalia.data.PushListener
 
 class OperatorProfileViewModel : ViewModel(){
 
-    var temporaryOperatorProfile = MutableLiveData<Operator>()
+    var temporaryOperatorProfile = MutableLiveData<OperatorRegistration>()
     var profileImage = MutableLiveData<String>()
     var profileState = MutableLiveData<OperatorProfileState>()
     var message = MutableLiveData<String>()
@@ -20,8 +20,11 @@ class OperatorProfileViewModel : ViewModel(){
     var something = MutableLiveData<String>()
 
     init {
-        temporaryOperatorProfile.postValue((Zuldru.getOperatorProfileFromLocal()))
-        profileImage.postValue(Zuldru.getOperatorProfileFromLocal().image)
+        val operatorFromLocal = (Zuldru.getOperatorProfileFromLocal())
+        if (operatorFromLocal != null) {
+            profileImage.postValue(operatorFromLocal.image)
+            temporaryOperatorProfile.postValue(operatorFromLocal)
+        }
         profileState.postValue(OperatorProfileState.INITIAL)
     }
 
@@ -81,16 +84,23 @@ class OperatorProfileViewModel : ViewModel(){
 
     }
 
-    fun setOperatorAsHomeService(){
 
-    }
 
     fun goToCategoryFragment() = profileState.postValue(OperatorProfileState.PICKING_A_GROUP)
-    fun homeServicePickedAsAGroup() = profileState.postValue(OperatorProfileState.HOME_SERVICE_PICKED_AS_A_GROUP)
+    fun homeServicePickedAsAGroup(){
+        profileState.postValue(OperatorProfileState.HOME_SERVICE_PICKED_AS_A_GROUP)
+        updateOperatorGroupAsHomeServices()
+    }
 
+    private fun updateOperatorGroupAsHomeServices(){
+        val operator = temporaryOperatorProfile.value
+        operator?.let {
+            operator.category = 0
+            Zuldru.updateOperatorLocallyWithId(operator)
+        }
+    }
 
-
-    fun updateTemporaryProfile(operator: Operator) = temporaryOperatorProfile.postValue(operator)
+    fun updateTemporaryProfile(operatorRegistration: OperatorRegistration) = temporaryOperatorProfile.postValue(operatorRegistration)
 
     fun updateProfilePictureLocally(location : String){
         val updates = temporaryOperatorProfile.value

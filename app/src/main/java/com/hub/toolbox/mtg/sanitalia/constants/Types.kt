@@ -1,5 +1,7 @@
 package com.hub.toolbox.mtg.sanitalia.constants
 
+import org.intellij.lang.annotations.Language
+
 val Provinces = hashMapOf(
         Pair("AG", Pair("Agrigento", "Sicilia")),
         Pair("AL", Pair("Alessandria", "Piemonte")),
@@ -119,6 +121,12 @@ val Groups = hashMapOf(
         Pair("Structure", 2)
 )
 
+enum class Group {
+    HOME_SERVICES,
+    DOCTOR,
+    STRUCTURE
+}
+
 
 val HomeServiceCategories = hashMapOf(
         Pair("Fisioterapista", 0),
@@ -126,6 +134,8 @@ val HomeServiceCategories = hashMapOf(
         Pair("Infermiere", 2),
         Pair("Assistente Anziani",3)
 )
+
+
 
 val PhysiotherapistSpecs = hashMapOf(
         Pair("Trattamento Fisioterapico", 0),
@@ -154,3 +164,4 @@ fun transformGroupsNamesInItalian() : List<String>{
     }
     return transformedList
 }
+

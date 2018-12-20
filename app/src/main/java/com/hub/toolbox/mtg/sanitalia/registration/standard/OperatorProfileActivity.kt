@@ -65,7 +65,7 @@ class OperatorProfileActivity : AppCompatActivity() {
         step_view.setOnStepClickListener { index ->
             if(index == 2){
                 Zuldru.signOutCurrentUser {
-                    Zuldru.deleteOwnOperatorProfileLocally()
+                   // Zuldru.deleteOwnOperatorProfileLocally()
                 }
                 goTo<RegistrationActivity>()
                 finish()
@@ -73,20 +73,6 @@ class OperatorProfileActivity : AppCompatActivity() {
                 step_view.go(index, true)
             }
         }
-
-//        baseProfileNext.setOnClickListener {
-////            val ph = viewModel.profileFromLocal.value
-////            ph?.apply {
-////                firstName=firstNameField.text.toString()
-////                lastName=lastNameField.text.toString()
-////                email=emailField.text.toString()
-////                phone=phoneField.text.toString()
-////            }
-////            viewModel.profileFromLocal.postValue(ph)
-////            viewModel.goToCategoryFragment()
-//              step_view.go(1, true)
-//            // viewModel.pushOperator()
-//        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/app_bg_hexagons"
     tools:context=".registration.RegistrationActivity">
 
 
@@ -18,11 +19,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/app_logo" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/headerGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/providersButtonGroup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -31,26 +33,21 @@
         app:layout_constraintVertical_bias="0.0">
 
         <View
-            android:id="@+id/view"
-            android:layout_width="match_parent"
+            android:layout_width="60dp"
             android:layout_height="2dp"
-            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/app_gradient"
-            app:layout_constraintBottom_toBottomOf="@+id/authHeader"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/authHeader" />
+            android:background="@drawable/app_gradient" />
 
         <TextView
             android:id="@+id/authHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:background="#FAFAFA"
+            android:background="@color/transparent"
             android:fontFamily="@font/ubuntu_light"
             android:padding="16dp"
             android:text="Accedi a Sanitalia"
@@ -59,7 +56,16 @@
             app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="60dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/app_gradient" />
+    </LinearLayout>
 
 
     <androidx.cardview.widget.CardView

@@ -18,8 +18,7 @@ import androidx.fragment.app.FragmentActivity
 import com.hub.toolbox.mtg.sanitalia.R
 import android.view.WindowManager
 import android.os.Build
-
-
+import android.view.LayoutInflater
 
 
 inline fun <reified T : Activity> AppCompatActivity.goTo(bundle : Bundle? = null ){
@@ -56,4 +55,8 @@ fun Fragment.getDrawable(id : Int, placeholderId : Int = R.drawable.user_icon_wh
     return if (ContextCompat.getDrawable(requireActivity(), id) != null)
         ContextCompat.getDrawable(requireActivity(), id)!!
     else ContextCompat.getDrawable(requireActivity(), placeholderId)!!
+}
+
+fun Fragment.getInflater() : LayoutInflater{
+    return requireActivity().applicationContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 }

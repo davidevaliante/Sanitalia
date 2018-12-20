@@ -28,9 +28,6 @@ class CategoryChoiceFragment : Fragment() {
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
 
         setEnterSharedElementCallback(object : SharedElementCallback(){
-            override fun onSharedElementEnd(sharedElementNames: MutableList<String>?, sharedElements: MutableList<View>?, sharedElementSnapshots: MutableList<View>?) {
-                super.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots)
-            }
         })
     }
 
@@ -46,16 +43,16 @@ class CategoryChoiceFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         firstCategoryRecyclerView.layoutManager = GridLayoutManager(activity, 3)
         val list = listOf(
-                Pair("Fisioterapisti", getDrawable(R.drawable.ic_stethoscope)!!),
-                Pair("Categoria 2", getDrawable(R.drawable.ic_stethoscope)!!),
-                Pair("Categoria 3", getDrawable(R.drawable.ic_stethoscope)!!),
+                Pair("Fisioterapisti", getDrawable(R.drawable.ic_stethoscope)),
+                Pair("Categoria 2", getDrawable(R.drawable.ic_stethoscope)),
+                Pair("Categoria 3", getDrawable(R.drawable.ic_stethoscope)),
 
-                Pair("Assistenza Anziani", getDrawable(R.drawable.ic_stethoscope)!!),
-                Pair("Categoria 5", getDrawable(R.drawable.ic_stethoscope)!!),
-                Pair("Categoria 6", getDrawable(R.drawable.ic_stethoscope)!!),
-                Pair("Infermieri", getDrawable(R.drawable.ic_stethoscope)!!),
-                Pair("Categoria 8", getDrawable(R.drawable.ic_stethoscope)!!),
-                Pair("Categoria 9", getDrawable(R.drawable.ic_stethoscope)!!)
+                Pair("Assistenza Anziani", getDrawable(R.drawable.ic_stethoscope)),
+                Pair("Categoria 5", getDrawable(R.drawable.ic_stethoscope)),
+                Pair("Categoria 6", getDrawable(R.drawable.ic_stethoscope)),
+                Pair("Infermieri", getDrawable(R.drawable.ic_stethoscope)),
+                Pair("Categoria 8", getDrawable(R.drawable.ic_stethoscope)),
+                Pair("Categoria 9", getDrawable(R.drawable.ic_stethoscope))
         )
 
         firstCategoryRecyclerView.adapter = FirstButtonRecyclerAdapter(list, activity as FragmentActivity)

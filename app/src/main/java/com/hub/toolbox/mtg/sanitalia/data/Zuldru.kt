@@ -19,8 +19,8 @@ import java.util.concurrent.TimeUnit
 object Zuldru {
 
     val firebaseAuth by lazy { FirebaseAuth.getInstance() }
-    private val operatorBox by lazy { ObjectBoxsingleton.boxStore.boxFor(Operator::class.java)}
-    private val fireStore by lazy {  FirebaseFirestore.getInstance() }
+    private val operatorBox by lazy { ObjectBoxsingleton.boxStore.boxFor(OperatorRegistration::class.java)}
+    val fireStore by lazy {  FirebaseFirestore.getInstance() }
     var isAuthenticatedInFirebase = false
     // inizializzato solo per Facebook e Google
     lateinit var listener: FirebaseRegistrationListener
@@ -29,8 +29,8 @@ object Zuldru {
         firebaseAuth.setLanguageCode("it")
     }
 
-    fun pushOperatorToFirebase(operator:Operator, listener : PushListener){
-        fireStore.collection("Users").add(operator)
+    fun pushOperatorToFirebase(operatorRegistration:OperatorRegistration, listener : PushListener){
+        fireStore.collection("Users").add(operatorRegistration)
         .addOnCompleteListener { task ->
             if (task.isSuccessful)
                 listener.onPushSuccess()
@@ -56,19 +56,19 @@ object Zuldru {
 
 
     // -------------------------------------------GET----------------------------------------------------------
-    fun getOperatorWithId(operatorId : String, onSuccess : (Operator?) -> Unit, onFailure : () -> Unit ) {
+    fun getOperatorWithId(operatorId : String, onSuccess : (OperatorRegistration?) -> Unit, onFailure : () -> Unit ) {
         fireStore.collection("Operators").document(operatorId).get().addOnSuccessListener { document ->
-            if(document.exists()) onSuccess(document.toObject(Operator::class.java))
+            if(document.exists()) onSuccess(document.toObject(OperatorRegistration::class.java))
             else onFailure()
         }
     }
-    fun getOperatorProfileFromLocal() : Operator = operatorBox.get(1)
+    fun getOperatorProfileFromLocal() : OperatorRegistration? = operatorBox.get(1)
 
-    fun getListOfFisioterapisti(callback  : (List<Operator>) -> Unit) {
+    fun getListOfFisioterapisti(callback  : (List<OperatorRegistration>) -> Unit) {
         fireStore.collection("Operators").whereEqualTo("type","Fisioterapista").get().addOnCompleteListener { 
             if(it.isSuccessful){
                 val data = it.result
-                val list = data?.toObjects<Operator>(Operator::class.java)
+                val list = data?.toObjects<OperatorRegistration>(OperatorRegistration::class.java)
                 list?.forEach {
                     log(it.toString())
                 }
@@ -91,13 +91,13 @@ object Zuldru {
                 .whereEqualTo("type","Fisioterapista")
                 .whereEqualTo("zone","Isernia").get().addOnCompleteListener {
             result ->
-            val list = result.result?.toObjects(Operator::class.java)
+            val list = result.result?.toObjects(OperatorRegistration::class.java)
             list?.forEach { log(it.toString()) }
         }
     }
 
     // ------------------------------------------UPDATE--------------------------------------------------------
-    fun updateOperatorLocallyWithId(operator : Operator) = operatorBox.put(operator)
+    fun updateOperatorLocallyWithId(operatorRegistration : OperatorRegistration) = operatorBox.put(operatorRegistration)
 
     // ------------------------------------------DELETE--------------------------------------------------------
     fun deleteOwnOperatorProfileLocally() = operatorBox.remove(1)
@@ -124,7 +124,7 @@ object Zuldru {
             val firstName = tokenizedName.joinToString(separator = " ", limit = tokenizedName.size-1, truncated = "")
             val lastName = tokenizedName.last()
             val email = data.optString("email")
-            val newInclompleteOperator = Operator(
+            val newInclompleteOperator = OperatorRegistration(
                     firstName = firstName,
                     lastName = lastName,
                     email = email,
@@ -134,7 +134,7 @@ object Zuldru {
             signInToFirebaseWithCredentials(
                     token.token,
                     provider = RegistrationProviders.FACEBOOK,
-                    incompleteOperator = newInclompleteOperator,
+                    incompleteOperatorRegistration = newInclompleteOperator,
                     authListener = this.listener
             )
         }
@@ -152,7 +152,7 @@ object Zuldru {
         val email = googleSignInAccount?.email
         val image = googleSignInAccount?.photoUrl
 
-        val newIncompleteOperator = Operator(
+        val newIncompleteOperator = OperatorRegistration(
                 firstName=firstName,
                 lastName = lastName,
                 image = image.toString(),
@@ -163,7 +163,7 @@ object Zuldru {
         signInToFirebaseWithCredentials(
                 googleSignInAccount?.idToken,
                 provider = RegistrationProviders.GOOGLE,
-                incompleteOperator = newIncompleteOperator,
+                incompleteOperatorRegistration = newIncompleteOperator,
                 authListener = this.listener
         )
     }
@@ -172,23 +172,34 @@ object Zuldru {
             provider : RegistrationProviders,
             smsCode : String?=null,
             pass:String?=null,
-            incompleteOperator: Operator?=null,
+            incompleteOperatorRegistration: OperatorRegistration?=null,
             authListener : FirebaseRegistrationListener?
     ){
         // callback generale per tutti i providers
         val firebaseSignInComplete = OnCompleteListener<AuthResult> { task ->
             if (task.isSuccessful){
                 // setta l'id per il database locale a 1 e fa l'uplaod
-                incompleteOperator?.apply {
+                incompleteOperatorRegistration?.apply {
                     timeStamp = System.currentTimeMillis()
                     localId = 1
-                    operatorBox.put(this)
+                    val locallySavedOperator = operatorBox.get(1)
+                    if(locallySavedOperator == null){
+                        // l'utente non ha un profilo salvato localmente e si deve aggiungere
+                        operatorBox.put(this)
+                    } else {
+                        // nulla, conserviamo il profilo locale e aggiorniamo solo l'immagine
+                        locallySavedOperator.image = incompleteOperatorRegistration.image
+                        operatorBox.put(locallySavedOperator)
+                    }
                     // registrazione finita, chiama il callback definito nel viewModel
                     authListener?.onFirebaseRegistrationComplete(this)
                 }
+
+
+
                 // un pò di logging
                 log("Successfully logged in firebase from ${task.result?.user?.providers?.get(0)}")
-                log("Logged Operator : ${operatorBox.get(1)}")
+                log("Logged OperatorRegistration : ${operatorBox.get(1)}")
             }
         }
 
@@ -215,7 +226,7 @@ object Zuldru {
 
 // questa interfaccia viene implementata dal ViewModel che richiede la registrazione a Firebase
 interface FirebaseRegistrationListener{
-    fun onFirebaseRegistrationComplete(incompleteOperator : Operator)
+    fun onFirebaseRegistrationComplete(incompleteOperatorRegistration : OperatorRegistration)
 }
 
 interface AuthStatusListener{
