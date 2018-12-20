@@ -13,7 +13,6 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import aqua.extensions.goTo
-import com.hub.toolbox.mtg.sanitalia.profiles.ProfileActivity
 
 import com.hub.toolbox.mtg.sanitalia.R
 import com.hub.toolbox.mtg.sanitalia.data.OperatorRegistration
@@ -85,7 +84,6 @@ class CategoryListFrag : Fragment() {
                     cardProfileAdress.text = data.fullAdress
                     cardProfileDistance.text = selfLocation.distanceTo(operatorLocation).toString().split(".")[0]+" m"
                     setOnClickListener {
-                        (activity as AppCompatActivity).goTo<ProfileActivity>()
                     }
                 }
             }

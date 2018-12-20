@@ -16,10 +16,12 @@ class OperatorProfileViewModel : ViewModel(){
     var profileImage = MutableLiveData<String>()
     var profileState = MutableLiveData<OperatorProfileState>()
     var message = MutableLiveData<String>()
+    var physioPickedSpecs = MutableLiveData<MutableList<Pair<String, Int>>>()
 
     var something = MutableLiveData<String>()
 
     init {
+        physioPickedSpecs.postValue(mutableListOf())
         val operatorFromLocal = (Zuldru.getOperatorProfileFromLocal())
         if (operatorFromLocal != null) {
             profileImage.postValue(operatorFromLocal.image)
@@ -28,20 +30,7 @@ class OperatorProfileViewModel : ViewModel(){
         profileState.postValue(OperatorProfileState.INITIAL)
     }
 
-    fun pushOperator(){
-        val operatorToPush = Zuldru.getOperatorProfileFromLocal()
-        log(operatorToPush.toString())
-        Zuldru.pushOperatorToFirebase(operatorToPush!!, object : PushListener{
-            override fun onPushSuccess() {
-                message.postValue("Profilo aggiunto con successo")
-            }
-
-            override fun onPushFailed() {
-                message.postValue("Non siamo riusciti a caricare il profilo, riprova")
-            }
-        })
-    }
-
+    // -----------------------------------------------ANAGRAFICA
     fun updateOperatorAnagraphic(firstName:String, lastName : String, email : String, phoneNumber : String, thenDo : ()->Unit){
         val profileToUpdate = temporaryOperatorProfile.value
         if(profileToUpdate != null) {
@@ -83,31 +72,77 @@ class OperatorProfileViewModel : ViewModel(){
         }
 
     }
-
-
-
     fun goToCategoryFragment() = profileState.postValue(OperatorProfileState.PICKING_A_GROUP)
-    fun homeServicePickedAsAGroup(){
-        profileState.postValue(OperatorProfileState.HOME_SERVICE_PICKED_AS_A_GROUP)
-        updateOperatorGroupAsHomeServices()
-    }
-
-    private fun updateOperatorGroupAsHomeServices(){
-        val operator = temporaryOperatorProfile.value
-        operator?.let {
-            operator.category = 0
-            Zuldru.updateOperatorLocallyWithId(operator)
-        }
-    }
-
-    fun updateTemporaryProfile(operatorRegistration: OperatorRegistration) = temporaryOperatorProfile.postValue(operatorRegistration)
-
     fun updateProfilePictureLocally(location : String){
         val updates = temporaryOperatorProfile.value
         updates?.let {
             updates.image = location
             Zuldru.updateOperatorLocallyWithId(updates)
         }
+    }
+
+
+    //  -----------------------GROUP PICKED--------------------------------------------
+    fun homeServicePickedAsAGroup(){
+        profileState.postValue(OperatorProfileState.HOME_SERVICE_PICKED_AS_A_GROUP)
+        val operator = temporaryOperatorProfile.value
+        operator?.let {
+            operator.group = 0
+            Zuldru.updateOperatorLocallyWithId(operator)
+        }
+        temporaryOperatorProfile.postValue(operator)
+    }
+    fun doctorPickedAsAGroup(){
+        profileState.postValue(OperatorProfileState.DOCTOR_PICKED_AS_A_GROUP)
+        val operator = temporaryOperatorProfile.value
+        operator?.let {
+            operator.group = 1
+            Zuldru.updateOperatorLocallyWithId(operator)
+        }
+        temporaryOperatorProfile.postValue(operator)
+    }
+    fun removePickedGroupFromLocalProfile(){
+        val operator = temporaryOperatorProfile.value
+        operator?.let {
+            operator.group = null
+            Zuldru.updateOperatorLocallyWithId(operator)
+        }
+        temporaryOperatorProfile.postValue(operator)
+    }
+
+    // ------------------------PHYSIOTERAPIST SPECS------------------------------------
+    fun addPhysioSpec(spec : Pair<String, Int>){
+        val specListToUpdate = physioPickedSpecs.value
+        specListToUpdate?.let {
+            it.add(spec)
+        }
+        physioPickedSpecs.postValue(specListToUpdate)
+    }
+
+    fun removePhysioSpec(spec: Pair<String, Int>){
+        val specListToUpdate = physioPickedSpecs.value
+        specListToUpdate?.let {
+            it.remove(spec)
+        }
+        physioPickedSpecs.postValue(specListToUpdate)
+    }
+
+    fun removeAllPickedPhysioSpecs() = physioPickedSpecs.postValue(mutableListOf())
+
+    fun updateTemporaryProfile(operatorRegistration: OperatorRegistration) = temporaryOperatorProfile.postValue(operatorRegistration)
+
+    fun pushOperator(){
+        val operatorToPush = Zuldru.getOperatorProfileFromLocal()
+        log(operatorToPush.toString())
+        Zuldru.pushOperatorToFirebase(operatorToPush!!, object : PushListener{
+            override fun onPushSuccess() {
+                message.postValue("Profilo aggiunto con successo")
+            }
+
+            override fun onPushFailed() {
+                message.postValue("Non siamo riusciti a caricare il profilo, riprova")
+            }
+        })
     }
 }
 

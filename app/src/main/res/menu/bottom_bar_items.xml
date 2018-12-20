@@ -7,13 +7,11 @@
         />
 
     <item
-        android:id="@+id/secondBottomItem"
         android:title="Posizione"
         android:icon="@drawable/ic_world"
         />
 
     <item
-        android:id="@+id/thirdBottomItem"
         android:title="Preferiti"
         android:icon="@drawable/ic_star"
         />

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="waiting_for_auth_response_from">Collegamento a </string>
-    <string name="complete_your_profile">Completa il tuo profilo</string>
     <string name="ask_for_external_storage_message">Questa applicazione deve accedere ai contenuti multimediali per cambiare l\'immagine di profilo</string>
     <string name="position_permission_desc">Abbiamo bisogno di accedere alla posizione per assicurarti un esperienza migliore.</string>
     <string name="position_permission_desc_seconday">Potrai modificare questa impostazione in qualsiasi momento</string>

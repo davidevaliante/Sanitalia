@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import com.hub.toolbox.mtg.sanitalia.R
+import com.hub.toolbox.mtg.sanitalia.R.layout.registration_container
 import com.hub.toolbox.mtg.sanitalia.constants.RegistrationError
 import com.hub.toolbox.mtg.sanitalia.constants.RegistrationProviders
 import kotlinx.android.synthetic.main.registration_container.*

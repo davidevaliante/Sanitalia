@@ -38,7 +38,7 @@ class EmailRegistrationFragment : DialogFragment() {
             registrationViewModel.signUpWithEmailAndPassword(
                     email = emailInput.text.toString().trim(),
                     pass = passInput.text.toString().trim(),
-                    passConfirm = confirPassInput.text.toString().trim()
+                    passConfirm = confirmPassInput.text.toString().trim()
             )
         }
 

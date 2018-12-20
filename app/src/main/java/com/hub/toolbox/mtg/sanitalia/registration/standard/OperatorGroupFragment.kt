@@ -35,6 +35,10 @@ class OperatorGroupFragment : Fragment() {
         homeServiceGroupButton.setOnClickListener {
             viewModel.homeServicePickedAsAGroup()
         }
+
+        doctorButtonGroup.setOnClickListener {
+            viewModel.doctorPickedAsAGroup()
+        }
         startEnterAnimation()
     }
 

@@ -17,7 +17,6 @@
     app:cardElevation="6dp">
 
     <LinearLayout
-        android:id="@+id/groupChoiceContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
@@ -43,23 +42,23 @@
 </androidx.cardview.widget.CardView>
 
     <com.github.florent37.shapeofview.shapes.CutCornerView
-        android:id="@+id/clipCorner1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:elevation="8dp"
         app:shape_cutCorner_bottomLeftSize="20dp"
-        app:shape_cutCorner_topRightSize="20dp"
+        app:shape_cutCorner_bottomRightSize="20dp"
         app:shape_cutCorner_topLeftSize="20dp"
-        app:shape_cutCorner_bottomRightSize="20dp">
+        app:shape_cutCorner_topRightSize="20dp">
+
         <androidx.cardview.widget.CardView
             android:id="@+id/homeServiceGroupButton"
             android:layout_width="wrap_content"
-            android:transitionName="homeButtonChoice"
             android:layout_height="wrap_content"
+            android:transitionName="homeButtonChoice"
             app:cardElevation="4dp">
 
             <RelativeLayout
@@ -69,12 +68,12 @@
 
                 <xyz.schwaab.avvylib.AvatarView
                     android:id="@+id/homePinIcon"
-                    android:transitionName="homePinIcon"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="8dp"
                     android:src="@drawable/from_to_icon"
+                    android:transitionName="homePinIcon"
                     android:visibility="invisible"
                     app:avvy_border_color="@color/grey"
                     app:avvy_border_highlight_color="@color/colorPrimary"
@@ -88,14 +87,14 @@
 
                 <TextView
                     android:id="@+id/homeServiceDescriptionHeader"
-                    android:transitionName="homeHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/homePinIcon"
                     android:gravity="center"
-                    android:textSize="18sp"
                     android:paddingTop="8dp"
-                    android:text="Assistenza Domiciliare" />
+                    android:text="Assistenza Domiciliare"
+                    android:textSize="18sp"
+                    android:transitionName="homeHeader" />
 
                 <TextView
                     android:id="@+id/homeServicesDescriptionList"
@@ -110,16 +109,16 @@
                     android:textSize="12sp"
                     android:visibility="invisible" />
             </RelativeLayout>
+
             <View
-                android:layout_gravity="bottom"
-                android:background="@drawable/app_gradient"
                 android:layout_width="match_parent"
-                android:layout_height="3dp" />
+                android:layout_height="3dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/app_gradient" />
         </androidx.cardview.widget.CardView>
     </com.github.florent37.shapeofview.shapes.CutCornerView>
 
     <com.github.florent37.shapeofview.shapes.CutCornerView
-        android:id="@+id/clipCorner2"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_width="wrap_content"
@@ -129,11 +128,12 @@
         app:shape_cutCorner_topRightSize="20dp"
         app:shape_cutCorner_topLeftSize="20dp"
         app:shape_cutCorner_bottomRightSize="20dp">
+
         <androidx.cardview.widget.CardView
-            android:id="@+id/categoryChoiceDoctorButtonGroup"
-            android:transitionName="choiceDoctor"
+            android:id="@+id/doctorButtonGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:transitionName="choiceDoctor"
             app:cardElevation="4dp">
 
             <RelativeLayout
@@ -166,9 +166,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/groupDoctorIcon"
                     android:gravity="center"
-                    android:textSize="18sp"
                     android:paddingTop="8dp"
-                    android:text="Medico" />
+                    android:text="Medico"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/doctorsDescriptionList"
@@ -183,16 +183,16 @@
                     android:textSize="12sp"
                     android:visibility="invisible" />
             </RelativeLayout>
+
             <View
-                android:layout_gravity="bottom"
-                android:background="@drawable/app_gradient"
                 android:layout_width="match_parent"
-                android:layout_height="3dp" />
+                android:layout_height="3dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/app_gradient" />
         </androidx.cardview.widget.CardView>
     </com.github.florent37.shapeofview.shapes.CutCornerView>
 
     <com.github.florent37.shapeofview.shapes.CutCornerView
-        android:id="@+id/clipCorner3"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
@@ -204,8 +204,9 @@
         app:shape_cutCorner_topRightSize="20dp"
         app:shape_cutCorner_topLeftSize="20dp"
         app:shape_cutCorner_bottomRightSize="20dp">
+
         <androidx.cardview.widget.CardView
-            android:id="@+id/categoryChoiceStructureButtonGroup"
+            android:id="@+id/structureButtonGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:cardElevation="4dp">
@@ -241,8 +242,8 @@
                     android:layout_below="@+id/groupStructureIcon"
                     android:gravity="center"
                     android:paddingTop="8dp"
-                    android:textSize="18sp"
-                    android:text="Struttura" />
+                    android:text="Struttura"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/structuresDescriptionList"
@@ -257,11 +258,12 @@
                     android:textSize="12sp"
                     android:visibility="invisible" />
             </RelativeLayout>
+
             <View
-                android:layout_gravity="bottom"
-                android:background="@drawable/app_gradient"
                 android:layout_width="match_parent"
-                android:layout_height="3dp" />
+                android:layout_height="3dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/app_gradient" />
         </androidx.cardview.widget.CardView>
     </com.github.florent37.shapeofview.shapes.CutCornerView>
 

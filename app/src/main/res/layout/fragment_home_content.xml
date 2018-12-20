@@ -10,68 +10,67 @@
 
     <RelativeLayout
         android:id="@+id/firstFilterButton"
-        android:background="@drawable/ic_fbg"
-        android:transitionName="first_bg"
-        android:layout_weight="0.33"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:layout_weight="0.33"
+        android:background="@drawable/ic_fbg"
+        android:transitionName="first_bg">
 
         <LinearLayout
-            android:id="@+id/btnGroupOne"
-            android:background="@color/white"
-            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/test"
-            android:textSize="@dimen/bigFontSize"
-            android:layout_alignParentTop="true"
-            android:gravity="center"
-            android:text="Assistenza Domiciliare"
-            android:transitionName="transition_name_test"
-            android:layout_alignParentStart="true"
-            android:paddingBottom="24dp"
-            android:fontFamily="@font/ubuntu_bold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:fontFamily="@font/ubuntu_bold"
+                android:gravity="center"
+                android:paddingBottom="24dp"
+                android:text="Assistenza Domiciliare"
+                android:textSize="@dimen/bigFontSize"
+                android:transitionName="transition_name_test" />
 
 
-        <TextView
-            android:text="Ci sono 32 operatori nella provincia di Isernia"
-            android:textSize="@dimen/smallFontSize"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
-            android:gravity="center"
-            android:paddingBottom="16dp"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="16dp"
+                android:text="Ci sono 32 operatori nella provincia di Isernia"
+                android:textSize="@dimen/smallFontSize" />
         </LinearLayout>
+
         <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            app:srcCompat="@drawable/ic_house_pin"
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
+            app:srcCompat="@drawable/ic_house_pin" />
+
         <View
-            android:layout_alignParentBottom="true"
-            android:background="@color/grey"
             android:layout_width="match_parent"
-            android:layout_height="3dp"/>
+            android:layout_height="3dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/grey" />
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/secondFilterButton"
         android:background="@drawable/ic_sbg"
         android:layout_weight="0.33"
         android:layout_width="match_parent"
         android:layout_height="0dp">
 
         <LinearLayout
-            android:id="@+id/btnGroupTwo"
             android:background="@color/white"
             android:orientation="vertical"
             android:layout_centerHorizontal="true"
@@ -79,7 +78,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <TextView
-            android:id="@+id/test2"
             android:text="Medici"
             android:textSize="@dimen/bigFontSize"
             android:layout_alignParentStart="true"
@@ -117,7 +115,6 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/thirdFilterButton"
         android:background="@drawable/ic_tbg"
         android:layout_weight="0.33"
         android:layout_width="match_parent"
@@ -137,7 +134,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/test3"
                 android:layout_centerVertical="true"
                 android:textSize="@dimen/bigFontSize"
                 android:text="Strutture"

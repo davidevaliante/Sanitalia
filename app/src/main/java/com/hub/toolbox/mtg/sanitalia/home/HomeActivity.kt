@@ -14,7 +14,7 @@ import com.hub.toolbox.mtg.sanitalia.helpers.PositionHelper
 import kotlinx.android.synthetic.main.activity_home.*
 import androidx.lifecycle.Observer
 import aqua.extensions.*
-import com.hub.toolbox.mtg.sanitalia.profiles.ProfileActivity
+import com.hub.toolbox.mtg.sanitalia.R.layout.top_bar
 import com.ramotion.paperonboarding.PaperOnboardingFragment
 import com.ramotion.paperonboarding.PaperOnboardingPage
 import getViewModelOf
@@ -63,7 +63,6 @@ class HomeActivity : AppCompatActivity() {
 
         // ----------------------------------UI--------------------------------------------------
         bottom_bar.setOnNavigationItemSelectedListener { itemSelected ->
-              if(itemSelected.itemId == R.id.fourthBottomItem) goTo<ProfileActivity>()
               if(itemSelected.itemId == R.id.firstBottomItem) goTo<HomeActivity>()
 //            when(itemSelected.itemId){
 //                R.id.firstBottomItem ->

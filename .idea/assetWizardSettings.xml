@@ -19,8 +19,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="from_to_icon" />
-                            <entry key="sourceFile" value="C:\Users\akain\Downloads\way.svg" />
+                            <entry key="outputName" value="ic_right_arrow" />
+                            <entry key="sourceFile" value="C:\Users\akain\Downloads\right-arrow.svg" />
                           </map>
                         </option>
                       </PersistentState>

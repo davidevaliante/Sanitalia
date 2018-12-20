@@ -2,16 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/infoProfileRoot"
     android:animateLayoutChanges="true"
     android:background="@drawable/ic_profile_bg"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".profiles.ProfileInformationFragment">
+    android:layout_height="match_parent">
 
     <ImageView
         android:layout_marginTop="12dp"
-        android:id="@+id/infoMapIcon"
         android:transitionName="mapIcon"
         android:layout_alignParentEnd="true"
         android:layout_margin="12dp"
@@ -20,7 +17,6 @@
         android:layout_height="24dp" />
 
     <ImageView
-        android:id="@+id/infoBackArrow"
         android:layout_marginTop="12dp"
         android:transitionName="backArrow"
         android:layout_alignParentStart="true"
@@ -75,7 +71,6 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/infoProfileImage"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:scaleType="centerCrop"
@@ -86,20 +81,17 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/socialButtonsBg"
                     android:layout_width="60dp"
                     android:layout_height="match_parent"
                     android:background="@color/shaded70"
                     android:visibility="gone" />
 
                 <LinearLayout
-                    android:id="@+id/infoSocialButtonsGroup"
                     android:layout_width="60dp"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/infoProfileFacebookBtn"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="0.33"
@@ -108,7 +100,6 @@
                         app:srcCompat="@drawable/com_facebook_button_icon_white" />
 
                     <ImageView
-                        android:id="@+id/infoProfileMailBtn"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="0.33"
@@ -117,7 +108,6 @@
                         app:srcCompat="@drawable/ic_mail_white" />
 
                     <ImageView
-                        android:id="@+id/infoProfileWhatsAppButton"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="0.33"
@@ -169,7 +159,6 @@
             android:text="Specializzazioni" />
 
         <TextView
-            android:id="@+id/spec"
             android:transitionName="spec"
             android:padding="16dp"
             android:layout_marginBottom="8dp"

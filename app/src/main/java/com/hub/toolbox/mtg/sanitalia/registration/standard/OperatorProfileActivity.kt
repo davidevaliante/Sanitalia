@@ -3,6 +3,7 @@ package com.hub.toolbox.mtg.sanitalia.registration.standard
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import aqua.extensions.*
@@ -50,11 +51,22 @@ class OperatorProfileActivity : AppCompatActivity() {
                             .commit()
                     // replaceFrag(operatorProfileContainer, HomeServiceChoiceFragment())
                 }
+                OperatorProfileState.DOCTOR_PICKED_AS_A_GROUP -> {
+                    showMessage("Doctor setted as group")
+                }
+                OperatorProfileState.PICKING_PHYSIOTHERAPY_SPECS -> {
+                    val physiotherapySpecsFragment = PhysiotherapySpecsFragment()
+                    physiotherapySpecsFragment.show(supportFragmentManager, "PHYSIO_SPECS")
+                }
                 else -> {
                     step_view.go(0, true)
                     replaceFragWithAnimation(operatorProfileContainer, baseProfileFragment)
                 }
             }
+        })
+
+        viewModel.physioPickedSpecs.observe(this, Observer { updatedList ->
+            Log.d("PHYSIO_SPECS", updatedList.toString())
         })
 
         viewModel.message.observe(this, Observer { newMessage ->
@@ -63,14 +75,15 @@ class OperatorProfileActivity : AppCompatActivity() {
 
         step_view.setSteps(listOf("Anagrafica", "Professione", "Dettagli"))
         step_view.setOnStepClickListener { index ->
-            if(index == 2){
-                Zuldru.signOutCurrentUser {
-                   // Zuldru.deleteOwnOperatorProfileLocally()
+            when(index){
+                0 -> viewModel.profileState.postValue(OperatorProfileState.INITIAL)
+                2 -> {
+                    Zuldru.signOutCurrentUser {
+                        // Zuldru.deleteOwnOperatorProfileLocally()
+                    }
+                    goTo<RegistrationActivity>()
+                    finish()
                 }
-                goTo<RegistrationActivity>()
-                finish()
-            }else {
-                step_view.go(index, true)
             }
         }
     }
@@ -85,6 +98,14 @@ class OperatorProfileActivity : AppCompatActivity() {
         when(viewModel.profileState.value){
             OperatorProfileState.INITIAL -> showMessage("Dove lo mandiamo ?")
             OperatorProfileState.PICKING_A_GROUP -> viewModel.profileState.postValue(OperatorProfileState.INITIAL)
+            OperatorProfileState.HOME_SERVICE_PICKED_AS_A_GROUP -> {
+                viewModel.removePickedGroupFromLocalProfile()
+                viewModel.profileState.postValue(OperatorProfileState.PICKING_A_GROUP)
+            }
+            OperatorProfileState.DOCTOR_PICKED_AS_A_GROUP -> {
+                viewModel.removePickedGroupFromLocalProfile()
+                super.onBackPressed()
+            }
             else -> super.onBackPressed()
         }
     }

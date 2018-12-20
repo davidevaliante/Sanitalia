@@ -1,10 +1,7 @@
 package com.hub.toolbox.mtg.sanitalia.registration.standard
 
 
-import android.animation.LayoutTransition
 import android.app.Activity
-import android.app.SharedElementCallback
-import android.content.Context
 import android.os.Bundle
 import android.view.Gravity
 import androidx.fragment.app.Fragment
@@ -13,18 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.transition.addListener
-import androidx.core.view.ViewCompat.animate
 import androidx.core.view.children
-import androidx.transition.Transition
 import androidx.transition.TransitionInflater
 import aqua.extensions.*
 import com.github.florent37.kotlin.pleaseanimate.please
 
 import com.hub.toolbox.mtg.sanitalia.R
-import com.hub.toolbox.mtg.sanitalia.R.id.homeChoiceGroup
-import com.hub.toolbox.mtg.sanitalia.R.id.registrationHomeServiceButtonGroup
-import com.hub.toolbox.mtg.sanitalia.constants.HomeServiceCategories
 import com.hub.toolbox.mtg.sanitalia.constants.OperatorProfileState
 import com.hub.toolbox.mtg.sanitalia.constants.homeservices.HomeServices
 import com.hub.toolbox.mtg.sanitalia.constants.homeservices.getHomeServiceType
@@ -33,8 +24,6 @@ import com.hub.toolbox.mtg.sanitalia.extensions.*
 import getViewModelOf
 import kotlinx.android.synthetic.main.fragment_home_service_choice.*
 import kotlinx.android.synthetic.main.fragment_home_service_choice.view.*
-import kotlinx.android.synthetic.main.fragment_home_service_registration.*
-import kotlinx.android.synthetic.main.fragment_operator_category.*
 
 
 class HomeServiceChoiceFragment : Fragment() {
@@ -84,7 +73,9 @@ class HomeServiceChoiceFragment : Fragment() {
             val tv = button.findViewById<TextView>(R.id.categoryName)
 
             when(tv.getHomeServiceType()){
-                HomeServices.FISIOTERAPISTA -> button.setOnClickListener{showMessage("mostrare ui fisioterapisti")}
+                HomeServices.FISIOTERAPISTA -> button.setOnClickListener{
+                    viewModel.profileState.postValue(OperatorProfileState.PICKING_PHYSIOTHERAPY_SPECS)
+                }
                 HomeServices.OSS ->  button.setOnClickListener{showMessage("mostrare ui oss")}
                 HomeServices.INFERMIERE ->  button.setOnClickListener{showMessage("mostrare ui infermieri")}
                 HomeServices.ASSISTENZA_ANZIANI ->  button.setOnClickListener{showMessage("mostrare ui assistenza anziani")}
@@ -105,14 +96,18 @@ class HomeServiceChoiceFragment : Fragment() {
         }.now()
         Do after 300 milliseconds {
             please(duration = 400L) {
-                animate(homeChoiceGroup) toBe {
-                    homeChoiceGroup.visibility = View.VISIBLE
-                    originalPosition()
+                homeChoiceGroup?.let {
+                    animate(homeChoiceGroup) toBe {
+                        homeChoiceGroup.visibility = View.VISIBLE
+                        originalPosition()
+                    }
                 }
             }.thenCouldYou(duration = 500L) {
-                animate(homeServiceChoiceBack) toBe {
-                    homeServiceChoiceBack.visibility = View.VISIBLE
-                    originalPosition()
+                homeServiceChoiceBack?.let {
+                    animate(homeServiceChoiceBack) toBe {
+                        homeServiceChoiceBack.visibility = View.VISIBLE
+                        originalPosition()
+                    }
                 }
             }.start()
         }
