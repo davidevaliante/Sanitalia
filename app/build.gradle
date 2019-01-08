@@ -53,6 +53,7 @@ dependencies {
     implementation "com.google.firebase:firebase-auth:16.1.0"
     implementation "com.google.firebase:firebase-core:$firebaseVersion"
     implementation 'com.google.firebase:firebase-firestore:17.1.4'
+    implementation 'com.google.firebase:firebase-storage:16.0.5'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
 
     // GCP
@@ -75,7 +76,7 @@ dependencies {
     implementation 'com.github.florent37:shapeofview:1.4.6'
 
     // auth
-    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+    implementation 'com.facebook.android:facebook-android-sdk:4.39.0'
 
     // utils
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'

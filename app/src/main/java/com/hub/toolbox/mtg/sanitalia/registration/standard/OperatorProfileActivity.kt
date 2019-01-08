@@ -26,7 +26,11 @@ class OperatorProfileActivity : AppCompatActivity() {
         makeActivityFullScreen()
 
         viewModel.temporaryOperatorProfile.observe(this, Observer { newValue ->
-            newValue.toString() log "TEMP_PROFILE"
+            logger(newValue.toString(), "KING_ACTIVITY")
+        })
+
+        viewModel.physioPickedSpecs.observe(this, Observer { newValue ->
+            logger(newValue.toString(), "KING_ACTIVITY")
         })
 
         viewModel.profileState.observe(this, Observer { newProfileState ->
@@ -49,7 +53,6 @@ class OperatorProfileActivity : AppCompatActivity() {
                             .replace(R.id.operatorProfileContainer, HomeServiceChoiceFragment())
                             .addToBackStack("PICKING_A_GROUP")
                             .commit()
-                    // replaceFrag(operatorProfileContainer, HomeServiceChoiceFragment())
                 }
                 OperatorProfileState.DOCTOR_PICKED_AS_A_GROUP -> {
                     showMessage("Doctor setted as group")
@@ -57,6 +60,12 @@ class OperatorProfileActivity : AppCompatActivity() {
                 OperatorProfileState.PICKING_PHYSIOTHERAPY_SPECS -> {
                     val physiotherapySpecsFragment = PhysiotherapySpecsFragment()
                     physiotherapySpecsFragment.show(supportFragmentManager, "PHYSIO_SPECS")
+                }
+
+                OperatorProfileState.ADDING_DETAILS -> {
+                    step_view.go(2, true)
+                    val profileDetailsFragment = OperatorProfileDetailsFragment()
+                    replaceFragWithAnimation(operatorProfileContainer, profileDetailsFragment)
                 }
                 else -> {
                     step_view.go(0, true)
@@ -105,6 +114,15 @@ class OperatorProfileActivity : AppCompatActivity() {
             OperatorProfileState.DOCTOR_PICKED_AS_A_GROUP -> {
                 viewModel.removePickedGroupFromLocalProfile()
                 super.onBackPressed()
+            }
+            OperatorProfileState.ADDING_DETAILS -> {
+                step_view.go(1, true)
+                // rimuovere il gruppo e la categoria scelta
+                viewModel.removePickedGroupAndCategoryFromLocalProfile()
+                // rimuove tutte le eventuali specializzazioni
+                viewModel.removeAllPickedPhysioSpecs()
+                // TODO rimuovi specializzazione per i medici
+                viewModel.profileState.postValue(OperatorProfileState.PICKING_A_GROUP)
             }
             else -> super.onBackPressed()
         }

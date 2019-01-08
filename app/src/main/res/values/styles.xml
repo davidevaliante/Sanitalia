@@ -40,6 +40,11 @@
         <item name="android:windowExitAnimation">@anim/fade_out_dialog</item>
     </style>
 
+    <!-- Animations for Dialogs-->
+    <style name="dialog_animation_from_top">
+        <item name="android:windowEnterAnimation">@anim/dialog_enter_animation</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit_animation</item>
+    </style>
 
 
 

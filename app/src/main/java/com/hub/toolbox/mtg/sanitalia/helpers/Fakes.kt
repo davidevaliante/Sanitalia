@@ -70,8 +70,7 @@ class Fakes(val activity : Activity) {
                     fullAdress = ph.getPositionFromLatLon(x.first, x.second)?.getAddressLine(0),
                     lat = x.first,
                     lon = x.second,
-                    authProvider = fakeAuthProviders[(0..3).random()],
-                    type = operatorType
+                    authProvider = fakeAuthProviders[(0..3).random()]
             )
             counter++
 

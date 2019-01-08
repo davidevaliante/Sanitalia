@@ -2,6 +2,7 @@ package com.hub.toolbox.mtg.sanitalia.data
 
 import android.app.Activity
 import android.os.Bundle
+import androidx.core.net.toUri
 import aqua.extensions.log
 import com.facebook.AccessToken
 import com.facebook.GraphRequest
@@ -11,6 +12,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.*
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.hub.toolbox.mtg.sanitalia.constants.PostError
 import com.hub.toolbox.mtg.sanitalia.constants.RegistrationProviders
 import com.hub.toolbox.mtg.sanitalia.data.local.ObjectBoxsingleton
 import com.hub.toolbox.mtg.sanitalia.registration.RegistrationActivity
@@ -47,7 +50,6 @@ object Zuldru {
             listener.isLoggedIn(false)
         }
     }
-
     fun signOutCurrentUser(callback : () -> Unit = {}){
         firebaseAuth.signOut()
         LoginManager.getInstance().logOut()
@@ -63,7 +65,6 @@ object Zuldru {
         }
     }
     fun getOperatorProfileFromLocal() : OperatorRegistration? = operatorBox.get(1)
-
     fun getListOfFisioterapisti(callback  : (List<OperatorRegistration>) -> Unit) {
         fireStore.collection("Operators").whereEqualTo("type","Fisioterapista").get().addOnCompleteListener { 
             if(it.isSuccessful){
@@ -81,10 +82,6 @@ object Zuldru {
             }
         }
     }
-
-
-
-
     fun foo (){
         fireStore.collection("Operators")
                 .whereEqualTo("authProvider", "G")
@@ -93,6 +90,33 @@ object Zuldru {
             result ->
             val list = result.result?.toObjects(OperatorRegistration::class.java)
             list?.forEach { log(it.toString()) }
+        }
+    }
+
+    // ------------------------------------------POST----------------------------------------------------------
+    fun postOperatorToFirebase(operator : OperatorRegistration, imageIsFromDevice : Boolean, onSuccess : () -> Unit={}, onFailure : (PostError) -> Unit = {} ){
+        val operatorCountry = "IT" // default value
+        val zoneId = operator.zoneId
+        val firebaseId = firebaseAuth.currentUser?.uid
+
+        if (imageIsFromDevice && firebaseId != null){
+            FirebaseStorage.getInstance().reference.child("OPERATORS_IMAGES").child(firebaseId).putFile(operator.image?.toUri()!!).addOnCompleteListener{
+                if (it.isSuccessful) log("Upload successfull")
+                else log(it.result.toString())
+            }
+        }
+
+        if (zoneId != null && firebaseId != null){
+            fireStore.collection("Countries")
+                     .document(operatorCountry).collection("Zones")
+                     .document(zoneId).collection("Operators").add(operator)
+                     .addOnCompleteListener {
+                         if (it.isSuccessful) onSuccess()
+                         else onFailure(PostError.FIREBASE_INTERNAL_ERROR)
+                     }
+        } else {
+            if(zoneId == null) onFailure(PostError.ZONE_ID_IS_NULL)
+            if(firebaseId == null) onFailure(PostError.FIREBASE_ID_IS_NULL)
         }
     }
 

@@ -16,11 +16,11 @@ class OperatorProfileViewModel : ViewModel(){
     var profileImage = MutableLiveData<String>()
     var profileState = MutableLiveData<OperatorProfileState>()
     var message = MutableLiveData<String>()
+    var imageFromDevice = MutableLiveData<Boolean>()
     var physioPickedSpecs = MutableLiveData<MutableList<Pair<String, Int>>>()
 
-    var something = MutableLiveData<String>()
-
     init {
+        imageFromDevice.postValue(false)
         physioPickedSpecs.postValue(mutableListOf())
         val operatorFromLocal = (Zuldru.getOperatorProfileFromLocal())
         if (operatorFromLocal != null) {
@@ -77,6 +77,7 @@ class OperatorProfileViewModel : ViewModel(){
         val updates = temporaryOperatorProfile.value
         updates?.let {
             updates.image = location
+            temporaryOperatorProfile.postValue(updates)
             Zuldru.updateOperatorLocallyWithId(updates)
         }
     }
@@ -110,20 +111,26 @@ class OperatorProfileViewModel : ViewModel(){
         temporaryOperatorProfile.postValue(operator)
     }
 
+    // ------------------------CATEGORIES----------------------------------------------
+    fun removePickedCategoryFromLocalProfile(){
+        val operator = temporaryOperatorProfile.value
+        operator?.let {
+            operator.category = null
+            Zuldru.updateOperatorLocallyWithId(operator)
+        }
+        temporaryOperatorProfile.postValue(operator)
+    }
+
     // ------------------------PHYSIOTERAPIST SPECS------------------------------------
     fun addPhysioSpec(spec : Pair<String, Int>){
         val specListToUpdate = physioPickedSpecs.value
-        specListToUpdate?.let {
-            it.add(spec)
-        }
+        specListToUpdate?.add(spec)
         physioPickedSpecs.postValue(specListToUpdate)
     }
 
     fun removePhysioSpec(spec: Pair<String, Int>){
         val specListToUpdate = physioPickedSpecs.value
-        specListToUpdate?.let {
-            it.remove(spec)
-        }
+        specListToUpdate?.remove(spec)
         physioPickedSpecs.postValue(specListToUpdate)
     }
 
@@ -143,6 +150,41 @@ class OperatorProfileViewModel : ViewModel(){
                 message.postValue("Non siamo riusciti a caricare il profilo, riprova")
             }
         })
+    }
+
+    fun removePickedGroupAndCategoryFromLocalProfile(){
+        val operator = temporaryOperatorProfile.value
+        operator?.let {
+            operator.group = null
+            operator.category = null
+            Zuldru.updateOperatorLocallyWithId(operator)
+        }
+        temporaryOperatorProfile.postValue(operator)
+    }
+
+    // ------------------------PROFILE DETAILS---------------------------------------------
+    fun updateLocalOperatorDescription(description : String?){
+
+    }
+
+    // ------------------------UPLOAD-------------------------------------------------------
+    fun tryToUploadProfileToTheServer(description : String?=null, onSuccess : () -> Unit={}, onFailure : () -> Unit={}){
+        if (description != null && description.isNotEmpty()){
+            val operatorToPost = temporaryOperatorProfile.value
+            operatorToPost?.let {
+                operatorToPost.description = description
+                Zuldru.postOperatorToFirebase(operatorToPost, imageFromDevice.value!!,  onFailure = { error ->
+                    Log.d("LOLOLOLO","Bad stuff $error")
+                })
+            }
+        } else {
+            val operatorToPost = temporaryOperatorProfile.value
+            operatorToPost?.let {
+                Zuldru.postOperatorToFirebase(operatorToPost, imageFromDevice.value!!, onFailure = { error ->
+                    Log.d("LOLOLOLO","Bad stuff $error")
+                })
+            }
+        }
     }
 }
 

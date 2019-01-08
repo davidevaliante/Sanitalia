@@ -28,7 +28,6 @@ data class OperatorRegistration(
         var lat : Double?=null,
         var lon : Double?=null,
         // professione
-        var type : String?="0",
         var group : Int?=null,
         var category : Int?=null,
         var spec : Int?=null,

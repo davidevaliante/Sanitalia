@@ -13,7 +13,13 @@ import com.hub.toolbox.mtg.sanitalia.data.Zuldru
 
 infix fun String.log(tag : String) = Log.d(tag,this)
 
+fun Fragment.logger(message : String, tag : String="CUSTOM_LOGGER") {
+    Log.d(tag, message)
+}
 
+fun Activity.logger(message : String, tag : String="CUSTOM_LOGGER") {
+    Log.d(tag, message)
+}
 
 fun ViewModel.log(string:String) = Log.d("MY_VIEWMODEL", string)
 

@@ -52,12 +52,14 @@
         </activity>
         <activity android:name=".Splash" />
         <activity android:name=".DeepLinksActivity" />
-        <activity android:name=".registration.standard.OperatorProfileActivity" />
+        <activity
+            android:name=".registration.standard.OperatorProfileActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden|keyboard"/>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".home.HomeActivity"></activity>
-        <activity android:name=".profiles.ProfileActivity" />
         <activity android:name=".DispatcherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

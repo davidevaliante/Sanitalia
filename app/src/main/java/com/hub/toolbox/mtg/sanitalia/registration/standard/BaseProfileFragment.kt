@@ -63,11 +63,6 @@ class BaseProfileFragment : Fragment() {
             }
         })
 
-        viewModel.temporaryOperatorProfile.observe(this, Observer { tempOperator ->
-            tempOperator?.let {
-                Log.d("TEMP_PROFILE", tempOperator.toString())
-            }
-        })
         return inflate(R.layout.fragment_base_profile)
     }
 
@@ -98,6 +93,7 @@ class BaseProfileFragment : Fragment() {
             val result = CropImage.getActivityResult(data)
             if (resultCode == RESULT_OK) {
                 viewModel.updateProfilePictureLocally(result.uri.toString())
+                viewModel.imageFromDevice.postValue(true)
                 Picasso.get().load(result.uri.toString()).into(ownProfileImage)
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error

@@ -42,6 +42,7 @@ class HomeServiceChoiceFragment : Fragment() {
         val rootView = inflate(R.layout.fragment_home_service_choice) as ViewGroup
         val myInflater = getInflater()
 
+        // setup dei vari pulsanti a partire dalla lista
         HomeServices.values().forEach { type ->
             val button = myInflater.inflate(R.layout.home_service_button_choice_button, null)
             // setup nome della categoria

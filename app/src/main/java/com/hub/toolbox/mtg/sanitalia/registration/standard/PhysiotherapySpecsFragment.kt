@@ -13,6 +13,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import aqua.extensions.getInflater
 import aqua.extensions.inflate
+import aqua.extensions.logger
 import aqua.extensions.showMessage
 
 import com.hub.toolbox.mtg.sanitalia.R
@@ -25,11 +26,19 @@ import kotlinx.android.synthetic.main.fragment_physiotherapy_specs.view.*
 
 class PhysiotherapySpecsFragment : DialogFragment() {
     private val viewModel by lazy {  getViewModelOf<OperatorProfileViewModel>(activity as FragmentActivity) }
+    private var confirmed = false
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        dialog.window?.attributes?.windowAnimations = R.style.dialog_animation_from_top
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflate(R.layout.fragment_physiotherapy_specs) as ViewGroup
         val myInflater = getInflater()
+
+        // creazione del menu di selezione a partire dalla lista
         PhysiotherapistSpecs.keys.forEach { string ->
             val specButton = myInflater.inflate(R.layout.physio_spec_button, null)
             specButton.findViewById<TextView>(R.id.physioSpecName).apply{
@@ -38,13 +47,14 @@ class PhysiotherapySpecsFragment : DialogFragment() {
             }
             val checkBox =  specButton.findViewById<CheckBox>(R.id.physioSpecCheckBox)
             specButton.setOnClickListener {
+                // selezione di una specializzazione
                 if(!checkBox.isChecked){
-                    showMessage("Picked $string with id ${PhysiotherapistSpecs[string]}")
                     checkBox.isChecked = true
                     val specToAdd = Pair(string, PhysiotherapistSpecs[string]!!)
                     viewModel.addPhysioSpec(specToAdd)
+
+                // deselezione di una specializzazione
                 } else {
-                    showMessage("UNPICKED $string with id ${PhysiotherapistSpecs[string]}")
                     checkBox.isChecked = false
                     val specToRemove = Pair(string, PhysiotherapistSpecs[string]!!)
                     viewModel.removePhysioSpec(specToRemove)
@@ -53,6 +63,7 @@ class PhysiotherapySpecsFragment : DialogFragment() {
             rootView.physioSpecsList.addView(specButton)
         }
 
+        // handle "Indietro"
         rootView.physioSpecsBackButton.setOnClickListener {
             viewModel.message.postValue("Selezione delle specializzazioni annullata")
             viewModel.removeAllPickedPhysioSpecs()
@@ -60,17 +71,25 @@ class PhysiotherapySpecsFragment : DialogFragment() {
             dismiss()
         }
 
+        // handle "Conferma"
         rootView.physioSpecsConfirmButton.setOnClickListener {
-            showMessage("Vuoi confermare ?")
+            viewModel.profileState.postValue(OperatorProfileState.ADDING_DETAILS)
+            confirmed=true
+            dismiss()
         }
 
         return rootView
     }
 
+    // handle "Indietro"
     override fun onDismiss(dialog: DialogInterface?) {
-        viewModel.message.postValue("Selezione delle specializzazioni annullata")
-        viewModel.removeAllPickedPhysioSpecs()
-        viewModel.profileState.postValue(OperatorProfileState.HOME_SERVICE_PICKED_AS_A_GROUP)
-        super.onDismiss(dialog)
+        if (!confirmed){
+            viewModel.message.postValue("Selezione delle specializzazioni annullata")
+            viewModel.removeAllPickedPhysioSpecs()
+            viewModel.profileState.postValue(OperatorProfileState.HOME_SERVICE_PICKED_AS_A_GROUP)
+            super.onDismiss(dialog)
+        } else {
+            super.onDismiss(dialog)
+        }
     }
 }
