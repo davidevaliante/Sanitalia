@@ -1,4 +1,4 @@
-package com.hub.toolbox.mtg.sanitalia.registration.standard
+package com.hub.toolbox.mtg.sanitalia.registration.data
 
 
 import android.os.Bundle
@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import aqua.extensions.Do
 import aqua.extensions.inflate
-import aqua.extensions.logger
+import com.hub.toolbox.mtg.sanitalia.extensions.logger
 import com.github.florent37.kotlin.pleaseanimate.please
 
 import com.hub.toolbox.mtg.sanitalia.R
@@ -48,8 +48,10 @@ class OperatorProfileDetailsFragment : Fragment() {
         detailsConfirmProfile.setOnClickListener {
             viewModel.tryToUploadProfileToTheServer(description = profileDescriptionEditText.text.toString().trim())
         }
-        logger(viewModel.physioPickedSpecs.value.toString())
-        logger(viewModel.temporaryOperatorProfile.value.toString())
+        logger("Spec Fisioterapisti -> ${viewModel.physioPickedSpecs.value.toString()}")
+        logger("Spec Dottori -> ${viewModel.doctorSpecs.value.toString()}")
+        logger("Spec Infermieri -> ${viewModel.nurseSpecs.value.toString()}")
+        logger("Profilo attuale -> ${viewModel.temporaryOperatorProfile.value.toString()}")
     }
 
     private fun startEnterAnimation(){

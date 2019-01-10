@@ -1,4 +1,4 @@
-package com.hub.toolbox.mtg.sanitalia.registration
+package com.hub.toolbox.mtg.sanitalia.registration.providers
 
 import android.os.Bundle
 import android.util.Log
@@ -12,17 +12,17 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import com.hub.toolbox.mtg.sanitalia.R
-import com.hub.toolbox.mtg.sanitalia.R.layout.registration_container
 import com.hub.toolbox.mtg.sanitalia.constants.RegistrationError
 import com.hub.toolbox.mtg.sanitalia.constants.RegistrationProviders
 import kotlinx.android.synthetic.main.registration_container.*
 import com.hub.toolbox.mtg.sanitalia.constants.RegistrationStage
 import com.hub.toolbox.mtg.sanitalia.extensions.log
-import com.hub.toolbox.mtg.sanitalia.registration.standard.OperatorProfileActivity
-import com.hub.toolbox.mtg.sanitalia.registration.providers.*
+import com.hub.toolbox.mtg.sanitalia.extensions.showSnackBar
+import com.hub.toolbox.mtg.sanitalia.registration.data.OperatorProfileActivity
 import getViewModelOf
 
 
+@Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
 class RegistrationActivity : AppCompatActivity() {
 
     val registrationViewModel by lazy { getViewModelOf<RegistrationViewModel>(this) }
@@ -43,7 +43,7 @@ class RegistrationActivity : AppCompatActivity() {
         registrationViewModel.registrationStage.observe(this, Observer { newStage ->
             log(newStage.toString(), "MY_VIEW")
             when(newStage){
-                RegistrationStage.PICKING_A_PROVIDER -> replaceFragWithAnimation(registration_container, RegistrationProviderChoice())
+                RegistrationStage.PICKING_A_PROVIDER -> replaceFragWithAnimation(registration_container, RegistrationProviderChoiceFragment())
                 RegistrationStage.PROVIDER_PICKED -> snackBarForProviderPicked()
                 RegistrationStage.WAITING_FOR_PHONE_VERIFICATION -> showUiForPhoneVerification()
                 RegistrationStage.EMAIL_AND_PASSWORD_SUBMITTED -> removeEmailInputUI()
@@ -66,6 +66,8 @@ class RegistrationActivity : AppCompatActivity() {
                 RegistrationError.EMAIL_NOT_VALID -> showSnackBar(getString(R.string.email_not_matching))
                 RegistrationError.PASS_NOT_LONG_ENOUGH -> showSnackBar(getString(R.string.pass_not_long_enough))
                 RegistrationError.PASS_NOT_MATCHING -> showSnackBar(getString(R.string.pass_not_matching))
+                else -> {
+                }
             }
         })
 
@@ -140,6 +142,8 @@ class RegistrationActivity : AppCompatActivity() {
         when(currentProvider){
             RegistrationProviders.FACEBOOK -> showSnackBar(getString(R.string.waiting_for_auth_response_from)+" Facebook")
             RegistrationProviders.GOOGLE -> showSnackBar(getString(R.string.waiting_for_auth_response_from)+" Google")
+            else -> {
+            }
         }
     }
 }

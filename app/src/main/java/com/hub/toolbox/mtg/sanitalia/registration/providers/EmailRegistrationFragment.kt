@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.github.florent37.kotlin.pleaseanimate.please
 
 import com.hub.toolbox.mtg.sanitalia.R
-import com.hub.toolbox.mtg.sanitalia.registration.RegistrationViewModel
 import kotlinx.android.synthetic.main.fragment_email_registration.*
 import kotlinx.android.synthetic.main.fragment_email_registration.view.*
 
@@ -49,7 +48,7 @@ class EmailRegistrationFragment : DialogFragment() {
         super.onStart()
 
         if (dialog == null) return
-        dialog.window.setWindowAnimations(R.style.dialog_animation_fade)
+        dialog.window?.setWindowAnimations(R.style.dialog_animation_fade)
     }
 
     // --------------------------------------------------------ANIMAZIONI---------------------------------------

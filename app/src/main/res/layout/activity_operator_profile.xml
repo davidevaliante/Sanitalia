@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/app_bg_hexagon_with_overlay_05"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".registration.standard.OperatorProfileActivity">
+    tools:context=".registration.data.OperatorProfileActivity">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.hub.toolbox.mtg.sanitalia.registration.standard
+package com.hub.toolbox.mtg.sanitalia.registration.data
 
 
 import android.Manifest
@@ -31,13 +31,14 @@ import com.google.android.gms.location.places.Place
 import com.google.android.gms.location.places.ui.PlaceSelectionListener
 import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment
 import com.hub.toolbox.mtg.sanitalia.constants.Provinces
+import com.hub.toolbox.mtg.sanitalia.extensions.showMessage
 import com.squareup.picasso.Callback
 import com.google.android.gms.location.places.Places as Places
 import com.squareup.picasso.Picasso
 import java.lang.Exception
 
 
-class BaseProfileFragment : Fragment() {
+class BioInfoFragment : Fragment() {
 
     private val quickPermissionsOption by lazy { QuickPermissionsOptions(
             handleRationale = false,
@@ -93,7 +94,7 @@ class BaseProfileFragment : Fragment() {
             val result = CropImage.getActivityResult(data)
             if (resultCode == RESULT_OK) {
                 viewModel.updateProfilePictureLocally(result.uri.toString())
-                viewModel.imageFromDevice.postValue(true)
+                viewModel.imageIsFromDevice.postValue(true)
                 Picasso.get().load(result.uri.toString()).into(ownProfileImage)
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error

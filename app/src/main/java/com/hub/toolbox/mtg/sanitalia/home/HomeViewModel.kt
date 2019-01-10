@@ -4,7 +4,7 @@ import android.location.Location
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.hub.toolbox.mtg.sanitalia.data.Zuldru
-import com.hub.toolbox.mtg.sanitalia.data.OperatorRegistration
+import com.hub.toolbox.mtg.sanitalia.data.Operator
 
 class HomeViewModel : ViewModel(){
     val isLoading = MutableLiveData<Boolean>()
@@ -24,7 +24,7 @@ class HomeViewModel : ViewModel(){
     fun hideLoading() = isLoading.postValue(false)
 
 
-    fun getListOfFisioterapisti(callback : (List<OperatorRegistration>) -> Unit){
+    fun getListOfFisioterapisti(callback : (List<Operator>) -> Unit){
         isLoading.postValue(true)
         Zuldru.getListOfFisioterapisti{ operatorList ->
             isLoading.postValue(false)

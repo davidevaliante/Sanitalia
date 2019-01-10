@@ -1,11 +1,11 @@
-package com.hub.toolbox.mtg.sanitalia.registration
+package com.hub.toolbox.mtg.sanitalia.registration.providers
 
 import android.app.Activity
 import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import aqua.extensions.log
+import com.hub.toolbox.mtg.sanitalia.extensions.log
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.PhoneAuthCredential
@@ -22,7 +22,7 @@ class RegistrationViewModel : ViewModel(), FirebaseRegistrationListener {
 
     val currentAuthProvider = MutableLiveData<RegistrationProviders>()
     val registrationStage =  MutableLiveData<RegistrationStage>()
-    val operator  = MutableLiveData<OperatorRegistration>()
+    val operator  = MutableLiveData<Operator>()
     val isLoading = MutableLiveData<Boolean>()
     val error = MutableLiveData<RegistrationError>()
     val phoneVerificationId = MutableLiveData<String>()
@@ -66,14 +66,14 @@ class RegistrationViewModel : ViewModel(), FirebaseRegistrationListener {
             error.postValue(RegistrationError.PASS_NOT_MATCHING)
             return
         }
-        val incompleteOperator = OperatorRegistration(email = email, authProvider = "M")
+        val incompleteOperator = Operator(email = email, authProvider = "M")
         registrationStage.postValue(RegistrationStage.EMAIL_AND_PASSWORD_SUBMITTED)
         isLoading.postValue(true)
         brain.signInToFirebaseWithCredentials(
                 email,
                 RegistrationProviders.EMAIL,
                 pass = pass,
-                incompleteOperatorRegistration = incompleteOperator,
+                incompleteOperator = incompleteOperator,
                 authListener = this
         )
     }
@@ -105,22 +105,22 @@ class RegistrationViewModel : ViewModel(), FirebaseRegistrationListener {
     }
 
     fun startPhoneRegistration(verificationId:String, credential : PhoneAuthCredential){
-        val incompleteOperator = OperatorRegistration(phone = this.phoneNumber.value, authProvider = "P")
+        val incompleteOperator = Operator(phone = this.phoneNumber.value, authProvider = "P")
         brain.signInToFirebaseWithCredentials(
                 verificationId,
                 RegistrationProviders.PHONE,
                 smsCode = credential.smsCode,
-                incompleteOperatorRegistration = incompleteOperator,
+                incompleteOperator = incompleteOperator,
                 authListener = this
                 )
     }
 
     fun signUpWithPhoneFromCode(code:String){
-        val incompleteOperator = OperatorRegistration(phone = this.phoneNumber.value)
+        val incompleteOperator = Operator(phone = this.phoneNumber.value)
         brain.signInToFirebaseWithCredentials(
                 phoneVerificationId.value,RegistrationProviders.PHONE,
                 smsCode = code,
-                incompleteOperatorRegistration = incompleteOperator,
+                incompleteOperator = incompleteOperator,
                 authListener = this
         )
     }
@@ -139,10 +139,10 @@ class RegistrationViewModel : ViewModel(), FirebaseRegistrationListener {
         error.postValue(type)
     }
 
-    override fun onFirebaseRegistrationComplete(incompleteOperatorRegistration: OperatorRegistration) {
+    override fun onFirebaseRegistrationComplete(incompleteOperator: Operator) {
         Log.d("BRAIN_LOG", "Running")
         isLoading.postValue(false)
-        operator.postValue(incompleteOperatorRegistration)
+        operator.postValue(incompleteOperator)
         registrationStage.postValue(RegistrationStage.FIREBASE_REGISTRATION_COMPLETE)
     }
 

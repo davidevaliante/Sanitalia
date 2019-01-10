@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/app_bg_hexagons"
-    tools:context=".registration.RegistrationActivity">
+    tools:context=".registration.providers.RegistrationActivity">
 
 
     <ImageView
@@ -50,7 +50,7 @@
             android:fontFamily="@font/ubuntu_light"
             android:padding="16dp"
             android:text="Accedi a Sanitalia"
-            android:textSize="23dp"
+            android:textSize="23sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintStart_toStartOf="parent"

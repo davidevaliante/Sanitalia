@@ -1,33 +1,41 @@
-package com.hub.toolbox.mtg.sanitalia.registration.standard
+package com.hub.toolbox.mtg.sanitalia.registration.data
 
 import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import aqua.extensions.log
-import com.hub.toolbox.mtg.sanitalia.constants.OperatorProfileState
+import com.hub.toolbox.mtg.sanitalia.extensions.log
+import com.hub.toolbox.mtg.sanitalia.constants.Group
+import com.hub.toolbox.mtg.sanitalia.constants.GroupsValues
+import com.hub.toolbox.mtg.sanitalia.constants.HomeServiceCategories
+import com.hub.toolbox.mtg.sanitalia.constants.RegistrationDataStage
 import com.hub.toolbox.mtg.sanitalia.data.Zuldru
-import com.hub.toolbox.mtg.sanitalia.data.OperatorRegistration
+import com.hub.toolbox.mtg.sanitalia.data.Operator
 import com.hub.toolbox.mtg.sanitalia.data.PushListener
 
 class OperatorProfileViewModel : ViewModel(){
 
-    var temporaryOperatorProfile = MutableLiveData<OperatorRegistration>()
+    var temporaryOperatorProfile = MutableLiveData<Operator>()
     var profileImage = MutableLiveData<String>()
-    var profileState = MutableLiveData<OperatorProfileState>()
+    var stage = MutableLiveData<RegistrationDataStage>()
     var message = MutableLiveData<String>()
-    var imageFromDevice = MutableLiveData<Boolean>()
+    var imageIsFromDevice = MutableLiveData<Boolean>()
     var physioPickedSpecs = MutableLiveData<MutableList<Pair<String, Int>>>()
+    var doctorSpecs = MutableLiveData<MutableList<Pair<String, Int>>>()
+    var nurseSpecs = MutableLiveData<MutableList<Pair<String, Int>>>()
+
 
     init {
-        imageFromDevice.postValue(false)
+        imageIsFromDevice.postValue(false)
         physioPickedSpecs.postValue(mutableListOf())
+        doctorSpecs.postValue(mutableListOf())
+        nurseSpecs.postValue(mutableListOf())
         val operatorFromLocal = (Zuldru.getOperatorProfileFromLocal())
         if (operatorFromLocal != null) {
             profileImage.postValue(operatorFromLocal.image)
             temporaryOperatorProfile.postValue(operatorFromLocal)
         }
-        profileState.postValue(OperatorProfileState.INITIAL)
+        stage.postValue(RegistrationDataStage.INITIAL)
     }
 
     // -----------------------------------------------ANAGRAFICA
@@ -54,13 +62,14 @@ class OperatorProfileViewModel : ViewModel(){
                 return
             } else profileToUpdate.phone = phoneNumber
 
-            if(profileToUpdate.zoneId.isNullOrBlank() ||
-                    profileToUpdate.zone.isNullOrBlank() ||
-                    profileToUpdate.region.isNullOrBlank() ||
-                    profileToUpdate.adressName.isNullOrBlank() ||
-                    profileToUpdate.fullAdress.isNullOrBlank() ||
-                    profileToUpdate.lat == null ||
-                    profileToUpdate.lon == null){
+            if( profileToUpdate.zoneId.isNullOrBlank() ||
+                profileToUpdate.zone.isNullOrBlank() ||
+                profileToUpdate.region.isNullOrBlank() ||
+                profileToUpdate.adressName.isNullOrBlank() ||
+                profileToUpdate.fullAdress.isNullOrBlank() ||
+                profileToUpdate.lat == null ||
+                profileToUpdate.lon == null)
+            {
                 message.postValue("Inserisci un indirizzo di riferimento principale")
                 return
             }
@@ -72,7 +81,7 @@ class OperatorProfileViewModel : ViewModel(){
         }
 
     }
-    fun goToCategoryFragment() = profileState.postValue(OperatorProfileState.PICKING_A_GROUP)
+    fun goToCategoryFragment() = stage.postValue(RegistrationDataStage.PICKING_A_GROUP)
     fun updateProfilePictureLocally(location : String){
         val updates = temporaryOperatorProfile.value
         updates?.let {
@@ -85,27 +94,19 @@ class OperatorProfileViewModel : ViewModel(){
 
     //  -----------------------GROUP PICKED--------------------------------------------
     fun homeServicePickedAsAGroup(){
-        profileState.postValue(OperatorProfileState.HOME_SERVICE_PICKED_AS_A_GROUP)
+        stage.postValue(RegistrationDataStage.HOME_SERVICE_PICKED_AS_A_GROUP)
         val operator = temporaryOperatorProfile.value
         operator?.let {
-            operator.group = 0
+            operator.group = GroupsValues[Group.HOME_SERVICES]
             Zuldru.updateOperatorLocallyWithId(operator)
         }
         temporaryOperatorProfile.postValue(operator)
     }
     fun doctorPickedAsAGroup(){
-        profileState.postValue(OperatorProfileState.DOCTOR_PICKED_AS_A_GROUP)
+        stage.postValue(RegistrationDataStage.PICKING_DOCTORS_SPECS)
         val operator = temporaryOperatorProfile.value
         operator?.let {
-            operator.group = 1
-            Zuldru.updateOperatorLocallyWithId(operator)
-        }
-        temporaryOperatorProfile.postValue(operator)
-    }
-    fun removePickedGroupFromLocalProfile(){
-        val operator = temporaryOperatorProfile.value
-        operator?.let {
-            operator.group = null
+            operator.group = GroupsValues[Group.DOCTOR]
             Zuldru.updateOperatorLocallyWithId(operator)
         }
         temporaryOperatorProfile.postValue(operator)
@@ -116,6 +117,24 @@ class OperatorProfileViewModel : ViewModel(){
         val operator = temporaryOperatorProfile.value
         operator?.let {
             operator.category = null
+            Zuldru.updateOperatorLocallyWithId(operator)
+        }
+        temporaryOperatorProfile.postValue(operator)
+    }
+
+    fun setPhysioteraphistAsCategory(){
+        val operator = temporaryOperatorProfile.value
+        operator?.let {
+            operator.category = HomeServiceCategories["Fisioterapista"]
+            Zuldru.updateOperatorLocallyWithId(operator)
+        }
+        temporaryOperatorProfile.postValue(operator)
+    }
+
+    fun setNurseAsCategory(){
+        val operator = temporaryOperatorProfile.value
+        operator?.let {
+            operator.category = HomeServiceCategories["Infermiere"]
             Zuldru.updateOperatorLocallyWithId(operator)
         }
         temporaryOperatorProfile.postValue(operator)
@@ -135,8 +154,23 @@ class OperatorProfileViewModel : ViewModel(){
     }
 
     fun removeAllPickedPhysioSpecs() = physioPickedSpecs.postValue(mutableListOf())
+    fun removeAllPickedDoctorsSpecs() = doctorSpecs.postValue(mutableListOf())
+    fun removeAllPickedNurseSpecs() = nurseSpecs.postValue(mutableListOf())
 
-    fun updateTemporaryProfile(operatorRegistration: OperatorRegistration) = temporaryOperatorProfile.postValue(operatorRegistration)
+    // ------------------------NURSE SPECS---------------------------------------------
+    fun addNurseSpec(spec : Pair<String, Int>){
+        val specListToUpdate = nurseSpecs.value
+        specListToUpdate?.add(spec)
+        nurseSpecs.postValue(specListToUpdate)
+    }
+
+    fun removeNurseSpec(spec: Pair<String, Int>){
+        val specListToUpdate = nurseSpecs.value
+        specListToUpdate?.remove(spec)
+        nurseSpecs.postValue(specListToUpdate)
+    }
+
+    fun updateTemporaryProfile(operator: Operator) = temporaryOperatorProfile.postValue(operator)
 
     fun pushOperator(){
         val operatorToPush = Zuldru.getOperatorProfileFromLocal()
@@ -163,9 +197,7 @@ class OperatorProfileViewModel : ViewModel(){
     }
 
     // ------------------------PROFILE DETAILS---------------------------------------------
-    fun updateLocalOperatorDescription(description : String?){
 
-    }
 
     // ------------------------UPLOAD-------------------------------------------------------
     fun tryToUploadProfileToTheServer(description : String?=null, onSuccess : () -> Unit={}, onFailure : () -> Unit={}){
@@ -173,15 +205,21 @@ class OperatorProfileViewModel : ViewModel(){
             val operatorToPost = temporaryOperatorProfile.value
             operatorToPost?.let {
                 operatorToPost.description = description
-                Zuldru.postOperatorToFirebase(operatorToPost, imageFromDevice.value!!,  onFailure = { error ->
+                Zuldru.postOperatorToFirebase(operatorToPost, imageIsFromDevice.value!!,  onFailure = { error ->
                     Log.d("LOLOLOLO","Bad stuff $error")
+                    onFailure()
+                }, onSuccess = {
+                    onSuccess()
                 })
             }
         } else {
             val operatorToPost = temporaryOperatorProfile.value
             operatorToPost?.let {
-                Zuldru.postOperatorToFirebase(operatorToPost, imageFromDevice.value!!, onFailure = { error ->
+                Zuldru.postOperatorToFirebase(operatorToPost, imageIsFromDevice.value!!, onFailure = { error ->
                     Log.d("LOLOLOLO","Bad stuff $error")
+                    onFailure()
+                }, onSuccess = {
+                    onSuccess()
                 })
             }
         }

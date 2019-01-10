@@ -3,26 +3,14 @@ package com.hub.toolbox.mtg.sanitalia.home
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.transition.Slide
-import android.transition.TransitionManager
-import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator
-import aqua.extensions.Do
-import aqua.extensions.show
-import aqua.extensions.showMessage
-import com.github.florent37.kotlin.pleaseanimate.please
 import com.hub.toolbox.mtg.sanitalia.R
-import com.hub.toolbox.mtg.sanitalia.R.id.*
 import com.hub.toolbox.mtg.sanitalia.helpers.PositionHelper
 import getViewModelOf
-import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_home_content.*
-import kotlinx.android.synthetic.main.top_bar.*
 
 
 class HomeContentFragment : Fragment() {
@@ -104,8 +92,5 @@ class HomeContentFragment : Fragment() {
         }
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) = HomeContentFragment().apply {}
-    }
+
 }

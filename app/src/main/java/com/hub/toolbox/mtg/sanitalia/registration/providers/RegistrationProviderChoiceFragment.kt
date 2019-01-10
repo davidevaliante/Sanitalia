@@ -27,12 +27,11 @@ import com.google.android.gms.tasks.Task
 import com.hub.toolbox.mtg.sanitalia.constants.RegistrationError
 import com.hub.toolbox.mtg.sanitalia.constants.RegistrationProviders
 import com.hub.toolbox.mtg.sanitalia.constants.RegistrationStage
-import com.hub.toolbox.mtg.sanitalia.registration.RegistrationViewModel
 import getViewModelFromParentActivity
 import kotlinx.android.synthetic.main.activity_auth.view.*
 
 
-class RegistrationProviderChoice : Fragment() {
+class RegistrationProviderChoiceFragment : Fragment() {
 
     private val GOOGLE_SIGN_IN_RC = 1
 
@@ -109,7 +108,7 @@ class RegistrationProviderChoice : Fragment() {
 
         realFacebookLoginButton.apply {
             setReadPermissions("email", "public_profile")
-            fragment=this@RegistrationProviderChoice
+            fragment=this@RegistrationProviderChoiceFragment
             performClick()
             registerCallback(facebookCallbackManager, object : FacebookCallback<LoginResult> {
                 override fun onSuccess(loginResult: LoginResult) {

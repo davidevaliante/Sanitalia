@@ -3,7 +3,7 @@ package com.hub.toolbox.mtg.sanitalia.helpers
 import android.app.Activity
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
-import com.hub.toolbox.mtg.sanitalia.data.OperatorRegistration
+import com.hub.toolbox.mtg.sanitalia.data.Operator
 import random
 
 class Fakes(val activity : Activity) {
@@ -50,32 +50,33 @@ class Fakes(val activity : Activity) {
             Pair(41.611801, 14.236398)
     )
 
-    fun buildFakes(operatorType : String){
-        val ph = PositionHelper(activity)
-        var counter = 1
-        for (x in fakePositions){
-            val randomPhonePrefix = listOf("320","339","328","329")
-            val r = (0..3).random()
-            val randomPhone = (0..9999999).random()
-            val randomImage = fakeImages[(0..11).random()]
+}
 
-            val o = OperatorRegistration(
-                    firstName = "Operatore finto",
-                    lastName = "N° $counter",
-                    timeStamp = System.currentTimeMillis(),
-                    phone = "${randomPhonePrefix[r]}$randomPhone",
-                    email = "emailfinta$counter@provider.com",
-                    image = randomImage,
-                    zone =  ph.getPositionFromLatLon(x.first, x.second)?.subAdminArea?.split("Provincia di ")?.last(),
-                    fullAdress = ph.getPositionFromLatLon(x.first, x.second)?.getAddressLine(0),
-                    lat = x.first,
-                    lon = x.second,
-                    authProvider = fakeAuthProviders[(0..3).random()]
-            )
-            counter++
+fun Fakes.buildFakes(){
+    val ph = PositionHelper(activity)
+    var counter = 1
+    for (x in fakePositions){
+        val randomPhonePrefix = listOf("320","339","328","329")
+        val r = (0..3).random()
+        val randomPhone = (0..9999999).random()
+        val randomImage = fakeImages[(0..11).random()]
 
-            Log.d("FAKE_OPERATOR", o.toString())
-            FirebaseFirestore.getInstance().collection("Operators").add(o)
-        }
+        val o = Operator(
+                firstName = "Operatore finto",
+                lastName = "N° $counter",
+                timeStamp = System.currentTimeMillis(),
+                phone = "${randomPhonePrefix[r]}$randomPhone",
+                email = "emailfinta$counter@provider.com",
+                image = randomImage,
+                zone =  ph.getPositionFromLatLon(x.first, x.second)?.subAdminArea?.split("Provincia di ")?.last(),
+                fullAdress = ph.getPositionFromLatLon(x.first, x.second)?.getAddressLine(0),
+                lat = x.first,
+                lon = x.second,
+                authProvider = fakeAuthProviders[(0..3).random()]
+        )
+        counter++
+
+        Log.d("FAKE_OPERATOR", o.toString())
+        FirebaseFirestore.getInstance().collection("Operators").add(o)
     }
 }

@@ -1,43 +1,40 @@
-package aqua.extensions
+package com.hub.toolbox.mtg.sanitalia.extensions
 
 import android.app.Activity
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import com.andrognito.flashbar.Flashbar
 import com.andrognito.flashbar.anim.FlashAnim
 import com.hub.toolbox.mtg.sanitalia.R
-import com.hub.toolbox.mtg.sanitalia.data.Zuldru
 
 infix fun String.log(tag : String) = Log.d(tag,this)
 
 fun Fragment.logger(message : String, tag : String="CUSTOM_LOGGER") {
-    Log.d(tag, message)
+    Log.d("$tag@${this::class.java.simpleName}", message)
 }
 
 fun Activity.logger(message : String, tag : String="CUSTOM_LOGGER") {
-    Log.d(tag, message)
+    Log.d("$tag@${this::class.java.simpleName}" ,message)
 }
 
-fun ViewModel.log(string:String) = Log.d("MY_VIEWMODEL", string)
+fun log(string: String) = Log.d("MY_VIEWMODEL", string)
 
 // mostra un Toast di base per le activity
 fun Context.showMessage(message : String, duration : Int = Toast.LENGTH_SHORT){
-    Toast.makeText(this, "$message", duration).show()
+    Toast.makeText(this, message, duration).show()
 }
 
 // mostra un Toast di base per le activity
 fun Fragment.showMessage(message : String, duration : Int = Toast.LENGTH_SHORT){
-    Toast.makeText(requireActivity(), "$message", duration).show()
+    Toast.makeText(requireActivity(), message, duration).show()
 }
 
 
 
-fun Zuldru.log(string : String) = Log.d("ZULDRU_LOG",string)
 
-fun Fragment.showSnackBar(message:String, duration : Long = 1800, withShadow : Boolean=false){
+fun Fragment.showSnackBar(message: String, duration: Long = 1800){
     activity?.showMessage("ciao")
     // val snackbar = Snackbar.make(container, message, duration)
     Flashbar.Builder(activity as Activity)

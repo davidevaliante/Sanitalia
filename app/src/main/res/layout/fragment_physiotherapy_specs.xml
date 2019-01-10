@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingBottom="0dp"
-    tools:context=".registration.standard.PhysiotherapySpecsFragment">
+    tools:context=".registration.data.specializations.PhysiotherapySpecsFragment">
 
     <TextView
         android:id="@+id/specChoiceHeader"
@@ -16,7 +16,6 @@
         android:fontFamily="@font/ubuntu_bold"
         android:gravity="center"
         android:padding="16dp"
-        android:text="Seleziona una o più specializzazioni"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:drawableLeft="@drawable/ic_left_arrow"
+            android:drawableStart="@drawable/ic_left_arrow"
             android:drawablePadding="16dp"
             android:fontFamily="@font/ubuntu_light"
             android:gravity="center"

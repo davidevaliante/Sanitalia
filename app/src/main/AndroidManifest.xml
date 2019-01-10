@@ -41,7 +41,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".registration.RegistrationActivity">
+        <activity android:name=".registration.providers.RegistrationActivity">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -53,13 +53,13 @@
         <activity android:name=".Splash" />
         <activity android:name=".DeepLinksActivity" />
         <activity
-            android:name=".registration.standard.OperatorProfileActivity"
+            android:name=".registration.data.OperatorProfileActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|keyboard"/>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name=".home.HomeActivity"></activity>
+        <activity android:name=".home.HomeActivity"/>
         <activity android:name=".DispatcherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

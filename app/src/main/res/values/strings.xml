@@ -16,6 +16,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nurse_specs_header_text">Seleziona uno o più servizi che offri</string>
+    <string name="physio_specs_header_text">Seleziona una o più specializzazioni</string>
 
 
 </resources>

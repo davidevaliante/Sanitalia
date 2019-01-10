@@ -1,6 +1,7 @@
 package com.hub.toolbox.mtg.sanitalia.home
 
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.location.Location
 import android.os.Bundle
@@ -8,14 +9,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import aqua.extensions.goTo
 
 import com.hub.toolbox.mtg.sanitalia.R
-import com.hub.toolbox.mtg.sanitalia.data.OperatorRegistration
+import com.hub.toolbox.mtg.sanitalia.data.Operator
 import com.squareup.picasso.Picasso
 import getViewModelOf
 import kotlinx.android.synthetic.main.fragment_category_list.*
@@ -50,7 +49,7 @@ class CategoryListFrag : Fragment() {
 
     }
 
-    class CategoryListAdapter(var list : List<OperatorRegistration>, val activity : FragmentActivity, val viewModel: HomeViewModel) : RecyclerView.Adapter<CategoryListAdapter.ViewHolder>(){
+    class CategoryListAdapter(var list : List<Operator>, val activity : FragmentActivity, val viewModel: HomeViewModel) : RecyclerView.Adapter<CategoryListAdapter.ViewHolder>(){
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             return ViewHolder(LayoutInflater.from(activity).inflate(R.layout.list_card, parent, false), activity, viewModel)
         }
@@ -61,13 +60,14 @@ class CategoryListFrag : Fragment() {
             holder.bind(list[position])
         }
 
-        fun updateList(newList : List<OperatorRegistration>){
+        fun updateList(newList : List<Operator>){
             this.list = newList
             notifyDataSetChanged()
         }
 
         class ViewHolder(itemView : View,val activity: Activity, val viewModel: HomeViewModel) : RecyclerView.ViewHolder(itemView){
-            fun bind(data : OperatorRegistration){
+            @SuppressLint("SetTextI18n")
+            fun bind(data : Operator){
 
                 val operatorLocation = Location("operator")
                 operatorLocation.latitude = data.lat!!

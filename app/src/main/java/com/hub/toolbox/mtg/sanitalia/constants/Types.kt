@@ -1,6 +1,131 @@
 package com.hub.toolbox.mtg.sanitalia.constants
+enum class Group {
+    HOME_SERVICES,
+    DOCTOR,
+    STRUCTURE
+}
 
-import org.intellij.lang.annotations.Language
+val GroupsValues = hashMapOf(
+        Pair(Group.HOME_SERVICES, 0),
+        Pair(Group.DOCTOR, 1),
+        Pair(Group.STRUCTURE, 2)
+)
+
+val HomeServiceCategories = hashMapOf(
+        Pair("Fisioterapista", 0),
+        Pair("Operatore Socio Sanitario", 1),
+        Pair("Infermiere", 2),
+        Pair("Assistente Anziani",3)
+)
+
+val PhysiotherapistSpecs = hashMapOf(
+        Pair("Trattamento Fisioterapico", 0),
+        Pair("Bendaggio Funzionale", 1),
+        Pair("Chinesiterapia", 2),
+        Pair("Fiosioterapia Sportiva", 3),
+        Pair("Rieducazione Posturale",4),
+        Pair("Linfodrenaggio Manuale", 5),
+        Pair("Manipolazione Fasciale", 6),
+        Pair("Manipolazione Vertebrale", 7),
+        Pair("Massaggio Decontratturante", 8),
+        Pair("Riabilitazione Neuromotoria", 9),
+        Pair("Riabilitazione Ortopedica", 10),
+        Pair("Terapia Manuale", 11),
+        Pair("Terapia Cranio Sacrale", 12)
+)
+
+val NurseSpecs = hashMapOf(
+        Pair("Iniezioni Intramuscolari", 0),
+        Pair("Somministrazione Medicinali", 1),
+        Pair("Consegna Medicinali a domicilio", 2),
+        Pair("Iniezioni di insulina", 3),
+        Pair("Medicazioni semplici o complesse", 4),
+        Pair("Medicazione piaghe da decubito",5),
+        Pair("Catererismi (cambio catetere)", 6),
+        Pair("Flebo", 7),
+        Pair("Prelievo di sangue con consegna", 8),
+        Pair("Iniezioni", 9),
+        Pair("Clistere", 10),
+        Pair("Prelievo da catetere per esame urine", 11),
+        Pair("Trasporta prelievo ambulatorio", 12)
+)
+
+val DoctorsSpecs = hashMapOf(
+        Pair("Allergologia", 0),
+        Pair("Allenamento ad alta quota", 1),
+        Pair("Anatomia patologica", 2),
+        Pair("Andrologia", 3),
+        Pair("Anestesia e rianimazione", 4),
+        Pair("Angiologia", 5),
+        Pair("Audiologia", 6),
+        Pair("Auxologia", 7),
+        Pair("Biomedicina", 8),
+        Pair("Cardiochirurgia", 9),
+        Pair("Cardiologia", 10),
+        Pair("Chirurgia", 11),
+        Pair("Chirurgia vascolare", 12),
+        Pair("Chirurgia odontostomatologica", 13),
+        Pair("Dermatologia", 14),
+        Pair("Dietetica", 15),
+        Pair("Ematologia", 16),
+        Pair("Embriologia", 17),
+        Pair("Endocrinologia", 18),
+        Pair("Epatologia", 19),
+        Pair("Epidemiologia", 20),
+        Pair("Flebologia", 21),
+        Pair("Foniatria", 22),
+        Pair("Gastroenterologia", 23),
+        Pair("Genetica", 24),
+        Pair("Geriatria", 25),
+        Pair("Ginecologia e ostetricia", 26),
+        Pair("Igiene e medicina preventiva", 27),
+        Pair("Immunologia", 28),
+        Pair("Infettivologia", 29),
+        Pair("Istologia", 30),
+        Pair("Logopedia", 31),
+        Pair("Medicina aeronautica", 32),
+        Pair("Medicina delle catastrofi", 33),
+        Pair("Medicina del lavoro", 34),
+        Pair("Medicina d'urgenza", 35),
+        Pair("Medicina di comunità", 36),
+        Pair("Medicina estetica", 37),
+        Pair("Medicina fisica e riabilitativa", 38),
+        Pair("Medicina interna", 39),
+        Pair("Medicina nucleare", 40),
+        Pair("Medicina pubblica", 41),
+        Pair("Medicina generale", 42),
+        Pair("Medicina legale", 43),
+        Pair("Medicina nucleare", 44),
+        Pair("Medicina spaziale", 45),
+        Pair("Medicina sportiva", 46),
+        Pair("Medicina subacquea", 47),
+        Pair("Nanomedicina", 48),
+        Pair("Neuroriabilitazione", 49),
+        Pair("Nefrologia", 50),
+        Pair("Neonatologia", 51),
+        Pair("Neurologia", 52),
+        Pair("Neuroscienze", 53),
+        Pair("Odontoiatria", 54),
+        Pair("Oftalmologia", 55),
+        Pair("Oncologia", 56),
+        Pair("Ortopedia", 57),
+        Pair("Otorinolaringoiatria", 58),
+        Pair("Pediatria", 59),
+        Pair("Pneumologia", 60),
+        Pair("Professioni mediche", 61),
+        Pair("Psichiatria", 62),
+        Pair("Radiologia", 63),
+        Pair("Radioterapia", 64),
+        Pair("Reumatologia", 65),
+        Pair("Riabilitazione equestre", 66),
+        Pair("Senologia", 67),
+        Pair("Sessuologia", 68),
+        Pair("Tabaccologia", 69),
+        Pair("Tricologia", 70),
+        Pair("Traumatologia", 71),
+        Pair("Urologia", 72),
+        Pair("Venereologia", 73)
+)
 
 val Provinces = hashMapOf(
         Pair("AG", Pair("Agrigento", "Sicilia")),
@@ -115,53 +240,4 @@ val Provinces = hashMapOf(
         Pair("VT", Pair("Viterbo", "Lazio"))
 )
 
-val Groups = hashMapOf(
-        Pair("Home Service", 0),
-        Pair("Doctor", 1),
-        Pair("Structure", 2)
-)
-
-enum class Group {
-    HOME_SERVICES,
-    DOCTOR,
-    STRUCTURE
-}
-
-
-val HomeServiceCategories = hashMapOf(
-        Pair("Fisioterapista", 0),
-        Pair("Operatore Socio Sanitario", 1),
-        Pair("Infermiere", 2),
-        Pair("Assistente Anziani",3)
-)
-
-
-
-val PhysiotherapistSpecs = hashMapOf(
-        Pair("Trattamento Fisioterapico", 0),
-        Pair("Bendaggio Funzionale", 1),
-        Pair("Chinesiterapia", 2),
-        Pair("Fiosioterapia Sportiva", 3),
-        Pair("Rieducazione Posturale",4),
-        Pair("Linfodrenaggio Manuale", 5),
-        Pair("Manipolazione Fasciale", 6),
-        Pair("Manipolazione Vertebrale", 7),
-        Pair("Massaggio Decontratturante", 8),
-        Pair("Riabilitazione Neuromotoria", 9),
-        Pair("Riabilitazione Ortopedica", 10),
-        Pair("Terapia Manuale", 11),
-        Pair("Terapia Cranio Sacrale", 12)
-)
-
-fun transformGroupsNamesInItalian() : List<String>{
-    val transformedList = mutableListOf<String>()
-    Groups.keys.toList().forEach {
-        when(it){
-            "Home Service" -> transformedList.add("Asssistenza Domicialiare")
-            "Doctor" -> transformedList.add("Medico")
-            "Structure" -> transformedList.add("Struttura Sanitaria")
-        }
-    }
-    return transformedList
-}
 

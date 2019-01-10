@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProviders
 import aqua.extensions.showKeyboard
 import com.github.florent37.kotlin.pleaseanimate.please
 import com.hub.toolbox.mtg.sanitalia.R
-import com.hub.toolbox.mtg.sanitalia.registration.RegistrationViewModel
 import kotlinx.android.synthetic.main.fragment_phone_input.*
 import kotlinx.android.synthetic.main.fragment_phone_input.view.*
 
@@ -52,7 +51,7 @@ class PhoneInputFragment : DialogFragment() {
         super.onStart()
 
         if (dialog == null) return
-        dialog.window.setWindowAnimations(R.style.dialog_animation_fade)
+        dialog.window?.setWindowAnimations(R.style.dialog_animation_fade)
     }
 
     // --------------------------------------------------------ANIMAZIONI---------------------------------------

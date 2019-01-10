@@ -1,6 +1,7 @@
-package com.hub.toolbox.mtg.sanitalia.registration.standard
+package com.hub.toolbox.mtg.sanitalia.registration.data
 
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.view.Gravity
@@ -16,7 +17,7 @@ import aqua.extensions.*
 import com.github.florent37.kotlin.pleaseanimate.please
 
 import com.hub.toolbox.mtg.sanitalia.R
-import com.hub.toolbox.mtg.sanitalia.constants.OperatorProfileState
+import com.hub.toolbox.mtg.sanitalia.constants.RegistrationDataStage
 import com.hub.toolbox.mtg.sanitalia.constants.homeservices.HomeServices
 import com.hub.toolbox.mtg.sanitalia.constants.homeservices.getHomeServiceType
 import com.hub.toolbox.mtg.sanitalia.constants.homeservices.getName
@@ -37,6 +38,7 @@ class HomeServiceChoiceFragment : Fragment() {
 
     }
 
+    @SuppressLint("InflateParams")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflate(R.layout.fragment_home_service_choice) as ViewGroup
@@ -75,10 +77,10 @@ class HomeServiceChoiceFragment : Fragment() {
 
             when(tv.getHomeServiceType()){
                 HomeServices.FISIOTERAPISTA -> button.setOnClickListener{
-                    viewModel.profileState.postValue(OperatorProfileState.PICKING_PHYSIOTHERAPY_SPECS)
+                    viewModel.stage.postValue(RegistrationDataStage.PICKING_PHYSIOTHERAPY_SPECS)
                 }
                 HomeServices.OSS ->  button.setOnClickListener{showMessage("mostrare ui oss")}
-                HomeServices.INFERMIERE ->  button.setOnClickListener{showMessage("mostrare ui infermieri")}
+                HomeServices.INFERMIERE ->  button.setOnClickListener{viewModel.stage.postValue(RegistrationDataStage.PICKING_NURSE_SPECS)}
                 HomeServices.ASSISTENZA_ANZIANI ->  button.setOnClickListener{showMessage("mostrare ui assistenza anziani")}
             }
         }

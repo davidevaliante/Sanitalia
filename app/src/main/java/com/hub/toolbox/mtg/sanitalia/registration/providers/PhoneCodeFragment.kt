@@ -10,7 +10,6 @@ import aqua.extensions.hideKeyboard
 import aqua.extensions.inflate
 
 import com.hub.toolbox.mtg.sanitalia.R
-import com.hub.toolbox.mtg.sanitalia.registration.RegistrationViewModel
 import getViewModelFromParentActivity
 import kotlinx.android.synthetic.main.fragment_phone_code.*
 

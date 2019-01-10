@@ -1,4 +1,4 @@
-package com.hub.toolbox.mtg.sanitalia.registration.standard
+package com.hub.toolbox.mtg.sanitalia.registration.data
 
 import android.os.Bundle
 import android.view.Gravity
@@ -8,14 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
-import androidx.transition.Transition
 import aqua.extensions.Do
 import aqua.extensions.inflate
-import aqua.extensions.showMessage
 import com.github.florent37.kotlin.pleaseanimate.please
 import com.hub.toolbox.mtg.sanitalia.R
 import getViewModelOf
-import kotlinx.android.synthetic.main.fragment_home_service_choice.*
 import kotlinx.android.synthetic.main.fragment_operator_category.*
 import kotlinx.android.synthetic.main.fragment_operator_category.view.*
 

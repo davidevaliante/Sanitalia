@@ -1,6 +1,7 @@
-package com.hub.toolbox.mtg.sanitalia.registration.standard
+package com.hub.toolbox.mtg.sanitalia.registration.data.specializations
 
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.DialogInterface
 import android.os.Bundle
@@ -13,33 +14,34 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import aqua.extensions.getInflater
 import aqua.extensions.inflate
-import aqua.extensions.logger
-import aqua.extensions.showMessage
 
 import com.hub.toolbox.mtg.sanitalia.R
-import com.hub.toolbox.mtg.sanitalia.constants.OperatorProfileState
+import com.hub.toolbox.mtg.sanitalia.constants.RegistrationDataStage
 import com.hub.toolbox.mtg.sanitalia.constants.PhysiotherapistSpecs
 import com.hub.toolbox.mtg.sanitalia.extensions.setFont
+import com.hub.toolbox.mtg.sanitalia.registration.data.OperatorProfileViewModel
+import com.livinglifetechway.k4kotlin.toast
 import getViewModelOf
 import kotlinx.android.synthetic.main.fragment_physiotherapy_specs.view.*
 
 
 class PhysiotherapySpecsFragment : DialogFragment() {
     private val viewModel by lazy {  getViewModelOf<OperatorProfileViewModel>(activity as FragmentActivity) }
-    private var confirmed = false
+    private var atLeastOneSpecHasBeenPicked = false
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         dialog.window?.attributes?.windowAnimations = R.style.dialog_animation_from_top
     }
 
+    @SuppressLint("InflateParams")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflate(R.layout.fragment_physiotherapy_specs) as ViewGroup
         val myInflater = getInflater()
-
+        rootView.specChoiceHeader.text = getString(R.string.physio_specs_header_text)
         // creazione del menu di selezione a partire dalla lista
-        PhysiotherapistSpecs.keys.forEach { string ->
+        PhysiotherapistSpecs.keys.sorted().forEach { string ->
             val specButton = myInflater.inflate(R.layout.physio_spec_button, null)
             specButton.findViewById<TextView>(R.id.physioSpecName).apply{
                 text = string
@@ -67,29 +69,31 @@ class PhysiotherapySpecsFragment : DialogFragment() {
         rootView.physioSpecsBackButton.setOnClickListener {
             viewModel.message.postValue("Selezione delle specializzazioni annullata")
             viewModel.removeAllPickedPhysioSpecs()
-            viewModel.profileState.postValue(OperatorProfileState.HOME_SERVICE_PICKED_AS_A_GROUP)
+            viewModel.stage.postValue(RegistrationDataStage.HOME_SERVICE_PICKED_AS_A_GROUP)
             dismiss()
         }
 
         // handle "Conferma"
         rootView.physioSpecsConfirmButton.setOnClickListener {
-            viewModel.profileState.postValue(OperatorProfileState.ADDING_DETAILS)
-            confirmed=true
-            dismiss()
+            if (viewModel.physioPickedSpecs.value?.size!! > 0) {
+                viewModel.stage.postValue(RegistrationDataStage.ADDING_DETAILS)
+                atLeastOneSpecHasBeenPicked=true
+                dismiss()
+            } else {
+                toast("Seleziona almeno una specializzazione per proseguire")
+                dismiss()
+            }
         }
-
         return rootView
     }
 
     // handle "Indietro"
     override fun onDismiss(dialog: DialogInterface?) {
-        if (!confirmed){
-            viewModel.message.postValue("Selezione delle specializzazioni annullata")
-            viewModel.removeAllPickedPhysioSpecs()
-            viewModel.profileState.postValue(OperatorProfileState.HOME_SERVICE_PICKED_AS_A_GROUP)
-            super.onDismiss(dialog)
-        } else {
-            super.onDismiss(dialog)
+        // delega all'activity is dismiss
+        if (atLeastOneSpecHasBeenPicked){
+            // almeno una specializzazione è stata scelta, setta la categoria
+            viewModel.setPhysioteraphistAsCategory()
         }
+        super.onDismiss(dialog)
     }
 }
