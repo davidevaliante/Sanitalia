@@ -1,46 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:id="@+id/homeRoot"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:animateLayoutChanges="true"
+    android:clipToPadding="false"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/app_bg_hexagons"
     tools:context=".home.HomeActivity">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:animateLayoutChanges="true"
+
+
+
+
+    <FrameLayout
+        android:id="@+id/homeContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".home.HomeActivity">
+        android:clipToPadding="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+    </FrameLayout>
 
-        <include
-            android:id="@+id/top_bar"
-            layout="@layout/top_bar" />
-
-        <FrameLayout
-            android:id="@+id/homeContainer"
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/bottom_bar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-        </FrameLayout>
-
-    </LinearLayout>
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottom_bar"
-        android:elevation="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="visible"
         style="@style/Widget.MaterialComponents.BottomAppBar"
         android:layout_gravity="bottom"
         android:backgroundTint="@color/colorPrimaryMedium"
+        app:hideOnScroll="true"
         app:fabAlignmentMode="center"
         app:navigationIcon="@drawable/burger_menu_thin_white"
         app:menu="@menu/bottom_bar_items" />
@@ -48,6 +41,7 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         app:fabSize="normal"
+        app:layout_behavior=""
         app:srcCompat="@drawable/ic_search_white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,9 +49,10 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/homePageLoader"
-        android:visibility="invisible"
+        android:layout_gravity="center"
         android:layout_width="72dp"
         android:layout_height="72dp"
+        android:visibility="invisible"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/hex_loader" />

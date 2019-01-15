@@ -58,8 +58,8 @@ class HomeContentFragment : Fragment() {
                         if(viewModel.isLoading.value==true) viewModel.hideLoading()
                         if(it.lat != null && it.lon != null){
                             val decodedAdress = positionHelper.getPositionFromLatLon(newPosition.lat!!,newPosition.lon!!)
-                            decodedAdress?.subAdminArea?.let {
-                                (activity as HomeActivity).setTopBarPosition(it.split("Provincia di ").last())
+                            decodedAdress?.subAdminArea?.let { result ->
+                                topBarLocation?.text = result.split("Provincia di ").last()
                             }
                         }
                         viewModel.userLat.postValue(newPosition.lat)
@@ -90,8 +90,8 @@ class HomeContentFragment : Fragment() {
                     if(viewModel.isLoading.value==true) viewModel.hideLoading()
                     if(newPosition.lat != null && newPosition.lon != null){
                         val decodedAdress = positionHelper.getPositionFromLatLon(newPosition.lat!!,newPosition.lon!!)
-                        decodedAdress?.subAdminArea?.let {
-                            (activity as HomeActivity).setTopBarPosition(it.split("Provincia di ").last())
+                        decodedAdress?.subAdminArea?.let { result ->
+                            topBarLocation?.text = result.split("Provincia di ").last()
                         }
                     }
                     viewModel.userLat.postValue(newPosition.lat)

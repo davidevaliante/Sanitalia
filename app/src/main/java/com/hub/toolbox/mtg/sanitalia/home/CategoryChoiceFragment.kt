@@ -29,7 +29,6 @@ class CategoryChoiceFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_category_choice, container, false) as ViewGroup
-        if (group == Group.HOME_SERVICES) root.categoryFilterTitle.text = "Assistenza Domiciliare"
 
         return root
     }

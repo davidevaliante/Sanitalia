@@ -8,7 +8,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.view.Gravity
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import com.hub.toolbox.mtg.sanitalia.R
 import com.hub.toolbox.mtg.sanitalia.helpers.PositionHelper
@@ -16,9 +18,9 @@ import kotlinx.android.synthetic.main.activity_home.*
 import androidx.lifecycle.Observer
 import aqua.extensions.*
 import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.snackbar.Snackbar
 import com.hub.toolbox.mtg.sanitalia.data.Zuldru
 import com.hub.toolbox.mtg.sanitalia.extensions.logger
-import com.livinglifetechway.k4kotlin.toast
 import com.ramotion.paperonboarding.PaperOnboardingFragment
 import com.ramotion.paperonboarding.PaperOnboardingPage
 import getViewModelOf
@@ -34,7 +36,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
+        makeActivityFullScreen()
         /* controllo principale, se si hanno i permessi si aggiunge il fragment (notificando il viewModel)
            della home e si ascolta dal viewModel, altrimenti si istanzia il fragment dei permessi  */
         if(hasLocationPermissions()) viewModel.hasLocationPermission.postValue(true)
@@ -70,33 +72,21 @@ class HomeActivity : AppCompatActivity() {
         })
 
 
-        dottedMenu.setOnClickListener {
-            Zuldru.signOutCurrentUser {  }
-        }
-
-        search_animated.setOnClickListener {
-            toast("Search")
-        }
-
         setSupportActionBar(bottom_bar as BottomAppBar)
         // ----------------------------------UI--------------------------------------------------
         bottom_bar.setOnMenuItemClickListener { itemSelected ->
-            logger(itemSelected.itemId.toString())
             when(itemSelected.itemId){
-                android.R.id.home -> {
-                    logger("ok")
-                    val bottomNavDrawerFragment = BottomNavigationDrawerFragment()
-                    bottomNavDrawerFragment.show(supportFragmentManager, bottomNavDrawerFragment.tag)
-                }
+                R.id.bottomAppBarSettings -> snack("Settings menu clicked")
+                R.id.bottomAppBarContacts -> Snackbar.make(homeRoot, "Settings contacts clicked", Snackbar.LENGTH_SHORT).show()
+                R.id.bottomAppBarPrivacy ->             Zuldru.signOutCurrentUser {  }
+
             }
             true
         }
         bottom_bar.setNavigationOnClickListener {
-            logger("ok")
             val bottomNavDrawerFragment = BottomNavigationDrawerFragment()
             bottomNavDrawerFragment.show(supportFragmentManager, bottomNavDrawerFragment.tag)
         }
-        bottom_bar.hideOnScroll = true
 
 
         // Fakes(this).buildFakes(operatorType = "Fisioterapista")
@@ -117,11 +107,11 @@ class HomeActivity : AppCompatActivity() {
 
 
 
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-////        val inflater = menuInflater
-////        inflater.inflate(R.menu.bottom_bar_items, menu)
-////        return true
-////    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.bottom_bar_menu, menu)
+        return true
+    }
 
     // ------------------------------ ONBOARDING -------------------------------------------------
     private fun prepareOnBoardingForPositionPermission() : ArrayList<PaperOnboardingPage> {
@@ -171,7 +161,6 @@ class HomeActivity : AppCompatActivity() {
     private fun initializeHomeUi(){
         removeAllFragments()
         replaceFragWithAnimation(homeContainer, HomeContentFragment())
-        top_bar.show()
         bottom_bar.show()
 
     }
@@ -185,6 +174,10 @@ class HomeActivity : AppCompatActivity() {
     fun changeBottomBarForListFragment(){
         bottom_bar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
         fab.background = getDrawable(R.drawable.ic_left_arrow)
+    }
+
+    private fun snack(message : String, duration: Int = Snackbar.LENGTH_SHORT){
+        Snackbar.make(homeRoot, message, duration).apply {view.layoutParams = (view.layoutParams as CoordinatorLayout.LayoutParams).apply {setMargins(32, topMargin, 32, (bottom_bar.height+fab.height/2)+8)}}.show()
     }
 
 }
