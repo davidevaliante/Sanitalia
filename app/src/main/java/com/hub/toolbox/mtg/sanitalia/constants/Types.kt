@@ -1,24 +1,44 @@
 package com.hub.toolbox.mtg.sanitalia.constants
+
+import android.os.Parcelable
+import com.hub.toolbox.mtg.sanitalia.R
+import com.hub.toolbox.mtg.sanitalia.constants.homeservices.HomeServices
+import kotlinx.android.parcel.Parcelize
+
 enum class Group {
     HOME_SERVICES,
     DOCTOR,
     STRUCTURE
 }
 
-val GroupsValues = hashMapOf(
+@Parcelize
+enum class UserType : Parcelable{
+    USER,
+    OPERATOR,
+    ANONYMOUS
+}
+
+val GroupsValues = linkedMapOf(
         Pair(Group.HOME_SERVICES, 0),
         Pair(Group.DOCTOR, 1),
         Pair(Group.STRUCTURE, 2)
 )
 
-val HomeServiceCategories = hashMapOf(
+val HomeServiceCategories = linkedMapOf(
         Pair("Fisioterapista", 0),
         Pair("Operatore Socio Sanitario", 1),
         Pair("Infermiere", 2),
         Pair("Assistente Anziani",3)
 )
 
-val PhysiotherapistSpecs = hashMapOf(
+val HomeServicesCategoriesWithImages = listOf(
+        Pair("Fisioterapista", R.drawable.ic_physiotherapy),
+        Pair("Operatore Socio Sanitario", R.drawable.ic_hands),
+        Pair("Infermiere", R.drawable.ic_nurse),
+        Pair("Assistente Anziani",R.drawable.ic_elder_care)
+)
+
+val PhysiotherapistSpecs = linkedMapOf(
         Pair("Trattamento Fisioterapico", 0),
         Pair("Bendaggio Funzionale", 1),
         Pair("Chinesiterapia", 2),
@@ -34,7 +54,7 @@ val PhysiotherapistSpecs = hashMapOf(
         Pair("Terapia Cranio Sacrale", 12)
 )
 
-val NurseSpecs = hashMapOf(
+val NurseSpecs = linkedMapOf(
         Pair("Iniezioni Intramuscolari", 0),
         Pair("Somministrazione Medicinali", 1),
         Pair("Consegna Medicinali a domicilio", 2),
@@ -50,7 +70,7 @@ val NurseSpecs = hashMapOf(
         Pair("Trasporta prelievo ambulatorio", 12)
 )
 
-val DoctorsSpecs = hashMapOf(
+val DoctorsSpecs = linkedMapOf(
         Pair("Allergologia", 0),
         Pair("Allenamento ad alta quota", 1),
         Pair("Anatomia patologica", 2),
@@ -95,39 +115,38 @@ val DoctorsSpecs = hashMapOf(
         Pair("Medicina pubblica", 41),
         Pair("Medicina generale", 42),
         Pair("Medicina legale", 43),
-        Pair("Medicina nucleare", 44),
-        Pair("Medicina spaziale", 45),
-        Pair("Medicina sportiva", 46),
-        Pair("Medicina subacquea", 47),
-        Pair("Nanomedicina", 48),
-        Pair("Neuroriabilitazione", 49),
-        Pair("Nefrologia", 50),
-        Pair("Neonatologia", 51),
-        Pair("Neurologia", 52),
-        Pair("Neuroscienze", 53),
-        Pair("Odontoiatria", 54),
-        Pair("Oftalmologia", 55),
-        Pair("Oncologia", 56),
-        Pair("Ortopedia", 57),
-        Pair("Otorinolaringoiatria", 58),
-        Pair("Pediatria", 59),
-        Pair("Pneumologia", 60),
-        Pair("Professioni mediche", 61),
-        Pair("Psichiatria", 62),
-        Pair("Radiologia", 63),
-        Pair("Radioterapia", 64),
-        Pair("Reumatologia", 65),
-        Pair("Riabilitazione equestre", 66),
-        Pair("Senologia", 67),
-        Pair("Sessuologia", 68),
-        Pair("Tabaccologia", 69),
-        Pair("Tricologia", 70),
-        Pair("Traumatologia", 71),
-        Pair("Urologia", 72),
-        Pair("Venereologia", 73)
+        Pair("Medicina spaziale", 44),
+        Pair("Medicina sportiva", 45),
+        Pair("Medicina subacquea", 46),
+        Pair("Nanomedicina", 47),
+        Pair("Neuroriabilitazione", 48),
+        Pair("Nefrologia", 49),
+        Pair("Neonatologia", 50),
+        Pair("Neurologia", 51),
+        Pair("Neuroscienze", 52),
+        Pair("Odontoiatria", 53),
+        Pair("Oftalmologia", 54),
+        Pair("Oncologia", 55),
+        Pair("Ortopedia", 56),
+        Pair("Otorinolaringoiatria", 57),
+        Pair("Pediatria", 58),
+        Pair("Pneumologia", 59),
+        Pair("Professioni mediche", 60),
+        Pair("Psichiatria", 61),
+        Pair("Radiologia", 62),
+        Pair("Radioterapia", 63),
+        Pair("Reumatologia", 64),
+        Pair("Riabilitazione equestre", 65),
+        Pair("Senologia", 66),
+        Pair("Sessuologia", 67),
+        Pair("Tabaccologia", 68),
+        Pair("Tricologia", 69),
+        Pair("Traumatologia", 70),
+        Pair("Urologia", 71),
+        Pair("Venereologia", 72)
 )
 
-val Provinces = hashMapOf(
+val Provinces = linkedMapOf(
         Pair("AG", Pair("Agrigento", "Sicilia")),
         Pair("AL", Pair("Alessandria", "Piemonte")),
         Pair("AN", Pair("Ancona", "Marche")),

@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:name=".App"
@@ -34,39 +34,35 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".registration.providers.RegistrationActivity">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
-        <activity android:name=".Splash" />
-        <activity android:name=".DeepLinksActivity" />
-        <activity
-            android:name=".registration.data.OperatorProfileActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden|keyboard"/>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name=".home.HomeActivity"/>
-        <activity android:name=".DispatcherActivity">
+
+
+
+        <activity android:name=".access.DispatcherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".access.UserTypeChoiceActivity"/>
+        <activity
+            android:name=".access.data.OperatorProfileActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard"
+            android:screenOrientation="portrait" />
+        <activity android:name=".access.providers.RegistrationActivity"/>
+
+        <activity android:name=".Splash" />
+        <activity android:name=".DeepLinksActivity" />
+
+        <activity android:name=".home.HomeActivity" />
+
     </application>
 
 </manifest>

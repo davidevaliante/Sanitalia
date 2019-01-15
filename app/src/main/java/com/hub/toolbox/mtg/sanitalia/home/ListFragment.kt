@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.hub.toolbox.mtg.sanitalia.R
 import com.hub.toolbox.mtg.sanitalia.data.Operator
+import com.hub.toolbox.mtg.sanitalia.extensions.log
 import com.squareup.picasso.Picasso
 import getViewModelOf
 import kotlinx.android.synthetic.main.fragment_category_list.*
@@ -25,7 +26,7 @@ import kotlinx.android.synthetic.main.list_card.view.*
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class CategoryListFrag : Fragment() {
+class ListFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -35,7 +36,7 @@ class CategoryListFrag : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+        (activity as HomeActivity).changeBottomBarForListFragment()
         return inflater.inflate(R.layout.fragment_category_list, container, false)
     }
 
@@ -44,6 +45,7 @@ class CategoryListFrag : Fragment() {
         categoryListRecyclerView.layoutManager = LinearLayoutManager(activity)
 
         viewModel.getListOfFisioterapisti{
+            log("callback")
             categoryListRecyclerView.adapter = CategoryListAdapter(it, activity!!, viewModel)
         }
 
@@ -94,7 +96,7 @@ class CategoryListFrag : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-                CategoryListFrag().apply {
+                ListFragment().apply {
                     arguments = Bundle().apply {
                         putString(ARG_PARAM1, param1)
                         putString(ARG_PARAM2, param2)

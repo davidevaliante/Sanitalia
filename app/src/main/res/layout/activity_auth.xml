@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/app_bg_hexagons"
-    tools:context=".registration.providers.RegistrationActivity">
+    tools:context=".access.providers.RegistrationActivity">
 
 
     <ImageView

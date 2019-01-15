@@ -1,4 +1,4 @@
-package com.hub.toolbox.mtg.sanitalia.registration.data
+package com.hub.toolbox.mtg.sanitalia.access.data
 
 
 import android.Manifest
@@ -130,7 +130,7 @@ class BioInfoFragment : Fragment() {
                     val currentUserState = viewModel.temporaryOperatorProfile.value
                     currentUserState?.let{ userState ->
                         userState.zoneId = provinceId
-                        userState.zone = Provinces[provinceId]?.first?.toLowerCase()
+                        userState.city = Provinces[provinceId]?.first?.toLowerCase()
                         userState.region = Provinces[provinceId]?.second?.toLowerCase()
                         userState.adressName = pickedPlace.name.toString().toLowerCase()
                         userState.fullAdress = pickedPlace.address.toString().toLowerCase()
@@ -169,6 +169,8 @@ class BioInfoFragment : Fragment() {
         // start picker to get image for cropping and then use the image in cropping activity
         CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
+                .setCropShape(CropImageView.CropShape.RECTANGLE)
+                .setAspectRatio(1,1)
                 .start(activity as Activity)
     }
 

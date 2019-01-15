@@ -1,4 +1,4 @@
-package com.hub.toolbox.mtg.sanitalia.registration.data
+package com.hub.toolbox.mtg.sanitalia.access.data
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -11,10 +11,10 @@ import com.hub.toolbox.mtg.sanitalia.constants.RegistrationDataStage
 import com.hub.toolbox.mtg.sanitalia.data.Zuldru
 import com.hub.toolbox.mtg.sanitalia.extensions.logger
 import com.hub.toolbox.mtg.sanitalia.extensions.showSnackBar
-import com.hub.toolbox.mtg.sanitalia.registration.data.specializations.DoctorsSpecsFragment
-import com.hub.toolbox.mtg.sanitalia.registration.data.specializations.NurseSpecsFragment
-import com.hub.toolbox.mtg.sanitalia.registration.data.specializations.PhysiotherapySpecsFragment
-import com.hub.toolbox.mtg.sanitalia.registration.providers.RegistrationActivity
+import com.hub.toolbox.mtg.sanitalia.access.data.specializations.DoctorsSpecsFragment
+import com.hub.toolbox.mtg.sanitalia.access.data.specializations.NurseSpecsFragment
+import com.hub.toolbox.mtg.sanitalia.access.data.specializations.PhysiotherapySpecsFragment
+import com.hub.toolbox.mtg.sanitalia.access.providers.RegistrationActivity
 import getViewModelOf
 import kotlinx.android.synthetic.main.activity_operator_profile.*
 import kotlinx.android.synthetic.main.fragment_operator_category.*
@@ -142,6 +142,7 @@ class OperatorProfileActivity : AppCompatActivity() {
                 // rimuove tutte le eventuali specializzazioni
                 viewModel.removeAllPickedPhysioSpecs()
                 viewModel.removeAllPickedDoctorsSpecs()
+                viewModel.removeAllPickedNurseSpecs()
                 viewModel.stage.postValue(RegistrationDataStage.PICKING_A_GROUP)
             }
             else -> super.onBackPressed()

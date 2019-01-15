@@ -3,16 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/app_bg_hexagons"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".home.AskLocationPermissionFragment">
 
     <ImageView
-        app:srcCompat="@drawable/trianglified_bg"
-        android:scaleType="centerCrop"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@drawable/circle_outline_primary_medium"
+        app:layout_constraintBottom_toBottomOf="@+id/animation_view"
+        app:layout_constraintEnd_toEndOf="@+id/animation_view"
+        app:layout_constraintStart_toStartOf="@+id/animation_view"
+        app:layout_constraintTop_toTopOf="@+id/animation_view" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animation_view"
@@ -25,53 +27,69 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/animated_pin" />
+        app:lottie_rawRes="@raw/ask_position_animated" />
 
-    <TextView
-        android:id="@+id/permissionDescription"
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/permissionDesc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:gravity="center"
-        android:paddingStart="32dp"
-        android:paddingEnd="32dp"
-        android:text="@string/position_permission_desc"
-        android:textColor="@color/white"
-        android:textSize="@dimen/defaultFontSize"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/animation_view"
-        app:layout_constraintVertical_bias="0.0" />
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:paddingBottom="16dp"
+        app:cardElevation="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/animation_view">
 
-    <TextView
-        android:id="@+id/permissionDescriptionSecondary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/ubuntu_italic"
-        android:gravity="center"
-        android:paddingStart="46dp"
-        android:paddingEnd="46dp"
-        android:text="@string/position_permission_desc_seconday"
-        android:textColor="@color/white"
-        android:textSize="@dimen/smallFontSize"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/permissionDescription" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/permissionDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:text="@string/position_permission_desc"
+                android:textSize="@dimen/defaultFontSize" />
+
+            <View
+                android:background="@drawable/app_gradient"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"/>
+
+            <TextView
+                android:id="@+id/permissionDescriptionSecondary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/ubuntu_italic"
+                android:gravity="center"
+                android:paddingBottom="16dp"
+                android:text="@string/position_permission_desc_seconday"
+                android:textSize="@dimen/smallFontSize" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/locationPermissionButton"
         style="@style/hollowRoundButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:elevation="12dp"
-        android:text="@string/confirm_permission"
-        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:layout_marginTop="32dp"
         android:clickable="true"
+        android:elevation="12dp"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:text="@string/confirm_permission"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/permissionDescriptionSecondary" />
+        app:layout_constraintTop_toBottomOf="@+id/permissionDesc" />
 
     <TextView
         android:id="@+id/locationPermissionExplainButton"

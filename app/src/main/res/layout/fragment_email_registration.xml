@@ -6,7 +6,7 @@
     android:id="@+id/emailRegistrationRoot"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".registration.providers.EmailRegistrationFragment">
+    tools:context=".access.providers.EmailRegistrationFragment">
 
     <TextView
         android:text="@string/emailFragTitle"

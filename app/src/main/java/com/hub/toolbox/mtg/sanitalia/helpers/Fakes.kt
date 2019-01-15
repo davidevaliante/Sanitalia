@@ -3,7 +3,11 @@ package com.hub.toolbox.mtg.sanitalia.helpers
 import android.app.Activity
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
+import com.hub.toolbox.mtg.sanitalia.constants.DoctorsSpecs
+import com.hub.toolbox.mtg.sanitalia.constants.NurseSpecs
+import com.hub.toolbox.mtg.sanitalia.constants.PhysiotherapistSpecs
 import com.hub.toolbox.mtg.sanitalia.data.Operator
+import com.hub.toolbox.mtg.sanitalia.data.Operator_.*
 import random
 
 class Fakes(val activity : Activity) {
@@ -52,7 +56,54 @@ class Fakes(val activity : Activity) {
 
 }
 
-fun Fakes.buildFakes(){
+fun Fakes.buildFakeDoctors() {
+    val desc = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
+    val ph = PositionHelper(activity)
+    var counter = 1
+    for (x in fakePositions) {
+        val randomPhonePrefix = listOf("320", "339", "328", "329")
+        val r = (0..3).random()
+        val randomPhone = (0..9999999).random()
+        val randomImage = fakeImages[(0..11).random()]
+
+        val randomSpecNumber = (1..8).random()
+        val specs: List<Int> = (0..randomSpecNumber).toList().map { DoctorsSpecs.values.elementAt((0 until DoctorsSpecs.values.size).random()) }
+
+        val o = Operator(
+                localId = 1,
+
+                firstName = "Dottore finto",
+                lastName = "N° $counter",
+                timeStamp = System.currentTimeMillis(),
+
+                phone = "${randomPhonePrefix[r]}$randomPhone",
+                email = "emailfinta$counter@provider.com",
+                image = randomImage,
+
+                city = ph.getPositionFromLatLon(x.first, x.second)?.subAdminArea?.split("Provincia di ")?.last(),
+                zoneId = "IS",
+                group = 1,
+
+                category = null,
+                spec = specs,
+                fullAdress = ph.getPositionFromLatLon(x.first, x.second)?.getAddressLine(0),
+
+                adressName = ph.getPositionFromLatLon(x.first, x.second)?.getAddressLine(0)?.split(',')?.get(0),
+                region = "Molise",
+                lat = x.first,
+
+                lon = x.second,
+                description = desc,
+                authProvider = fakeAuthProviders[(0..3).random()]
+        )
+        counter++
+
+        Log.d("FAKE_OPERATOR", o.toString())
+        FirebaseFirestore.getInstance().collection("Countries").document("IT").collection("Zones").document("IS").collection("Operators").add(o)
+    }
+}
+fun Fakes.buildFakePhysio(){
+    val desc = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
     val ph = PositionHelper(activity)
     var counter = 1
     for (x in fakePositions){
@@ -61,22 +112,182 @@ fun Fakes.buildFakes(){
         val randomPhone = (0..9999999).random()
         val randomImage = fakeImages[(0..11).random()]
 
+        val randomSpecNumber = (1..8).random()
+        val specs : List<Int> = (0..randomSpecNumber).toList().map { PhysiotherapistSpecs.values.elementAt((0 until PhysiotherapistSpecs.values.size).random()) }
+
         val o = Operator(
-                firstName = "Operatore finto",
+                localId = 1,
+
+                firstName = "Fisioterapista finto",
                 lastName = "N° $counter",
                 timeStamp = System.currentTimeMillis(),
+
                 phone = "${randomPhonePrefix[r]}$randomPhone",
                 email = "emailfinta$counter@provider.com",
                 image = randomImage,
-                zone =  ph.getPositionFromLatLon(x.first, x.second)?.subAdminArea?.split("Provincia di ")?.last(),
+
+                city =  ph.getPositionFromLatLon(x.first, x.second)?.subAdminArea?.split("Provincia di ")?.last(),
+                zoneId = "IS",
+                group = 0,
+
+                category = 0,
+                spec = specs,
                 fullAdress = ph.getPositionFromLatLon(x.first, x.second)?.getAddressLine(0),
+
+                adressName = ph.getPositionFromLatLon(x.first, x.second)?.getAddressLine(0)?.split(',')?.get(0),
+                region = "Molise",
                 lat = x.first,
+
                 lon = x.second,
+                description = desc,
                 authProvider = fakeAuthProviders[(0..3).random()]
         )
         counter++
 
         Log.d("FAKE_OPERATOR", o.toString())
-        FirebaseFirestore.getInstance().collection("Operators").add(o)
+        FirebaseFirestore.getInstance().collection("Countries").document("IT").collection("Zones").document("IS").collection("Operators").add(o)
+    }
+
+
+
+
+
+
+
+}
+fun Fakes.buildFakeOSS() {
+    val desc = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
+    val ph = PositionHelper(activity)
+    var counter = 1
+    for (x in fakePositions) {
+        val randomPhonePrefix = listOf("320", "339", "328", "329")
+        val r = (0..3).random()
+        val randomPhone = (0..9999999).random()
+        val randomImage = fakeImages[(0..11).random()]
+
+        val randomSpecNumber = (1..8).random()
+
+        val o = Operator(
+                localId = 1,
+
+                firstName = "OSS finto",
+                lastName = "N° $counter",
+                timeStamp = System.currentTimeMillis(),
+
+                phone = "${randomPhonePrefix[r]}$randomPhone",
+                email = "emailfinta$counter@provider.com",
+                image = randomImage,
+
+                city = ph.getPositionFromLatLon(x.first, x.second)?.subAdminArea?.split("Provincia di ")?.last(),
+                zoneId = "IS",
+                group = 0,
+
+                category = 1,
+                spec = null,
+                fullAdress = ph.getPositionFromLatLon(x.first, x.second)?.getAddressLine(0),
+
+                adressName = ph.getPositionFromLatLon(x.first, x.second)?.getAddressLine(0)?.split(',')?.get(0),
+                region = "Molise",
+                lat = x.first,
+
+                lon = x.second,
+                description = desc,
+                authProvider = fakeAuthProviders[(0..3).random()]
+        )
+        counter++
+
+        Log.d("FAKE_OPERATOR", o.toString())
+        FirebaseFirestore.getInstance().collection("Countries").document("IT").collection("Zones").document("IS").collection("Operators").add(o)
+    }
+}
+fun Fakes.buildFakeElderCare() {
+    val desc = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
+    val ph = PositionHelper(activity)
+    var counter = 1
+    for (x in fakePositions) {
+        val randomPhonePrefix = listOf("320", "339", "328", "329")
+        val r = (0..3).random()
+        val randomPhone = (0..9999999).random()
+        val randomImage = fakeImages[(0..11).random()]
+
+        val randomSpecNumber = (1..8).random()
+
+        val o = Operator(
+                localId = 1,
+
+                firstName = "Badante finto",
+                lastName = "N° $counter",
+                timeStamp = System.currentTimeMillis(),
+
+                phone = "${randomPhonePrefix[r]}$randomPhone",
+                email = "emailfinta$counter@provider.com",
+                image = randomImage,
+
+                city = ph.getPositionFromLatLon(x.first, x.second)?.subAdminArea?.split("Provincia di ")?.last(),
+                zoneId = "IS",
+                group = 0,
+
+                category = 3,
+                spec = null,
+                fullAdress = ph.getPositionFromLatLon(x.first, x.second)?.getAddressLine(0),
+
+                adressName = ph.getPositionFromLatLon(x.first, x.second)?.getAddressLine(0)?.split(',')?.get(0),
+                region = "Molise",
+                lat = x.first,
+
+                lon = x.second,
+                description = desc,
+                authProvider = fakeAuthProviders[(0..3).random()]
+        )
+        counter++
+
+        Log.d("FAKE_OPERATOR", o.toString())
+        FirebaseFirestore.getInstance().collection("Countries").document("IT").collection("Zones").document("IS").collection("Operators").add(o)
+    }
+}
+fun Fakes.buildFakeNurse() {
+    val desc = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
+    val ph = PositionHelper(activity)
+    var counter = 1
+    for (x in fakePositions) {
+        val randomPhonePrefix = listOf("320", "339", "328", "329")
+        val r = (0..3).random()
+        val randomPhone = (0..9999999).random()
+        val randomImage = fakeImages[(0..11).random()]
+
+        val randomSpecNumber = (1..8).random()
+        val specs: List<Int> = (0..randomSpecNumber).toList().map { NurseSpecs.values.elementAt((0 until NurseSpecs.values.size).random()) }
+
+        val o = Operator(
+                localId = 1,
+
+                firstName = "Infermiere finto",
+                lastName = "N° $counter",
+                timeStamp = System.currentTimeMillis(),
+
+                phone = "${randomPhonePrefix[r]}$randomPhone",
+                email = "emailfinta$counter@provider.com",
+                image = randomImage,
+
+                city = ph.getPositionFromLatLon(x.first, x.second)?.subAdminArea?.split("Provincia di ")?.last(),
+                zoneId = "IS",
+                group = 0,
+
+                category = 2,
+                spec = specs,
+                fullAdress = ph.getPositionFromLatLon(x.first, x.second)?.getAddressLine(0),
+
+                adressName = ph.getPositionFromLatLon(x.first, x.second)?.getAddressLine(0)?.split(',')?.get(0),
+                region = "Molise",
+                lat = x.first,
+
+                lon = x.second,
+                description = desc,
+                authProvider = fakeAuthProviders[(0..3).random()]
+        )
+        counter++
+
+        Log.d("FAKE_OPERATOR", o.toString())
+        FirebaseFirestore.getInstance().collection("Countries").document("IT").collection("Zones").document("IS").collection("Operators").add(o)
     }
 }

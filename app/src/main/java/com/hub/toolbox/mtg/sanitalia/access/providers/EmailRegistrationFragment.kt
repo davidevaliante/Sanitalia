@@ -1,4 +1,4 @@
-package com.hub.toolbox.mtg.sanitalia.registration.providers
+package com.hub.toolbox.mtg.sanitalia.access.providers
 
 
 import android.os.Bundle
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
+import aqua.extensions.hideKeyboard
 import com.github.florent37.kotlin.pleaseanimate.please
 
 import com.hub.toolbox.mtg.sanitalia.R
@@ -34,13 +35,13 @@ class EmailRegistrationFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         submitEmailAndPass.setOnClickListener {
-            registrationViewModel.signUpWithEmailAndPassword(
+            registrationViewModel.signInWithEmailAndPassword(
                     email = emailInput.text.toString().trim(),
                     pass = passInput.text.toString().trim(),
                     passConfirm = confirmPassInput.text.toString().trim()
             )
+            activity?.hideKeyboard()
         }
-
         startEnterAnimation()
     }
 

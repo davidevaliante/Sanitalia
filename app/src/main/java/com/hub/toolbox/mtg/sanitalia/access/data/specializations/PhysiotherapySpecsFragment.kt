@@ -1,5 +1,4 @@
-
-package com.hub.toolbox.mtg.sanitalia.registration.data.specializations
+package com.hub.toolbox.mtg.sanitalia.access.data.specializations
 
 
 import android.annotation.SuppressLint
@@ -17,16 +16,16 @@ import aqua.extensions.getInflater
 import aqua.extensions.inflate
 
 import com.hub.toolbox.mtg.sanitalia.R
-import com.hub.toolbox.mtg.sanitalia.constants.NurseSpecs
 import com.hub.toolbox.mtg.sanitalia.constants.RegistrationDataStage
+import com.hub.toolbox.mtg.sanitalia.constants.PhysiotherapistSpecs
 import com.hub.toolbox.mtg.sanitalia.extensions.setFont
-import com.hub.toolbox.mtg.sanitalia.registration.data.OperatorProfileViewModel
+import com.hub.toolbox.mtg.sanitalia.access.data.OperatorProfileViewModel
 import com.livinglifetechway.k4kotlin.toast
 import getViewModelOf
 import kotlinx.android.synthetic.main.fragment_physiotherapy_specs.view.*
 
 
-class NurseSpecsFragment : DialogFragment() {
+class PhysiotherapySpecsFragment : DialogFragment() {
     private val viewModel by lazy {  getViewModelOf<OperatorProfileViewModel>(activity as FragmentActivity) }
     private var atLeastOneSpecHasBeenPicked = false
 
@@ -40,9 +39,9 @@ class NurseSpecsFragment : DialogFragment() {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflate(R.layout.fragment_physiotherapy_specs) as ViewGroup
         val myInflater = getInflater()
-        rootView.specChoiceHeader.text = getString(R.string.nurse_specs_header_text)
+        rootView.specChoiceHeader.text = getString(R.string.physio_specs_header_text)
         // creazione del menu di selezione a partire dalla lista
-        NurseSpecs.keys.sorted().forEach { string ->
+        PhysiotherapistSpecs.keys.sorted().forEach { string ->
             val specButton = myInflater.inflate(R.layout.physio_spec_button, null)
             specButton.findViewById<TextView>(R.id.physioSpecName).apply{
                 text = string
@@ -53,14 +52,14 @@ class NurseSpecsFragment : DialogFragment() {
                 // selezione di una specializzazione
                 if(!checkBox.isChecked){
                     checkBox.isChecked = true
-                    val specToAdd = Pair(string, NurseSpecs[string]!!)
-                    viewModel.addNurseSpec(specToAdd)
+                    val specToAdd = Pair(string, PhysiotherapistSpecs[string]!!)
+                    viewModel.addPhysioSpec(specToAdd)
 
-                    // deselezione di una specializzazione
+                // deselezione di una specializzazione
                 } else {
                     checkBox.isChecked = false
-                    val specToRemove = Pair(string, NurseSpecs[string]!!)
-                    viewModel.removeNurseSpec(specToRemove)
+                    val specToRemove = Pair(string, PhysiotherapistSpecs[string]!!)
+                    viewModel.removePhysioSpec(specToRemove)
                 }
             }
             rootView.physioSpecsList.addView(specButton)
@@ -69,14 +68,14 @@ class NurseSpecsFragment : DialogFragment() {
         // handle "Indietro"
         rootView.physioSpecsBackButton.setOnClickListener {
             viewModel.message.postValue("Selezione delle specializzazioni annullata")
-            viewModel.removeAllPickedNurseSpecs()
+            viewModel.removeAllPickedPhysioSpecs()
             viewModel.stage.postValue(RegistrationDataStage.HOME_SERVICE_PICKED_AS_A_GROUP)
             dismiss()
         }
 
         // handle "Conferma"
         rootView.physioSpecsConfirmButton.setOnClickListener {
-            if (viewModel.nurseSpecs.value?.size!! > 0) {
+            if (viewModel.physioPickedSpecs.value?.size!! > 0) {
                 viewModel.stage.postValue(RegistrationDataStage.ADDING_DETAILS)
                 atLeastOneSpecHasBeenPicked=true
                 dismiss()
@@ -93,7 +92,9 @@ class NurseSpecsFragment : DialogFragment() {
         // delega all'activity is dismiss
         if (atLeastOneSpecHasBeenPicked){
             // almeno una specializzazione è stata scelta, setta la categoria
-            viewModel.setNurseAsCategory()
+            viewModel.setPhysioteraphistAsCategory()
+        } else {
+            viewModel.removeAllPickedPhysioSpecs()
         }
         super.onDismiss(dialog)
     }

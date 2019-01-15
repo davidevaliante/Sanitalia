@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.view.Gravity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.hub.toolbox.mtg.sanitalia.R
@@ -14,7 +15,10 @@ import com.hub.toolbox.mtg.sanitalia.helpers.PositionHelper
 import kotlinx.android.synthetic.main.activity_home.*
 import androidx.lifecycle.Observer
 import aqua.extensions.*
-import com.hub.toolbox.mtg.sanitalia.R.layout.top_bar
+import com.google.android.material.bottomappbar.BottomAppBar
+import com.hub.toolbox.mtg.sanitalia.data.Zuldru
+import com.hub.toolbox.mtg.sanitalia.extensions.logger
+import com.livinglifetechway.k4kotlin.toast
 import com.ramotion.paperonboarding.PaperOnboardingFragment
 import com.ramotion.paperonboarding.PaperOnboardingPage
 import getViewModelOf
@@ -43,13 +47,17 @@ class HomeActivity : AppCompatActivity() {
             else homePageLoader.hide()
         })
 
+        viewModel.userType.observe(this, Observer { userType ->
+            logger(userType.name)
+        })
+
         // decide quale fragment mostrare a seconda dei permessi
         viewModel.hasLocationPermission.observe(this, Observer { hasPermission ->
             if (hasPermission) initializeHomeUi()
             else replaceFragWithAnimation(homeContainer, AskLocationPermissionFragment())
         })
 
-        // istanzia il fragment di onboarding se necessario
+        // instanzia il fragment di onboarding se necessario
         viewModel.shouldShowOnBoardingForLocation.observe(this, Observer { shouldShowLocationOnBoarding ->
             if(shouldShowLocationOnBoarding){
                 onboardingFragment = PaperOnboardingFragment.newInstance(onboardingPages)
@@ -61,23 +69,40 @@ class HomeActivity : AppCompatActivity() {
                 replaceFragWithAnimation(homeContainer, AskLocationPermissionFragment())
         })
 
+
+        dottedMenu.setOnClickListener {
+            Zuldru.signOutCurrentUser {  }
+        }
+
+        search_animated.setOnClickListener {
+            toast("Search")
+        }
+
+        setSupportActionBar(bottom_bar as BottomAppBar)
         // ----------------------------------UI--------------------------------------------------
-        bottom_bar.setOnNavigationItemSelectedListener { itemSelected ->
-              if(itemSelected.itemId == R.id.firstBottomItem) goTo<HomeActivity>()
-//            when(itemSelected.itemId){
-//                R.id.firstBottomItem ->
-//                R.id.secondBottomItem ->
-//                R.id.thirdBottomItem ->
-//                R.id.fourthBottomItem ->
-//            }
+        bottom_bar.setOnMenuItemClickListener { itemSelected ->
+            logger(itemSelected.itemId.toString())
+            when(itemSelected.itemId){
+                android.R.id.home -> {
+                    logger("ok")
+                    val bottomNavDrawerFragment = BottomNavigationDrawerFragment()
+                    bottomNavDrawerFragment.show(supportFragmentManager, bottomNavDrawerFragment.tag)
+                }
+            }
             true
         }
-
-        bottom_bar.setOnNavigationItemReselectedListener { itemClikedAgain ->
-
+        bottom_bar.setNavigationOnClickListener {
+            logger("ok")
+            val bottomNavDrawerFragment = BottomNavigationDrawerFragment()
+            bottomNavDrawerFragment.show(supportFragmentManager, bottomNavDrawerFragment.tag)
         }
+        bottom_bar.hideOnScroll = true
+
+
         // Fakes(this).buildFakes(operatorType = "Fisioterapista")
     }
+
+
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -91,6 +116,13 @@ class HomeActivity : AppCompatActivity() {
     }
 
 
+
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+////        val inflater = menuInflater
+////        inflater.inflate(R.menu.bottom_bar_items, menu)
+////        return true
+////    }
+
     // ------------------------------ ONBOARDING -------------------------------------------------
     private fun prepareOnBoardingForPositionPermission() : ArrayList<PaperOnboardingPage> {
         //TODO da muovere sta munnezza nelle stringhe come costanti
@@ -102,7 +134,7 @@ class HomeActivity : AppCompatActivity() {
                 findColor(R.color.colorPrimaryDark), R.drawable.ic_doctor, R.drawable.ic_stethoscope)
         val scr3 = PaperOnboardingPage("Sicurezza",
                 "Le tue informazioni non saranno divulgate agli altri utenti nel rispetto della privacy",
-                findColor(R.color.colorPrimaryDarkest), R.drawable.ic_shield, R.drawable.ic_locked_lock)
+                findColor(R.color.colorAccentDark), R.drawable.ic_shield, R.drawable.ic_locked_lock)
         return arrayListOf(scr1, scr2, scr3)
     }
     private fun PaperOnboardingFragment.setListeners(){
@@ -147,9 +179,12 @@ class HomeActivity : AppCompatActivity() {
         topBarLocation.text = s
     }
     fun instantiateListFrag(){
-        replaceFragWithAnimation(homeContainer, CategoryListFrag())
+        replaceFragWithAnimation(homeContainer, ListFragment())
     }
 
-
+    fun changeBottomBarForListFragment(){
+        bottom_bar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
+        fab.background = getDrawable(R.drawable.ic_left_arrow)
+    }
 
 }

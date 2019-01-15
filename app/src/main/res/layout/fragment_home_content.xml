@@ -5,158 +5,232 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/white"
     tools:context=".home.HomeContentFragment">
 
-    <RelativeLayout
-        android:id="@+id/firstFilterButton"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.33"
-        android:background="@drawable/ic_fbg"
-        android:transitionName="first_bg">
+    <com.github.florent37.shapeofview.shapes.CutCornerView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        android:elevation="8dp"
+        app:shape_cutCorner_bottomLeftSize="20dp"
+        app:shape_cutCorner_bottomRightSize="20dp"
+        app:shape_cutCorner_topLeftSize="20dp"
+        app:shape_cutCorner_topRightSize="20dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/homeFilterButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:background="@color/white"
-            android:orientation="vertical">
+            android:transitionName="homeButtonChoice"
+            app:cardElevation="4dp">
 
-            <TextView
-                android:layout_width="match_parent"
+            <RelativeLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:fontFamily="@font/ubuntu_bold"
-                android:gravity="center"
-                android:paddingBottom="24dp"
-                android:text="Assistenza Domiciliare"
-                android:textSize="@dimen/bigFontSize"
-                android:transitionName="transition_name_test" />
+                android:paddingBottom="8dp">
 
+                <xyz.schwaab.avvylib.AvatarView
+                    android:id="@+id/homeIcon"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/from_to_icon"
+                    android:transitionName="homePinIcon"
+                    android:visibility="invisible"
+                    app:avvy_border_color="@color/grey"
+                    app:avvy_border_highlight_color="@color/colorPrimary"
+                    app:avvy_border_highlight_color_end="@color/colorAccent"
+                    app:avvy_border_thickness="2dp"
+                    app:avvy_border_thickness_highlight="3dp"
+                    app:avvy_distance_to_border="5dp"
+                    app:avvy_highlighted="true"
+                    app:avvy_loading_arches="5"
+                    app:avvy_loading_arches_degree_area="90" />
 
-            <TextView
+                <TextView
+                    android:id="@+id/homeServiceHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/homeIcon"
+                    android:gravity="center"
+                    android:paddingTop="8dp"
+                    android:text="Assistenza Domiciliare"
+                    android:textSize="18sp"
+                    android:transitionName="homeHeader" />
+
+                <TextView
+                    android:id="@+id/homeServicesList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/homeServiceHeader"
+                    android:gravity="center"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="Fisioterapisti, Infermieri, OSS..."
+                    android:textColor="@color/brand_grey"
+                    android:textSize="12sp"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+            <View
                 android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/app_gradient" />
+        </androidx.cardview.widget.CardView>
+    </com.github.florent37.shapeofview.shapes.CutCornerView>
+
+    <com.github.florent37.shapeofview.shapes.CutCornerView
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="8dp"
+        app:shape_cutCorner_bottomLeftSize="20dp"
+        app:shape_cutCorner_topRightSize="20dp"
+        app:shape_cutCorner_topLeftSize="20dp"
+        app:shape_cutCorner_bottomRightSize="20dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/doctorFilterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:transitionName="choiceDoctor"
+            app:cardElevation="4dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:gravity="center"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp"
-                android:paddingBottom="16dp"
-                android:text="Ci sono 32 operatori nella provincia di Isernia"
-                android:textSize="@dimen/smallFontSize" />
-        </LinearLayout>
+                android:paddingBottom="8dp">
 
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            app:srcCompat="@drawable/ic_house_pin" />
+                <xyz.schwaab.avvylib.AvatarView
+                    android:id="@+id/doctorIcon"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/doctor_colored"
+                    android:visibility="invisible"
+                    app:avvy_border_color="@color/grey"
+                    app:avvy_border_highlight_color="@color/colorPrimary"
+                    app:avvy_border_highlight_color_end="@color/colorAccent"
+                    app:avvy_border_thickness="2dp"
+                    app:avvy_border_thickness_highlight="3dp"
+                    app:avvy_distance_to_border="5dp"
+                    app:avvy_highlighted="true"
+                    app:avvy_loading_arches="5"
+                    app:avvy_loading_arches_degree_area="90" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/grey" />
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/testB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/doctorIcon"
+                    android:gravity="center"
+                    android:paddingTop="8dp"
+                    android:text="Medico"
+                    android:textSize="18sp" />
 
-    <RelativeLayout
-        android:background="@drawable/ic_sbg"
-        android:layout_weight="0.33"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
+                <TextView
+                    android:id="@+id/doctorsList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/testB"
+                    android:gravity="center"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="Qualsiasi Specializzazione"
+                    android:textColor="@color/brand_grey"
+                    android:textSize="12sp"
+                    android:visibility="invisible" />
+            </RelativeLayout>
 
-        <LinearLayout
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <TextView
-            android:text="Medici"
-            android:textSize="@dimen/bigFontSize"
-            android:layout_alignParentStart="true"
-            android:paddingBottom="24dp"
-            android:fontFamily="@font/ubuntu_bold"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:text="Ci sono 16 medici nella provincia di Isernia"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
-            android:textSize="@dimen/smallFontSize"
-            android:gravity="center"
-            android:paddingBottom="16dp"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        </LinearLayout>
-
-
-        <ImageView
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            app:srcCompat="@drawable/ic_stethoscope"
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
-        <View
-            android:layout_alignParentBottom="true"
-            android:background="@color/grey"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:background="@drawable/ic_tbg"
-        android:layout_weight="0.33"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
-        <ImageView
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            app:srcCompat="@drawable/ic_hospital"
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
-        <LinearLayout
-            android:orientation="vertical"
-            android:background="@color/white"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_centerVertical="true"
-                android:textSize="@dimen/bigFontSize"
-                android:text="Strutture"
-                android:layout_alignParentStart="true"
-                android:paddingBottom="24dp"
-                android:gravity="center"
-                android:fontFamily="@font/ubuntu_bold"
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="3dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/app_gradient" />
+        </androidx.cardview.widget.CardView>
+    </com.github.florent37.shapeofview.shapes.CutCornerView>
 
-            <TextView
-                android:textSize="@dimen/smallFontSize"
-                android:text="Ci sono 4 strutture nella provincia di Isernia"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp"
-                android:paddingBottom="16dp"
-                android:gravity="center"
-                android:layout_alignParentBottom="true"
+    <com.github.florent37.shapeofview.shapes.CutCornerView
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="8dp"
+        app:shape_cutCorner_bottomLeftSize="20dp"
+        app:shape_cutCorner_topRightSize="20dp"
+        app:shape_cutCorner_topLeftSize="20dp"
+        app:shape_cutCorner_bottomRightSize="20dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/structureFilterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardElevation="4dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp">
+
+                <xyz.schwaab.avvylib.AvatarView
+                    android:id="@+id/structureIcon"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_hospital_colored"
+                    android:visibility="invisible"
+                    app:avvy_border_color="@color/grey"
+                    app:avvy_border_highlight_color="@color/colorPrimary"
+                    app:avvy_border_highlight_color_end="@color/colorAccent"
+                    app:avvy_border_thickness="2dp"
+                    app:avvy_border_thickness_highlight="3dp"
+                    app:avvy_distance_to_border="5dp"
+                    app:avvy_highlighted="true"
+                    app:avvy_loading_arches="5"
+                    app:avvy_loading_arches_degree_area="90" />
+
+                <TextView
+                    android:id="@+id/testDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/structureIcon"
+                    android:gravity="center"
+                    android:paddingTop="8dp"
+                    android:text="Struttura"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/structuresList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/testDesc"
+                    android:gravity="center"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="Case di riposo, Centri di riabilitazione..."
+                    android:textColor="@color/brand_grey"
+                    android:textSize="12sp"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-    </RelativeLayout>
+                android:layout_height="3dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/app_gradient" />
+        </androidx.cardview.widget.CardView>
+    </com.github.florent37.shapeofview.shapes.CutCornerView>
 
 </LinearLayout>

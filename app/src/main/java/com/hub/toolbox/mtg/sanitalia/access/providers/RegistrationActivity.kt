@@ -1,4 +1,4 @@
-package com.hub.toolbox.mtg.sanitalia.registration.providers
+package com.hub.toolbox.mtg.sanitalia.access.providers
 
 import android.os.Bundle
 import android.util.Log
@@ -18,8 +18,12 @@ import kotlinx.android.synthetic.main.registration_container.*
 import com.hub.toolbox.mtg.sanitalia.constants.RegistrationStage
 import com.hub.toolbox.mtg.sanitalia.extensions.log
 import com.hub.toolbox.mtg.sanitalia.extensions.showSnackBar
-import com.hub.toolbox.mtg.sanitalia.registration.data.OperatorProfileActivity
+import com.hub.toolbox.mtg.sanitalia.access.data.OperatorProfileActivity
+import com.hub.toolbox.mtg.sanitalia.constants.UserType
+import com.hub.toolbox.mtg.sanitalia.extensions.logger
+import com.hub.toolbox.mtg.sanitalia.home.HomeActivity
 import getViewModelOf
+import kotlinx.android.synthetic.main.abc_tooltip.*
 
 
 @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
@@ -35,6 +39,10 @@ class RegistrationActivity : AppCompatActivity() {
         setContentView(R.layout.registration_container)
         makeActivityFullScreen()
 
+        registrationViewModel.registrationType.observe(this, Observer { type ->
+            logger("registration type changed in $type.name")
+        })
+
         registrationViewModel.isLoading.observe(this, Observer { isLoading ->
             if(isLoading) registrationActivityLoader.visibility= View.VISIBLE
             else registrationActivityLoader.visibility = View.GONE
@@ -47,8 +55,16 @@ class RegistrationActivity : AppCompatActivity() {
                 RegistrationStage.PROVIDER_PICKED -> snackBarForProviderPicked()
                 RegistrationStage.WAITING_FOR_PHONE_VERIFICATION -> showUiForPhoneVerification()
                 RegistrationStage.EMAIL_AND_PASSWORD_SUBMITTED -> removeEmailInputUI()
-                RegistrationStage.FIREBASE_REGISTRATION_COMPLETE -> {
+                RegistrationStage.OPERATOR_FIREBASE_REGISTRATION_COMPLETE -> {
                     goTo<OperatorProfileActivity>()
+                    finish()
+                }
+                RegistrationStage.USER_FIREBASE_REGISTRATION_COMPLETE -> {
+                    goTo<HomeActivity>()
+                    finish()
+                }
+                RegistrationStage.OPERATOR_DATABASE_DATA_IS_OK -> {
+                    goTo<HomeActivity>()
                     finish()
                 }
             }
@@ -71,9 +87,25 @@ class RegistrationActivity : AppCompatActivity() {
             }
         })
 
+        registrationViewModel.message.observe(this, Observer { newMessage ->
+            if(newMessage.isNotEmpty()) showSnackBar(newMessage)
+        })
+
         registrationViewModel.operator.observe(this, Observer { newValue ->
             // showMessage(newValue.toString())
         })
+
+        val registrationType = intent.extras?.getParcelable<UserType>("REGISTRATION_TYPE")
+        registrationType?.let {
+            registrationViewModel.registrationType.postValue(it)
+            if (it == UserType.USER) showSnackBar("Registrazione per Utenti")
+            if (it == UserType.OPERATOR) showSnackBar("Registrazione per Professionisti")
+        }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 
     //-----------------------------------PHONE----------------------------------------------------------
@@ -113,7 +145,7 @@ class RegistrationActivity : AppCompatActivity() {
                 // now need to ask the user to enter the code and then construct a credential
                 // by combining the code with a verification ID.
                 Log.d("PHONE_AUTH", "onCodeSent:" + verificationId!!)
-                showSnackBar(getString(R.string.waitingForSMSCode), 6000)
+                showSnackBar(getString(R.string.waitingForSMSCode), 60000)
                 vId = verificationId
             }
 

@@ -1,4 +1,4 @@
-package com.hub.toolbox.mtg.sanitalia.registration.data
+package com.hub.toolbox.mtg.sanitalia.access.data
 
 import android.os.Bundle
 import android.view.Gravity

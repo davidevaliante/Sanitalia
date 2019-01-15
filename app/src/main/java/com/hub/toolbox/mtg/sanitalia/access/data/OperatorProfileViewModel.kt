@@ -1,4 +1,4 @@
-package com.hub.toolbox.mtg.sanitalia.registration.data
+package com.hub.toolbox.mtg.sanitalia.access.data
 
 import android.util.Log
 import android.util.Patterns
@@ -63,7 +63,7 @@ class OperatorProfileViewModel : ViewModel(){
             } else profileToUpdate.phone = phoneNumber
 
             if( profileToUpdate.zoneId.isNullOrBlank() ||
-                profileToUpdate.zone.isNullOrBlank() ||
+                profileToUpdate.city.isNullOrBlank() ||
                 profileToUpdate.region.isNullOrBlank() ||
                 profileToUpdate.adressName.isNullOrBlank() ||
                 profileToUpdate.fullAdress.isNullOrBlank() ||
@@ -205,8 +205,39 @@ class OperatorProfileViewModel : ViewModel(){
             val operatorToPost = temporaryOperatorProfile.value
             operatorToPost?.let {
                 operatorToPost.description = description
+
+                if (physioPickedSpecs.value?.size!! > 0){
+                    val k = physioPickedSpecs.value
+                    val values = mutableListOf<Int>()
+
+                    k?.forEach { g ->
+                        values.add(g.second)
+                    }
+                    log(values.toString())
+                    operatorToPost.spec = values.toList()
+                }
+
+                if (doctorSpecs.value?.size!! > 0){
+                    val k = doctorSpecs.value
+                    val values = mutableListOf<Int>()
+                    k?.forEach { g ->
+                        values.add(g.second)
+                    }
+                    log(values.toString())
+                    operatorToPost.spec = values.toList()
+                }
+
+                if (nurseSpecs.value?.size!! > 0){
+                    val k = nurseSpecs.value
+                    val values = mutableListOf<Int>()
+                    k?.forEach { g ->
+                        values.add(g.second)
+                    }
+                    log(values.toString())
+                    operatorToPost.spec = values.toList()
+                }
+
                 Zuldru.postOperatorToFirebase(operatorToPost, imageIsFromDevice.value!!,  onFailure = { error ->
-                    Log.d("LOLOLOLO","Bad stuff $error")
                     onFailure()
                 }, onSuccess = {
                     onSuccess()
@@ -215,8 +246,40 @@ class OperatorProfileViewModel : ViewModel(){
         } else {
             val operatorToPost = temporaryOperatorProfile.value
             operatorToPost?.let {
+                operatorToPost.description = description
+
+                if (physioPickedSpecs.value?.size!! > 0){
+                    val k = physioPickedSpecs.value
+                    val values = mutableListOf<Int>()
+
+                    k?.forEach { g ->
+                        values.add(g.second)
+                    }
+                    log(values.toString())
+                    operatorToPost.spec = values.toList()
+                }
+
+                if (doctorSpecs.value?.size!! > 0){
+                    val k = doctorSpecs.value
+                    val values = mutableListOf<Int>()
+                    k?.forEach { g ->
+                        values.add(g.second)
+                    }
+                    log(values.toString())
+                    operatorToPost.spec = values.toList()
+                }
+
+                if (nurseSpecs.value?.size!! > 0){
+                    val k = nurseSpecs.value
+                    val values = mutableListOf<Int>()
+                    k?.forEach { g ->
+                        values.add(g.second)
+                    }
+                    log(values.toString())
+                    operatorToPost.spec = values.toList()
+                }
+
                 Zuldru.postOperatorToFirebase(operatorToPost, imageIsFromDevice.value!!, onFailure = { error ->
-                    Log.d("LOLOLOLO","Bad stuff $error")
                     onFailure()
                 }, onSuccess = {
                     onSuccess()

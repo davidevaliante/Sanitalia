@@ -1,28 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/groupOneColor"
-    android:transitionName="first_bg"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".home.CategoryChoiceFragment">
 
-    <TextView
-        android:id="@+id/firstCategoryTitle"
-        android:padding="32dp"
-        android:gravity="center"
-        android:textSize="24sp"
-        android:textColor="@color/white"
-        android:layout_centerHorizontal="true"
+    <com.github.florent37.shapeofview.shapes.CutCornerView
+        android:id="@+id/firstCategoryTitleCut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/ubuntu_bold"
-        android:transitionName="transition_name_test"
-        android:text="Assistenza domiciliare"/>
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        android:layout_centerHorizontal="true"
+        android:elevation="8dp"
+        app:shape_cutCorner_bottomLeftSize="20dp"
+        app:shape_cutCorner_bottomRightSize="20dp"
+        app:shape_cutCorner_topLeftSize="20dp"
+        app:shape_cutCorner_topRightSize="20dp">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/firstCategoryTitle"
+        app:cardCornerRadius="4dp"
+        android:elevation="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/categoryFilterTitle"
+            android:padding="32dp"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ubuntu_bold" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/app_gradient" />
+    </androidx.cardview.widget.CardView>
+    </com.github.florent37.shapeofview.shapes.CutCornerView>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/firstCategoryRecyclerView"
-        android:layout_below="@id/firstCategoryTitle"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_below="@id/firstCategoryTitleCut"
+        android:background="@color/transparent"
+        android:clipToPadding="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

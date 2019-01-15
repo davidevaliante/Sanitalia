@@ -1,4 +1,4 @@
-package com.hub.toolbox.mtg.sanitalia.registration.providers
+package com.hub.toolbox.mtg.sanitalia.access.providers
 
 
 import android.app.Activity

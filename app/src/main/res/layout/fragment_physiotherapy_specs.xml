@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingBottom="0dp"
-    tools:context=".registration.data.specializations.PhysiotherapySpecsFragment">
+    tools:context=".access.data.specializations.PhysiotherapySpecsFragment">
 
     <TextView
         android:id="@+id/specChoiceHeader"

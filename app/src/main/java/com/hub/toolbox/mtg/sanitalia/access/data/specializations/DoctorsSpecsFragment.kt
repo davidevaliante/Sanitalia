@@ -1,4 +1,4 @@
-package com.hub.toolbox.mtg.sanitalia.registration.data.specializations
+package com.hub.toolbox.mtg.sanitalia.access.data.specializations
 
 
 import android.os.Bundle
@@ -14,7 +14,8 @@ import com.github.florent37.kotlin.pleaseanimate.please
 import com.hub.toolbox.mtg.sanitalia.R
 import com.hub.toolbox.mtg.sanitalia.constants.DoctorsSpecs
 import com.hub.toolbox.mtg.sanitalia.constants.RegistrationDataStage
-import com.hub.toolbox.mtg.sanitalia.registration.data.OperatorProfileViewModel
+import com.hub.toolbox.mtg.sanitalia.access.data.OperatorProfileViewModel
+import com.hub.toolbox.mtg.sanitalia.extensions.logger
 import com.pchmn.materialchips.model.Chip
 import getViewModelOf
 import kotlinx.android.synthetic.main.fragment_doctors_specs.*

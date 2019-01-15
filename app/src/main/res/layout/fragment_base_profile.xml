@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="32dp"
         android:orientation="vertical"
-        tools:context=".registration.data.BioInfoFragment">
+        tools:context=".access.data.BioInfoFragment">
 
         <RelativeLayout
             android:layout_gravity="center_horizontal"

@@ -7,6 +7,8 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.icu.lang.UCharacter
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -19,12 +21,19 @@ import com.hub.toolbox.mtg.sanitalia.R
 import android.view.WindowManager
 import android.os.Build
 import android.view.LayoutInflater
+import androidx.core.content.ContextCompat.startActivity
 
 
-inline fun <reified T : Activity> AppCompatActivity.goTo(bundle : Bundle? = null ){
-    val intent = Intent(this, T::class.java)
+//inline fun <reified T : Activity> AppCompatActivity.goTo(bundle : Bundle? = null ){
+////    val intent = Intent(this, T::class.java)
+////    if(bundle == null) startActivity(intent) else startActivity(intent, bundle)
+////}
+
+inline fun <reified Z : Activity> AppCompatActivity.goTo(bundle : Bundle?=null){
+    val intent = Intent(this, Z::class.java)
     if(bundle == null) startActivity(intent) else startActivity(intent, bundle)
 }
+
 
 fun AppCompatActivity.makeActivityFullScreen(){
         val w = window

@@ -1,4 +1,4 @@
-package com.hub.toolbox.mtg.sanitalia.registration.data
+package com.hub.toolbox.mtg.sanitalia.access.data
 
 
 import android.os.Bundle
@@ -31,13 +31,23 @@ class OperatorProfileDetailsFragment : Fragment() {
 
         viewGroup.profileDescriptionEditText.apply {
             setOnFocusChangeListener { _, hasFocus ->
-                gravity = if (hasFocus) (Gravity.START and  Gravity.TOP)
-                          else Gravity.CENTER
+                if (hasFocus){
+                    please(duration = 700L) {
+                        animate(viewGroup.animatedWriting).toBe {
+                            scale(0f,0f)
+                        }
+                    }.start()
+                    gravity = (Gravity.START and Gravity.TOP)
+                } else {
+                    please(duration = 700L) {
+                        animate(viewGroup.animatedWriting).toBe {
+                            originalScale()
+                        }
+                    }.start()
+                    gravity = (Gravity.CENTER and Gravity.BOTTOM)
+                }
             }
         }
-
-
-
         return viewGroup
     }
 

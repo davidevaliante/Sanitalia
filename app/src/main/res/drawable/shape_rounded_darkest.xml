@@ -2,8 +2,8 @@
 <shape android:shape="rectangle"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <solid android:color="@color/colorPrimaryDarkest"/>
-    <stroke android:color="@color/colorPrimaryDarkest" android:width="2dp" />
+    <solid android:color="@color/colorAccentDark"/>
+    <stroke android:color="@color/colorAccentDark" android:width="2dp" />
     <!--corners allow us to make the rounded corners button-->
     <corners android:radius="30dp" />
 </shape>

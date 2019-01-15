@@ -3,6 +3,6 @@
     <dimen name="smallFontSize">14sp</dimen>
     <dimen name="defaultFontSize">16sp</dimen>
     <dimen name="bigFontSize">18sp</dimen>
-
+    <dimen name="recyclerViewSpacing">8dp</dimen>
 
 </resources>

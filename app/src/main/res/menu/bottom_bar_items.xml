@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/firstBottomItem"
         android:title="Home"
         android:icon="@drawable/ic_home"
+        app:showAsAction="always"
         />
 
     <item
+        android:id="@+id/secondBottomItem"
         android:title="Posizione"
         android:icon="@drawable/ic_world"
+        app:showAsAction="always"
         />
 
     <item
+        android:id="@+id/thirdBottomItem"
         android:title="Preferiti"
         android:icon="@drawable/ic_star"
+        app:showAsAction="always"
         />
 
     <item
         android:id="@+id/fourthBottomItem"
         android:title="Profilo"
         android:icon="@drawable/user_icon_white"
+        app:showAsAction="always"
         />
 </menu>

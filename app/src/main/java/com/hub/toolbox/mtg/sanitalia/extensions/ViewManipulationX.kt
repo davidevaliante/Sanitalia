@@ -1,11 +1,19 @@
 package aqua.extensions
 
 import android.app.Activity
+import android.content.Context
 import android.content.res.Resources
+import android.graphics.Rect
 import android.os.Build
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginLeft
+import androidx.recyclerview.widget.RecyclerView
+import androidx.annotation.DimenRes
+import androidx.annotation.NonNull
+
+
 
 fun AppCompatActivity.hideActionBar(){
     val decorView = window.decorView
@@ -55,19 +63,48 @@ infix fun View.setPaddingTopInDpi(dpi:Int){
     setPadding(0,valueInDpi,0,0)
 }
 
-infix fun View.setPaddingEndInDpi(dpi:Int){
+infix fun View.setMarginEndInDpi(dpi:Int){
     val scale = context.resources.displayMetrics.density
     val valueInDpi = (dpi * scale + 0.5f).toInt()
     setPadding(0,0,valueInDpi,0)
 }
 
-infix fun View.setPaddingBottomInDpi(dpi:Int){
+infix fun View.setMarginBottomInDpi(dpi:Int){
     val scale = context.resources.displayMetrics.density
     val valueInDpi = (dpi * scale + 0.5f).toInt()
     setPadding(0,0,0,valueInDpi)
+}
+
+infix fun View.setMarginInDpi(dpi:Int){
+    val scale = context.resources.displayMetrics.density
+    val valueInDpi = (dpi * scale + 0.5f).toInt()
+    setPadding(valueInDpi,valueInDpi,valueInDpi,valueInDpi)
+}
+
+infix fun View.setMarginStartInDpi(dpi:Int){
+    val scale = context.resources.displayMetrics.density
+    val valueInDpi = (dpi * scale + 0.5f).toInt()
+    setPadding(valueInDpi,0,0,0)
+}
+
+infix fun View.setMarginTopInDpi(dpi:Int){
+    val scale = context.resources.displayMetrics.density
+    val valueInDpi = (dpi * scale + 0.5f).toInt()
+    setPadding(0,valueInDpi,0,0)
 }
 
 val Int.dp: Int
     get() = (this / Resources.getSystem().displayMetrics.density).toInt()
 val Int.px: Int
     get() = (this * Resources.getSystem().displayMetrics.density).toInt()
+
+class ItemOffsetDecoration(private val mItemOffset: Int) : RecyclerView.ItemDecoration() {
+
+    constructor(context: Context, @DimenRes itemOffsetId: Int) : this(context.resources.getDimensionPixelSize(itemOffsetId))
+
+    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView,
+                       state: RecyclerView.State) {
+        super.getItemOffsets(outRect, view, parent, state)
+        outRect.set(mItemOffset, mItemOffset, mItemOffset, mItemOffset)
+    }
+}
