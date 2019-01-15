@@ -64,7 +64,9 @@ class DispatcherActivity : AppCompatActivity() {
 //        Fakes(this).buildFakeOSS()
 
         // query()
-
+        Zuldru.getNumberOfOperatorsForZoneId("IS") {
+            it.forEach { y -> logger(y.toString()) }
+        }
     }
 
 

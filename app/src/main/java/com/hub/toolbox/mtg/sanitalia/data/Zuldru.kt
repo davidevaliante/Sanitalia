@@ -96,7 +96,7 @@ object Zuldru {
         }
     }
     fun getOperatorProfileFromLocal() : Operator? = operatorBox.get(1)
-    fun getListOfPhysiotherapists(callback  : (List<Operator>) -> Unit) {
+    fun getListOfPhysiotherapists(callback  : (List<Operator>) -> Unit = {}) {
         fireStore.collection("Countries").document("IT").collection("Zones").document("IS")
         .collection("Operators").whereEqualTo("category",0).whereEqualTo("group", 0).get().addOnCompleteListener {
             if(it.isSuccessful){
@@ -111,6 +111,21 @@ object Zuldru {
             }else{
                 log("FAIL")
                 log(it.exception.toString())
+            }
+        }
+    }
+    fun getNumberOfOperatorsForZoneId(zoneId : String, onSuccess: (HashMap<String,Int>) -> Unit = {}){
+        fireStore.collection("Counters").document("IT").collection(zoneId).get().addOnSuccessListener {
+            if (it.documents != null) {
+                val values = hashMapOf<String,Int>()
+                for (doc in it.documents){
+                    val counter = doc.toObject(Counter::class.java)
+                    log(counter.toString())
+                    val type = doc.id
+
+                    if(counter?.count!=null) values[type] = counter.count
+                }
+                onSuccess(values)
             }
         }
     }

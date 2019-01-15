@@ -39,6 +39,9 @@ data class Operator(
         var description : String?=null
 )
 
+@Keep
+data class Counter(val count: Int?=null)
+
 // utilities
 fun Operator.getSpecsList() : List<String>?{
         val group = this.group

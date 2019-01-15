@@ -16,6 +16,8 @@ import aqua.extensions.replaceFragWithAnimation
 import com.github.florent37.kotlin.pleaseanimate.please
 import com.hub.toolbox.mtg.sanitalia.R
 import com.hub.toolbox.mtg.sanitalia.constants.Group
+import com.hub.toolbox.mtg.sanitalia.constants.Provinces
+import com.hub.toolbox.mtg.sanitalia.extensions.logger
 import com.hub.toolbox.mtg.sanitalia.helpers.PositionHelper
 import com.livinglifetechway.k4kotlin.toast
 import getViewModelOf
@@ -58,9 +60,9 @@ class HomeContentFragment : Fragment() {
                         if(viewModel.isLoading.value==true) viewModel.hideLoading()
                         if(it.lat != null && it.lon != null){
                             val decodedAdress = positionHelper.getPositionFromLatLon(newPosition.lat!!,newPosition.lon!!)
-                            decodedAdress?.subAdminArea?.let { result ->
-                                topBarLocation?.text = result.split("Provincia di ").last()
-                            }
+                            val zoneId = decodedAdress?.getAddressLine(0)?.split(",")?.get(2)?.split(" ")?.last()
+                            viewModel.zoneId.postValue(zoneId)
+                            if (Provinces[zoneId]?.first != null) topBarLocation?.text = Provinces[zoneId]?.first
                         }
                         viewModel.userLat.postValue(newPosition.lat)
                         viewModel.userLon.postValue(newPosition.lon)
@@ -90,9 +92,9 @@ class HomeContentFragment : Fragment() {
                     if(viewModel.isLoading.value==true) viewModel.hideLoading()
                     if(newPosition.lat != null && newPosition.lon != null){
                         val decodedAdress = positionHelper.getPositionFromLatLon(newPosition.lat!!,newPosition.lon!!)
-                        decodedAdress?.subAdminArea?.let { result ->
-                            topBarLocation?.text = result.split("Provincia di ").last()
-                        }
+                        val zoneId = decodedAdress?.getAddressLine(0)?.split(",")?.get(2)?.split(" ")?.last()
+                        viewModel.zoneId.postValue(zoneId)
+                        if (Provinces[zoneId]?.first != null) topBarLocation?.text = Provinces[zoneId]?.first
                     }
                     viewModel.userLat.postValue(newPosition.lat)
                     viewModel.userLon.postValue(newPosition.lon)

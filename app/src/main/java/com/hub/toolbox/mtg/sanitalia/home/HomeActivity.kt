@@ -72,6 +72,11 @@ class HomeActivity : AppCompatActivity() {
         })
 
 
+
+        viewModel.zoneId.observe(this, Observer { id ->
+            logger("zoneid -> $id")
+        })
+
         setSupportActionBar(bottom_bar as BottomAppBar)
         // ----------------------------------UI--------------------------------------------------
         bottom_bar.setOnMenuItemClickListener { itemSelected ->
@@ -93,8 +98,6 @@ class HomeActivity : AppCompatActivity() {
     }
 
 
-
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -104,8 +107,6 @@ class HomeActivity : AppCompatActivity() {
             findFragmentOfType<HomeContentFragment>()?.onActivityResult(requestCode, resultCode, data)
         }
     }
-
-
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
