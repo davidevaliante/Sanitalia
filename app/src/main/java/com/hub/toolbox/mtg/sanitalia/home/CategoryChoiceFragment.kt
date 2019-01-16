@@ -1,6 +1,7 @@
 package com.hub.toolbox.mtg.sanitalia.home
 
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -13,31 +14,26 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import aqua.extensions.ItemOffsetDecoration
 import aqua.extensions.getDrawable
+import aqua.extensions.hide
+import aqua.extensions.show
 import com.hub.toolbox.mtg.sanitalia.R
-import com.hub.toolbox.mtg.sanitalia.R.id.*
 import com.hub.toolbox.mtg.sanitalia.constants.Group
-import com.hub.toolbox.mtg.sanitalia.constants.HomeServiceCategories
 import com.hub.toolbox.mtg.sanitalia.constants.HomeServicesCategoriesWithImages
 import com.hub.toolbox.mtg.sanitalia.data.Operator_.zoneId
 import com.hub.toolbox.mtg.sanitalia.data.Zuldru
 import getViewModelOf
-import kotlinx.android.synthetic.main.category_icon.view.*
+import kotlinx.android.synthetic.main.category_choice_card.view.*
 import kotlinx.android.synthetic.main.fragment_category_choice.*
-import kotlinx.android.synthetic.main.fragment_category_choice.view.*
 
 class CategoryChoiceFragment : Fragment() {
 
     val viewModel by lazy { getViewModelOf<HomeViewModel>(activity!!) }
-    lateinit var counters : HashMap<String,Int>
+    private lateinit var counters : HashMap<String,Int>
     lateinit var group : Group
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val root = inflater.inflate(R.layout.fragment_category_choice, container, false) as ViewGroup
-        Zuldru.getNumberOfOperatorsForZoneId(viewModel.zoneId.value!!, onSuccess = { list ->
-            counters = list
-        })
-        return root
+        return inflater.inflate(R.layout.fragment_category_choice, container, false) as ViewGroup
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,18 +44,24 @@ class CategoryChoiceFragment : Fragment() {
         firstCategoryRecyclerView.addItemDecoration(rcDecorator)
 
         if (group == Group.HOME_SERVICES){
+            viewModel.isLoading.postValue(true)
             Zuldru.getNumberOfOperatorsForZoneId(viewModel.zoneId.value!!, onSuccess = { list ->
-                counters = list
-                val list = HomeServicesCategoriesWithImages.map { pair -> Pair(pair.first, getDrawable(pair.second)) }
-                firstCategoryRecyclerView.adapter = HomeServiceCategories(list, activity as FragmentActivity, counters)
+                if (list.size > 0){
+                    counters = list
+                    val l = HomeServicesCategoriesWithImages.map { pair -> Pair(pair.first, getDrawable(pair.second)) }
+                    firstCategoryRecyclerView.adapter = HomeServiceCategories(l, activity as FragmentActivity, counters)
+                    viewModel.isLoading.postValue(false)
+                } else {
+                    noOperatorsFound.show()
+                    firstCategoryRecyclerView.hide()
+                }
             })
-
         }
     }
 
-    class HomeServiceCategories(val items : List<Pair<String,Drawable>>, val activity : Activity,val countList : HashMap<String,Int>) : RecyclerView.Adapter<HomeServiceCategories.ViewHolder>(){
+    class HomeServiceCategories(val items : List<Pair<String,Drawable>>, val activity : Activity, private val countList : HashMap<String,Int>) : RecyclerView.Adapter<HomeServiceCategories.ViewHolder>(){
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            return ViewHolder(LayoutInflater.from(activity).inflate(R.layout.category_icon, parent, false), activity, countList)
+            return ViewHolder(LayoutInflater.from(activity).inflate(R.layout.category_choice_card, parent, false), activity, countList)
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -69,7 +71,8 @@ class CategoryChoiceFragment : Fragment() {
         override fun getItemCount() = items.size
 
 
-        class ViewHolder(itemView : View,val activity: Activity,val countList : HashMap<String,Int>) : RecyclerView.ViewHolder(itemView){
+        class ViewHolder(itemView : View, val activity: Activity, private val countList : HashMap<String,Int>) : RecyclerView.ViewHolder(itemView){
+            @SuppressLint("SetTextI18n")
             fun bind(data : Pair<String,Drawable>, typeId : Int){
                 itemView.apply {
                     categoryIcon.setImageDrawable(data.second)
@@ -81,6 +84,10 @@ class CategoryChoiceFragment : Fragment() {
                             2 -> count.text = "${countList["nurse"].toString()} professionisti"
                             3 -> count.text = "${countList["eldercare"].toString()} professionisti"
                         }
+                    }
+
+                    when(typeId){
+                        1 -> categoryName.textSize = 14.0f
                     }
                 }
                 itemView.setOnClickListener {

@@ -42,6 +42,11 @@ fun AppCompatActivity.getFragmentF2() : Fragment?{
     return supportFragmentManager.fragments.find { it is F2}
 }
 
+inline fun <reified T> AppCompatActivity.isShowing() : Boolean {
+    val l = supportFragmentManager.fragments.filter { it is T }
+    val f = if (l.isNotEmpty()) l[0] else null
+    return (f != null && f.isVisible)
+}
 
 inline fun <reified T> AppCompatActivity.removeFragmentsOfType(){
     val list = supportFragmentManager.fragments.filter { it is T }
@@ -59,6 +64,7 @@ inline fun <reified T> AppCompatActivity.findFragmentOfType() : Fragment? {
 fun AppCompatActivity.removeAllFragments(){
     for (fragment in supportFragmentManager.fragments) {
         removeFragment(fragment)
+        supportFragmentManager.popBackStack()
     }
 }
 
@@ -77,7 +83,15 @@ fun AppCompatActivity.replaceFragWithAnimation(container : View,frag : Fragment)
                 .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                 .replace(container.id, frag)
                 .commit()
+}
 
+fun AppCompatActivity.switchFragmentWithAnimation(container: View, frag : Fragment){
+    supportFragmentManager
+            .beginTransaction()
+            .addToBackStack(null)
+            .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+            .replace(container.id, frag)
+            .commit()
 }
 
 // rimuove il fragment X

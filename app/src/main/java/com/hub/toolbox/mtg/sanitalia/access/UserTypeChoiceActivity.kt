@@ -24,18 +24,21 @@ class UserTypeChoiceActivity : AppCompatActivity() {
             val intent = Intent(this, RegistrationActivity::class.java)
             intent.putExtra(registrationType, UserType.OPERATOR as Parcelable)
             startActivity(intent)
+            finish()
         }
 
         userChoiceButton.setOnClickListener {
             val intent = Intent(this, RegistrationActivity::class.java)
             intent.putExtra(registrationType, UserType.USER as Parcelable)
             startActivity(intent)
+            finish()
         }
 
         skipChoiceButton.setOnClickListener {
             val intent = Intent(this, HomeActivity::class.java)
             intent.putExtra(registrationType, UserType.ANONYMOUS as Parcelable)
             startActivity(intent)
+            finish()
         }
     }
 }

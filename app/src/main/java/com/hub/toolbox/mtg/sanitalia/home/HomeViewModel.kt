@@ -21,8 +21,6 @@ class HomeViewModel : ViewModel(){
     val zoneId = MutableLiveData<String>()
     init {
         isLoading.postValue(false)
-        zoneId.postValue("")
-        shouldShowOnBoardingForLocation.postValue(false)
         Zuldru.getUserType { type -> userType.postValue(type) }
     }
 

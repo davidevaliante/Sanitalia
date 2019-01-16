@@ -17,6 +17,7 @@ import com.hub.toolbox.mtg.sanitalia.helpers.PositionHelper
 import kotlinx.android.synthetic.main.activity_home.*
 import androidx.lifecycle.Observer
 import aqua.extensions.*
+import com.github.florent37.kotlin.pleaseanimate.please
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.snackbar.Snackbar
 import com.hub.toolbox.mtg.sanitalia.data.Zuldru
@@ -24,7 +25,6 @@ import com.hub.toolbox.mtg.sanitalia.extensions.logger
 import com.ramotion.paperonboarding.PaperOnboardingFragment
 import com.ramotion.paperonboarding.PaperOnboardingPage
 import getViewModelOf
-import kotlinx.android.synthetic.main.top_bar.*
 import java.util.*
 
 class HomeActivity : AppCompatActivity() {
@@ -37,26 +37,25 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         makeActivityFullScreen()
-        /* controllo principale, se si hanno i permessi si aggiunge il fragment (notificando il viewModel)
-           della home e si ascolta dal viewModel, altrimenti si istanzia il fragment dei permessi  */
-        if(hasLocationPermissions()) viewModel.hasLocationPermission.postValue(true)
-        else viewModel.hasLocationPermission.postValue(false)
+        setupBottomBar()
+        prepareViewsForEnterAnimation()
+
+        if (hasLocationPermissions())
+            viewModel.hasLocationPermission.postValue(true)
+        else
+            viewModel.hasLocationPermission.postValue(false)
 
         // ----------------------------VIEWMODEL-----------------------------------------------
-        // mostra e nasconde l'icona animata di loading
         viewModel.isLoading.observe(this, Observer { isLoading ->
             if (isLoading) homePageLoader.show()
             else homePageLoader.hide()
         })
 
-        viewModel.userType.observe(this, Observer { userType ->
-            logger(userType.name)
-        })
-
         // decide quale fragment mostrare a seconda dei permessi
         viewModel.hasLocationPermission.observe(this, Observer { hasPermission ->
+            logger("has permission -> $hasPermission")
             if (hasPermission) initializeHomeUi()
-            else replaceFragWithAnimation(homeContainer, AskLocationPermissionFragment())
+            else switchFragmentWithAnimation(homeContainer, AskLocationPermissionFragment())
         })
 
         // instanzia il fragment di onboarding se necessario
@@ -68,17 +67,79 @@ class HomeActivity : AppCompatActivity() {
                 onboardingFragment.setListeners()
             }
             else
-                replaceFragWithAnimation(homeContainer, AskLocationPermissionFragment())
+                switchFragmentWithAnimation(homeContainer, AskLocationPermissionFragment())
         })
 
-
+        viewModel.userType.observe(this, Observer { userType ->
+            logger(userType.name)
+        })
 
         viewModel.zoneId.observe(this, Observer { id ->
             logger("zoneid -> $id")
         })
+        fab.setOnClickListener {
 
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        enterAnimation()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        // request code dell'attivazione del GPS
+        if(requestCode==PositionHelper.GPS_ACTIVATION_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+            // delega l'utilizzo al fragment HomeContent vedere il suo onActivityResult
+            findFragmentOfType<HomeContentFragment>()?.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.bottom_bar_menu, menu)
+        return true
+    }
+    override fun onBackPressed() {
+        if (this.isShowing<HomeContentFragment>()){
+            finish()
+        } else {
+            super.onBackPressed()
+        }
+    }
+    // ------------------------------ PERMISSIONS ------------------------------------------------
+    private fun hasLocationPermissions():Boolean{
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+    }
+
+    fun sendUserToAppSettingPage(){
+        viewModel.appSettingOpen = true
+        val intent = Intent()
+        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+        val uri = Uri.fromParts("package", packageName, null)
+        intent.data = uri
+        startActivity(intent)
+    }
+
+    // ----------------------------------- UI ----------------------------------------------------
+    private fun initializeHomeUi(){
+        removeAllFragments()
+        switchFragmentWithAnimation(homeContainer, HomeContentFragment())
+//        bottom_bar.show()
+//        fab.show()
+    }
+
+    fun instantiateListFrag(){
+        replaceFragWithAnimation(homeContainer, ListFragment())
+    }
+    fun changeBottomBarForListFragment(){
+        bottom_bar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
+        fab.background = getDrawable(R.drawable.ic_left_arrow)
+    }
+    private fun setupBottomBar(){
         setSupportActionBar(bottom_bar as BottomAppBar)
-        // ----------------------------------UI--------------------------------------------------
         bottom_bar.setOnMenuItemClickListener { itemSelected ->
             when(itemSelected.itemId){
                 R.id.bottomAppBarSettings -> snack("Settings menu clicked")
@@ -92,26 +153,30 @@ class HomeActivity : AppCompatActivity() {
             val bottomNavDrawerFragment = BottomNavigationDrawerFragment()
             bottomNavDrawerFragment.show(supportFragmentManager, bottomNavDrawerFragment.tag)
         }
-
-
-        // Fakes(this).buildFakes(operatorType = "Fisioterapista")
     }
 
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        // request code dell'attivazione del GPS
-        if(requestCode==PositionHelper.GPS_ACTIVATION_REQUEST_CODE && resultCode == Activity.RESULT_OK){
-            // delega l'utilizzo al fragment HomeContent vedere il suo onActivityResult
-            findFragmentOfType<HomeContentFragment>()?.onActivityResult(requestCode, resultCode, data)
+    // ---------------------------------- ANIMATIONS ---------------------------------------------
+    private fun prepareViewsForEnterAnimation(){
+        please {
+            animate(bottom_bar).toBe {
+                outOfScreen(Gravity.BOTTOM)
+            }
+        }.now()
+    }
+    private fun enterAnimation(){
+        Do after 300 milliseconds {
+            bottom_bar.show()
+            please(duration = 1300) {
+                animate(bottom_bar).toBe {
+                    originalPosition()
+                }
+            }.start()
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.bottom_bar_menu, menu)
-        return true
+    // ---------------------------------- UTILS --------------------------------------------------
+    private fun snack(message : String, duration: Int = Snackbar.LENGTH_SHORT){
+        Snackbar.make(homeRoot, message, duration).apply {view.layoutParams = (view.layoutParams as CoordinatorLayout.LayoutParams).apply {setMargins(32, topMargin, 32, (bottom_bar.height+fab.height/2)+8)}}.show()
     }
 
     // ------------------------------ ONBOARDING -------------------------------------------------
@@ -130,7 +195,7 @@ class HomeActivity : AppCompatActivity() {
     }
     private fun PaperOnboardingFragment.setListeners(){
         // cambia il colore della statusbar per rendere fullscreen
-        this.setOnChangeListener { previousIndex, currentIndex ->
+        this.setOnChangeListener { _, currentIndex ->
             when(currentIndex){
                 0 -> this@HomeActivity.setStatusBarColor(findColor(R.color.colorPrimary))
                 1 -> this@HomeActivity.setStatusBarColor(findColor(R.color.colorPrimaryDark))
@@ -142,43 +207,6 @@ class HomeActivity : AppCompatActivity() {
             // raggiunta ultima pagina dell'onBoarding, tornare indietro
             viewModel.shouldShowOnBoardingForLocation.postValue(false)
         }
-    }
-
-    // ------------------------------ PERMISSIONS ------------------------------------------------
-    private fun hasLocationPermissions():Boolean{
-        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-        && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-    }
-    fun sendUserToAppSettingPage(){
-        viewModel.appSettingOpen = true
-        val intent = Intent()
-        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-        val uri = Uri.fromParts("package", packageName, null)
-        intent.data = uri
-        startActivity(intent)
-    }
-
-    // ----------------------------------- UI ----------------------------------------------------
-    private fun initializeHomeUi(){
-        removeAllFragments()
-        replaceFragWithAnimation(homeContainer, HomeContentFragment())
-        bottom_bar.show()
-
-    }
-    fun setTopBarPosition(s : String){
-        topBarLocation.text = s
-    }
-    fun instantiateListFrag(){
-        replaceFragWithAnimation(homeContainer, ListFragment())
-    }
-
-    fun changeBottomBarForListFragment(){
-        bottom_bar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
-        fab.background = getDrawable(R.drawable.ic_left_arrow)
-    }
-
-    private fun snack(message : String, duration: Int = Snackbar.LENGTH_SHORT){
-        Snackbar.make(homeRoot, message, duration).apply {view.layoutParams = (view.layoutParams as CoordinatorLayout.LayoutParams).apply {setMargins(32, topMargin, 32, (bottom_bar.height+fab.height/2)+8)}}.show()
     }
 
 }

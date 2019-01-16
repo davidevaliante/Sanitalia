@@ -52,7 +52,6 @@ class HomeContentFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
         positionHelper.checkGpsStatusAnd(
             onGpsAlreadyActive = {
                 positionHelper.startTrackingPosition { newPosition ->
@@ -103,6 +102,7 @@ class HomeContentFragment : Fragment() {
         }
     }
 
+    // -------------------------------------ANIMATIONS-----------------------------------------------
     private fun prepareViewsForEnterAnimation(root : ViewGroup){
         root.let {
             please {
@@ -130,7 +130,6 @@ class HomeContentFragment : Fragment() {
             }.now()
         }
     }
-
     private fun startEnterAnimation(){
         Do after 100 milliseconds {
             please(interpolator = FastOutSlowInInterpolator()) {
