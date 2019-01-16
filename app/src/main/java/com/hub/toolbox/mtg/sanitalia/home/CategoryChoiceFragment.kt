@@ -12,10 +12,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import aqua.extensions.ItemOffsetDecoration
-import aqua.extensions.getDrawable
-import aqua.extensions.hide
-import aqua.extensions.show
+import aqua.extensions.*
 import com.hub.toolbox.mtg.sanitalia.R
 import com.hub.toolbox.mtg.sanitalia.constants.Group
 import com.hub.toolbox.mtg.sanitalia.constants.HomeServicesCategoriesWithImages
@@ -30,6 +27,13 @@ class CategoryChoiceFragment : Fragment() {
     val viewModel by lazy { getViewModelOf<HomeViewModel>(activity!!) }
     private lateinit var counters : HashMap<String,Int>
     lateinit var group : Group
+
+    companion object {
+        @JvmStatic
+        fun newInstance(group: Group) = CategoryChoiceFragment().apply {
+            this.group = group
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -70,7 +74,6 @@ class CategoryChoiceFragment : Fragment() {
 
         override fun getItemCount() = items.size
 
-
         class ViewHolder(itemView : View, val activity: Activity, private val countList : HashMap<String,Int>) : RecyclerView.ViewHolder(itemView){
             @SuppressLint("SetTextI18n")
             fun bind(data : Pair<String,Drawable>, typeId : Int){
@@ -91,17 +94,14 @@ class CategoryChoiceFragment : Fragment() {
                     }
                 }
                 itemView.setOnClickListener {
-                    (activity as HomeActivity).instantiateListFrag()
+                    when(typeId){
+                        0 -> (activity as HomeActivity).listFragForPhysio()
+                        1 -> (activity as HomeActivity).listFragForOss()
+                        2 -> (activity as HomeActivity).listFragForNurse()
+                        3 -> (activity as HomeActivity).listFragForElderCare()
+                    }
                 }
             }
-        }
-    }
-
-
-    companion object {
-        @JvmStatic
-        fun newInstance(group: Group) = CategoryChoiceFragment().apply {
-            this.group = group
         }
     }
 }

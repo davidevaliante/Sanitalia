@@ -19,21 +19,114 @@ class HomeViewModel : ViewModel(){
     val userLon = MutableLiveData<Double>()
     val showing = MutableLiveData<Page>()
     val zoneId = MutableLiveData<String>()
+    val operatorMap = MutableLiveData<LinkedHashMap<String, Operator>>()
+    val filteredMap = MutableLiveData<LinkedHashMap<String, Operator>>()
+    val categoryFilters = MutableLiveData<List<Int>>()
+    val message = MutableLiveData<String>()
+
     init {
         isLoading.postValue(false)
         Zuldru.getUserType { type -> userType.postValue(type) }
+        categoryFilters.postValue(emptyList())
     }
 
     fun showLoading() = isLoading.postValue(true)
     fun hideLoading() = isLoading.postValue(false)
 
-
-    fun getListOfFisioterapisti(callback : (List<Operator>) -> Unit){
-        isLoading.postValue(true)
-        Zuldru.getListOfPhysiotherapists{ operatorList ->
-            isLoading.postValue(false)
-            callback(operatorList)
+    fun addFilter(index : Int){
+        val k = categoryFilters.value?.toMutableList()
+        k?.let {
+            k.add(index)
+            categoryFilters.postValue(k)
         }
     }
 
+    fun removeFilter(index : Int){
+        val k = categoryFilters.value?.toMutableList()
+        k?.let {
+            k.remove(index)
+            categoryFilters.postValue(k)
+        }
+    }
+
+    fun removeAllFilters() = categoryFilters.postValue(emptyList())
+
+    fun applyFilters(){
+        val operator_map = operatorMap.value
+        val filters = categoryFilters.value
+
+        if(filters != null && filters.isNotEmpty() && operator_map != null){
+            val filteredList = operator_map.filter { it.value.spec?.intersect(filters)?.size !=0 }
+            filteredMap.postValue(filteredList as LinkedHashMap<String, Operator>?)
+        }
+
+        if(filters != null && filters.isEmpty()) filteredMap.postValue(operator_map)
+    }
+
+
+    fun getListOfFisioterapisti(onListFound : (LinkedHashMap<String, Operator>) -> Unit = {}, onListEmptyOrNull : () -> Unit = {}){
+        isLoading.postValue(true)
+        Zuldru.getListOfPhysiotherapists(
+            onListFound = {  operatorList ->
+                isLoading.postValue(false)
+                operatorMap.postValue(operatorList)
+                onListFound(operatorList)
+            },
+            onListEmptyOrNull = {
+                onListEmptyOrNull()
+            }
+        )
+    }
+    fun getListOfOss(onListFound : (LinkedHashMap<String, Operator>) -> Unit = {}, onListEmptyOrNull : () -> Unit = {}){
+        isLoading.postValue(true)
+        Zuldru.getListOfOss(
+                onListFound = {  operatorList ->
+                    isLoading.postValue(false)
+                    operatorMap.postValue(operatorList)
+                    onListFound(operatorList)
+                },
+                onListEmptyOrNull = {
+                    onListEmptyOrNull()
+                }
+        )
+    }
+    fun getListOfNurse(onListFound : (LinkedHashMap<String, Operator>) -> Unit = {}, onListEmptyOrNull : () -> Unit = {}){
+        isLoading.postValue(true)
+        Zuldru.getListOfNurse(
+                onListFound = {  operatorList ->
+                    isLoading.postValue(false)
+                    operatorMap.postValue(operatorList)
+                    onListFound(operatorList)
+                },
+                onListEmptyOrNull = {
+                    onListEmptyOrNull()
+                }
+        )
+    }
+    fun getListOfElderCare(onListFound : (LinkedHashMap<String, Operator>) -> Unit = {}, onListEmptyOrNull : () -> Unit = {}){
+        isLoading.postValue(true)
+        Zuldru.getListOfElderCare(
+                onListFound = {  operatorList ->
+                    isLoading.postValue(false)
+                    operatorMap.postValue(operatorList)
+                    onListFound(operatorList)
+                },
+                onListEmptyOrNull = {
+                    onListEmptyOrNull()
+                }
+        )
+    }
+    fun getListOfDoctors(onListFound : (LinkedHashMap<String, Operator>) -> Unit = {}, onListEmptyOrNull : () -> Unit = {}){
+        isLoading.postValue(true)
+        Zuldru.getListOfDoctors(
+                onListFound = {  operatorList ->
+                    isLoading.postValue(false)
+                    operatorMap.postValue(operatorList)
+                    onListFound(operatorList)
+                },
+                onListEmptyOrNull = {
+                    onListEmptyOrNull()
+                }
+        )
+    }
 }

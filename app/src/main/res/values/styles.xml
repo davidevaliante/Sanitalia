@@ -33,6 +33,20 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="hollowRoundButtonNoMargins">
+        <item name="android:background">@drawable/shape_rounded_phone</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">@font/ubuntu_bold</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="fullRoundButtonDarkNoMargins">
+        <item name="android:background">@drawable/shape_rounded_facebook</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">@font/ubuntu_bold</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
     <!--animazione per i dialog fragment-->
     <style
         name="dialog_animation_fade" >

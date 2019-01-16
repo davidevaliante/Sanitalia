@@ -47,6 +47,10 @@ class HomeContentFragment : Fragment() {
             (activity as HomeActivity).replaceFragWithAnimation(activity?.homeContainer as View, choiceFrag)
         }
 
+        doctorFilterButton.setOnClickListener {
+            (activity as HomeActivity).listFragForDoctors()
+        }
+
 
     }
 

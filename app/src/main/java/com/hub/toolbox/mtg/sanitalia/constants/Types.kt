@@ -5,10 +5,28 @@ import com.hub.toolbox.mtg.sanitalia.R
 import com.hub.toolbox.mtg.sanitalia.constants.homeservices.HomeServices
 import kotlinx.android.parcel.Parcelize
 
-enum class Group {
+@Parcelize
+enum class Group : Parcelable {
     HOME_SERVICES,
     DOCTOR,
-    STRUCTURE
+    STRUCTURE,
+    ALL
+}
+
+@Parcelize
+enum class Categories : Parcelable {
+    PHYSIO,
+    NURSE,
+    OSS,
+    ELDER_CARE,
+    NONE
+}
+
+@Parcelize
+enum class FilterCategory : Parcelable {
+    PHYSIO,
+    NURSE,
+    DOCTOR
 }
 
 @Parcelize

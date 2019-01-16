@@ -20,6 +20,9 @@ import aqua.extensions.*
 import com.github.florent37.kotlin.pleaseanimate.please
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.snackbar.Snackbar
+import com.hub.toolbox.mtg.sanitalia.constants.Categories
+import com.hub.toolbox.mtg.sanitalia.constants.FilterCategory
+import com.hub.toolbox.mtg.sanitalia.constants.Group
 import com.hub.toolbox.mtg.sanitalia.data.Zuldru
 import com.hub.toolbox.mtg.sanitalia.extensions.logger
 import com.ramotion.paperonboarding.PaperOnboardingFragment
@@ -77,9 +80,7 @@ class HomeActivity : AppCompatActivity() {
         viewModel.zoneId.observe(this, Observer { id ->
             logger("zoneid -> $id")
         })
-        fab.setOnClickListener {
-
-        }
+        setDefaultFabOnCLickListener()
     }
 
     override fun onResume() {
@@ -131,13 +132,48 @@ class HomeActivity : AppCompatActivity() {
 //        fab.show()
     }
 
-    fun instantiateListFrag(){
-        replaceFragWithAnimation(homeContainer, ListFragment())
+    fun listFragForPhysio(){
+        replaceFragWithAnimation(homeContainer, ListFragment.newInstance(Group.HOME_SERVICES, Categories.PHYSIO))
     }
+
+    fun listFragForOss(){
+        replaceFragWithAnimation(homeContainer, ListFragment.newInstance(Group.HOME_SERVICES, Categories.OSS))
+    }
+
+    fun listFragForNurse(){
+        replaceFragWithAnimation(homeContainer, ListFragment.newInstance(Group.HOME_SERVICES, Categories.NURSE))
+    }
+
+    fun listFragForElderCare(){
+        replaceFragWithAnimation(homeContainer, ListFragment.newInstance(Group.HOME_SERVICES, Categories.ELDER_CARE))
+    }
+
+    fun listFragForDoctors() {
+        replaceFragWithAnimation(homeContainer, ListFragment.newInstance(Group.DOCTOR, Categories.NONE))
+    }
+
     fun changeBottomBarForListFragment(){
         bottom_bar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
-        fab.background = getDrawable(R.drawable.ic_left_arrow)
+        fab.setImageDrawable(getDrawable(R.drawable.ic_back_arrow_styled))
+        fab.setOnClickListener {
+            val filterFragment = FilterFragment.newInstance(FilterCategory.PHYSIO)
+            filterFragment.show(supportFragmentManager, "FILTER_FRAG")
+        }
     }
+
+    fun restoreBottomBarToOriginal(){
+        bottom_bar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
+        bottom_bar.show()
+        fab.setImageDrawable(getDrawable(R.drawable.ic_search_white))
+        setDefaultFabOnCLickListener()
+    }
+
+    private fun setDefaultFabOnCLickListener(){
+        fab.setOnClickListener {
+            snack("should search")
+        }
+    }
+
     private fun setupBottomBar(){
         setSupportActionBar(bottom_bar as BottomAppBar)
         bottom_bar.setOnMenuItemClickListener { itemSelected ->

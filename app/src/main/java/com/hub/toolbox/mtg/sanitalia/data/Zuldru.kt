@@ -96,23 +96,90 @@ object Zuldru {
         }
     }
     fun getOperatorProfileFromLocal() : Operator? = operatorBox.get(1)
-    fun getListOfPhysiotherapists(callback  : (List<Operator>) -> Unit = {}) {
+    fun getListOfPhysiotherapists(onListFound  : (LinkedHashMap<String,Operator>) -> Unit = {}, onListEmptyOrNull : () -> Unit = {}) {
         fireStore.collection("Countries").document("IT").collection("Zones").document("IS")
         .collection("Operators").whereEqualTo("category",0).whereEqualTo("group", 0).get().addOnCompleteListener {
             if(it.isSuccessful){
                 val data = it.result
-                val list = data?.toObjects<Operator>(Operator::class.java)
-                list?.forEach {
-                    log(it.toString())
+                val list = LinkedHashMap<String, Operator>()
+                data?.documents?.forEach { doc ->
+                    val operator = doc.toObject(Operator::class.java)
+                    list[doc.id] = operator!!
                 }
-                list?.let {
-                    callback(list)
-                }
+                if (list.size > 0) onListFound(list)
+                else onListEmptyOrNull()
             }else{
-                log("FAIL")
                 log(it.exception.toString())
             }
         }
+    }
+    fun getListOfOss(onListFound  : (LinkedHashMap<String, Operator>) -> Unit = {}, onListEmptyOrNull : () -> Unit = {}) {
+        fireStore.collection("Countries").document("IT").collection("Zones").document("IS")
+                .collection("Operators").whereEqualTo("category",1).whereEqualTo("group", 0).get().addOnCompleteListener {
+                    if(it.isSuccessful){
+                        val data = it.result
+                        val list = LinkedHashMap<String, Operator>()
+                        data?.documents?.forEach { doc ->
+                            val operator = doc.toObject(Operator::class.java)
+                            list[doc.id] = operator!!
+                        }
+                        if (list.size > 0) onListFound(list)
+                        else onListEmptyOrNull()
+                    }else{
+                        log(it.exception.toString())
+                    }
+                }
+    }
+    fun getListOfNurse(onListFound  : (LinkedHashMap<String, Operator>) -> Unit = {}, onListEmptyOrNull : () -> Unit = {}) {
+        fireStore.collection("Countries").document("IT").collection("Zones").document("IS")
+                .collection("Operators").whereEqualTo("category",2).whereEqualTo("group", 0).get().addOnCompleteListener {
+                    if(it.isSuccessful){
+                        val data = it.result
+                        val list = LinkedHashMap<String, Operator>()
+                        data?.documents?.forEach { doc ->
+                            val operator = doc.toObject(Operator::class.java)
+                            list[doc.id] = operator!!
+                        }
+                        if (list.size > 0) onListFound(list)
+                        else onListEmptyOrNull()
+                    }else{
+                        log(it.exception.toString())
+                    }
+                }
+    }
+    fun getListOfElderCare(onListFound  : (LinkedHashMap<String, Operator>) -> Unit = {}, onListEmptyOrNull : () -> Unit = {}) {
+        fireStore.collection("Countries").document("IT").collection("Zones").document("IS")
+                .collection("Operators").whereEqualTo("category",3).whereEqualTo("group", 0).get().addOnCompleteListener {
+                    if(it.isSuccessful){
+                        val data = it.result
+                        val list = LinkedHashMap<String, Operator>()
+                        data?.documents?.forEach { doc ->
+                            val operator = doc.toObject(Operator::class.java)
+                            list[doc.id] = operator!!
+                        }
+                        if (list.size > 0) onListFound(list)
+                        else onListEmptyOrNull()
+                    }else{
+                        log(it.exception.toString())
+                    }
+                }
+    }
+    fun getListOfDoctors(onListFound  : (LinkedHashMap<String, Operator>) -> Unit = {}, onListEmptyOrNull : () -> Unit = {}) {
+        fireStore.collection("Countries").document("IT").collection("Zones").document("IS")
+                .collection("Operators").whereEqualTo("category",null).whereEqualTo("group", 1).get().addOnCompleteListener {
+                    if(it.isSuccessful){
+                        val data = it.result
+                        val list = LinkedHashMap<String, Operator>()
+                        data?.documents?.forEach { doc ->
+                            val operator = doc.toObject(Operator::class.java)
+                            list[doc.id] = operator!!
+                        }
+                        if (list.size > 0) onListFound(list)
+                        else onListEmptyOrNull()
+                    }else{
+                        log(it.exception.toString())
+                    }
+                }
     }
     fun getNumberOfOperatorsForZoneId(zoneId : String, onSuccess: (HashMap<String,Int>) -> Unit = {}){
         fireStore.collection("Counters").document("IT").collection(zoneId).get().addOnSuccessListener {
