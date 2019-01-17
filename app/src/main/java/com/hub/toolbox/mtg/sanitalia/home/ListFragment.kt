@@ -14,14 +14,15 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import aqua.extensions.getDrawable
+import aqua.extensions.hide
 import aqua.extensions.show
 import com.hub.toolbox.mtg.sanitalia.R
-import com.hub.toolbox.mtg.sanitalia.R.id.*
 import com.hub.toolbox.mtg.sanitalia.constants.*
 import com.hub.toolbox.mtg.sanitalia.data.Operator
 import com.squareup.picasso.Picasso
 import getViewModelOf
-import kotlinx.android.synthetic.main.fragment_category_list.*
+import kotlinx.android.synthetic.main.fragement_list.*
 import kotlinx.android.synthetic.main.list_card.view.*
 import org.jetbrains.anko.toast
 
@@ -62,7 +63,7 @@ class ListFragment : Fragment() {
             if (group == Group.DOCTOR) changeBottomBarForDoctorListFragment()
         }
 
-        return inflater.inflate(R.layout.fragment_category_list, container, false)
+        return inflater.inflate(R.layout.fragement_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,17 +72,60 @@ class ListFragment : Fragment() {
 
         categoryListRecyclerView.adapter = OperatorListAdapter(linkedMapOf(), activity!!, viewModel)
 
+        val currentZoneId = viewModel.zoneId.value
+        listTopBarPosition.text = Provinces[currentZoneId]?.first
+        if (group == Group.HOME_SERVICES){
+            when(category){
+                Categories.PHYSIO -> {
+                    listTopBarCategoryIcon.background = getDrawable(R.drawable.ic_physiotherapy)
+                    listTopBarType.text = "Fisioterapisti"
+                }
+
+                Categories.NURSE -> {
+                    listTopBarCategoryIcon.background = getDrawable(R.drawable.ic_nurse)
+                    listTopBarType.text = "Infermieri"
+                }
+                Categories.OSS -> {
+                    listTopBarCategoryIcon.background = getDrawable(R.drawable.ic_hands)
+                    listTopBarType.text = "O.s.s."
+                }
+                Categories.ELDER_CARE -> {
+                    listTopBarCategoryIcon.background = getDrawable(R.drawable.ic_elder_care)
+                    listTopBarType.text = "Assistenza anziani"
+                }
+                Categories.NONE -> {
+                    listTopBarCategoryIcon.background = getDrawable(R.drawable.ic_physiotherapy)
+                    listTopBarType.text = "Fisioterapisti"
+                }
+            }
+        }
+
+        if (group == Group.DOCTOR) {
+            listTopBarCategoryIcon.background = getDrawable(R.drawable.doctor_colored)
+            listTopBarType.text = "Medici"
+        }
         viewModel.operatorMap.observe(this, Observer { newOperatorMap ->
             (categoryListRecyclerView.adapter as OperatorListAdapter).updateList(newOperatorMap)
+            if (newOperatorMap.isEmpty()) operationHasNoResult.show()
+            else operationHasNoResult.hide()
         })
 
         viewModel.categoryFilters.observe(this, Observer { newFilterList ->
+            l("current filters -> $newFilterList")
             viewModel.applyFilters()
+            (categoryListRecyclerView.adapter as OperatorListAdapter).collapseAllCells()
+
         })
 
         viewModel.filteredMap.observe(this, Observer { newFilteredMap ->
-            newFilteredMap?.let {
+            newFilteredMap?.let { map ->
+                val filters = viewModel.categoryFilters.value
+                filters?.let {
+                    map.forEach { operator -> l("${operator.key} M -> ${operator.value.spec?.intersect(filters).toString()}, NM -> ${operator.value.spec?.subtract(filters).toString()}") }
+                }
                 (categoryListRecyclerView.adapter as OperatorListAdapter).updateList(newFilteredMap)
+                if (newFilteredMap.isEmpty()) operationHasNoResult.show()
+                else operationHasNoResult.hide()
             }
         })
 
@@ -126,6 +170,7 @@ class ListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         (activity as HomeActivity).restoreBottomBarToOriginal()
+        viewModel.removeAllFilters()
     }
 
     class OperatorListAdapter(var map : LinkedHashMap<String, Operator>, val activity : FragmentActivity, val viewModel: HomeViewModel) : RecyclerView.Adapter<OperatorListAdapter.ViewHolder>(){
@@ -145,6 +190,10 @@ class ListFragment : Fragment() {
         fun updateList(newMap : LinkedHashMap<String, Operator>){
             this.map = newMap
             notifyDataSetChanged()
+        }
+
+        fun collapseAllCells(){
+            expandedCells.clear()
         }
 
         inner class ViewHolder(itemView : View,val activity: Activity, val viewModel: HomeViewModel) : RecyclerView.ViewHolder(itemView){
