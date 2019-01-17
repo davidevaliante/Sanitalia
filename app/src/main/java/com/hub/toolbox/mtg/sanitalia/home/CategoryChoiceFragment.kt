@@ -50,14 +50,16 @@ class CategoryChoiceFragment : Fragment() {
         if (group == Group.HOME_SERVICES){
             viewModel.isLoading.postValue(true)
             Zuldru.getNumberOfOperatorsForZoneId(viewModel.zoneId.value!!, onSuccess = { list ->
-                if (list.size > 0){
-                    counters = list
-                    val l = HomeServicesCategoriesWithImages.map { pair -> Pair(pair.first, getDrawable(pair.second)) }
-                    firstCategoryRecyclerView.adapter = HomeServiceCategories(l, activity as FragmentActivity, counters)
-                    viewModel.isLoading.postValue(false)
-                } else {
-                    noOperatorsFound.show()
-                    firstCategoryRecyclerView.hide()
+                if (isAdded){
+                    if (list.size > 0){
+                        counters = list
+                        val l = HomeServicesCategoriesWithImages.map { pair -> Pair(pair.first, getDrawable(pair.second)) }
+                        firstCategoryRecyclerView.adapter = HomeServiceCategories(l, activity as FragmentActivity, counters)
+                        viewModel.isLoading.postValue(false)
+                    } else {
+                        noOperatorsFound.show()
+                        firstCategoryRecyclerView.hide()
+                    }
                 }
             })
         }

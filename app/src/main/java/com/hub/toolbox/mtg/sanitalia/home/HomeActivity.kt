@@ -28,6 +28,7 @@ import com.hub.toolbox.mtg.sanitalia.extensions.logger
 import com.ramotion.paperonboarding.PaperOnboardingFragment
 import com.ramotion.paperonboarding.PaperOnboardingPage
 import getViewModelOf
+import kotlinx.android.synthetic.main.activity_home.view.*
 import java.util.*
 
 class HomeActivity : AppCompatActivity() {
@@ -41,7 +42,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         makeActivityFullScreen()
         setupBottomBar()
-        prepareViewsForEnterAnimation()
+        // prepareViewsForEnterAnimation()
 
         if (hasLocationPermissions())
             viewModel.hasLocationPermission.postValue(true)
@@ -85,7 +86,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        enterAnimation()
+        // enterAnimation()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -152,18 +153,41 @@ class HomeActivity : AppCompatActivity() {
         replaceFragWithAnimation(homeContainer, ListFragment.newInstance(Group.DOCTOR, Categories.NONE))
     }
 
-    fun changeBottomBarForListFragment(){
+    fun changeBottomBarForPhysioListFragment(){
+        bottom_bar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
+        fab.setImageDrawable(getDrawable(R.drawable.ic_filter_white))
+        fab.setOnClickListener {
+            FilterFragment.newInstance(FilterCategory.PHYSIO).show(supportFragmentManager, "FILTER_FRAG_PHYSIO")
+        }
+    }
+
+    fun changeBottomBarForNurseListFragment(){
+        bottom_bar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
+        fab.setImageDrawable(getDrawable(R.drawable.ic_filter_white))
+        fab.setOnClickListener {
+            FilterFragment.newInstance(FilterCategory.NURSE).show(supportFragmentManager, "FILTER_FRAG_NURSE")
+        }
+    }
+
+    fun changeBottomBarForDoctorListFragment(){
+        bottom_bar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
+        fab.setImageDrawable(getDrawable(R.drawable.ic_filter_white))
+        fab.setOnClickListener {
+            FilterFragment.newInstance(FilterCategory.DOCTOR).show(supportFragmentManager, "FILTER_FRAG_DOCTOR")
+        }
+    }
+
+    fun changeBottomBarForGroupOne(){
         bottom_bar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
         fab.setImageDrawable(getDrawable(R.drawable.ic_back_arrow_styled))
         fab.setOnClickListener {
-            val filterFragment = FilterFragment.newInstance(FilterCategory.PHYSIO)
-            filterFragment.show(supportFragmentManager, "FILTER_FRAG")
+           super.onBackPressed()
         }
     }
 
     fun restoreBottomBarToOriginal(){
         bottom_bar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
-        bottom_bar.show()
+        bottom_bar.hideOnScroll=true
         fab.setImageDrawable(getDrawable(R.drawable.ic_search_white))
         setDefaultFabOnCLickListener()
     }
@@ -192,23 +216,23 @@ class HomeActivity : AppCompatActivity() {
     }
 
     // ---------------------------------- ANIMATIONS ---------------------------------------------
-    private fun prepareViewsForEnterAnimation(){
-        please {
-            animate(bottom_bar).toBe {
-                outOfScreen(Gravity.BOTTOM)
-            }
-        }.now()
-    }
-    private fun enterAnimation(){
-        Do after 300 milliseconds {
-            bottom_bar.show()
-            please(duration = 1300) {
-                animate(bottom_bar).toBe {
-                    originalPosition()
-                }
-            }.start()
-        }
-    }
+//    private fun prepareViewsForEnterAnimation(){
+//        please {
+//            animate(bottom_bar).toBe {
+//                outOfScreen(Gravity.BOTTOM)
+//            }
+//        }.now()
+//    }
+//    private fun enterAnimation(){
+//        Do after 300 milliseconds {
+//            bottom_bar.show()
+//            please(duration = 1300) {
+//                animate(bottom_bar).toBe {
+//                    originalPosition()
+//                }
+//            }.start()
+//        }
+//    }
 
     // ---------------------------------- UTILS --------------------------------------------------
     private fun snack(message : String, duration: Int = Snackbar.LENGTH_SHORT){

@@ -16,9 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import aqua.extensions.show
 import com.hub.toolbox.mtg.sanitalia.R
-import com.hub.toolbox.mtg.sanitalia.constants.Categories
-import com.hub.toolbox.mtg.sanitalia.constants.Group
-import com.hub.toolbox.mtg.sanitalia.constants.PhysiotherapistSpecs
+import com.hub.toolbox.mtg.sanitalia.R.id.*
+import com.hub.toolbox.mtg.sanitalia.constants.*
 import com.hub.toolbox.mtg.sanitalia.data.Operator
 import com.squareup.picasso.Picasso
 import getViewModelOf
@@ -47,11 +46,22 @@ class ListFragment : Fragment() {
             }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        (activity as HomeActivity).changeBottomBarForListFragment()
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
         arguments?.getParcelable<Group>(GROUP_STRING)?.let { group = it }
         arguments?.getParcelable<Categories>(CATEGORY_STRING)?.let { category = it }
+
+        (activity as HomeActivity).apply {
+            if (group == Group.HOME_SERVICES){
+                when(category){
+                    Categories.PHYSIO -> changeBottomBarForPhysioListFragment()
+                    Categories.NURSE -> changeBottomBarForNurseListFragment()
+                    else -> changeBottomBarForGroupOne()
+                }
+            }
+            if (group == Group.DOCTOR) changeBottomBarForDoctorListFragment()
+        }
+
         return inflater.inflate(R.layout.fragment_category_list, container, false)
     }
 
@@ -63,21 +73,16 @@ class ListFragment : Fragment() {
 
         viewModel.operatorMap.observe(this, Observer { newOperatorMap ->
             (categoryListRecyclerView.adapter as OperatorListAdapter).updateList(newOperatorMap)
-            newOperatorMap.values.forEach { l(it.spec?.toString()!!) }
         })
 
         viewModel.categoryFilters.observe(this, Observer { newFilterList ->
             viewModel.applyFilters()
-            l(newFilterList.toString())
-            newFilterList.forEach { l(PhysiotherapistSpecs.keys.toList().get(it)+" with index $it") }
         })
 
         viewModel.filteredMap.observe(this, Observer { newFilteredMap ->
             newFilteredMap?.let {
                 (categoryListRecyclerView.adapter as OperatorListAdapter).updateList(newFilteredMap)
-                newFilteredMap.values.forEach { l(it.spec?.toString()!!) }
             }
-
         })
 
         if (group == Group.HOME_SERVICES){
@@ -90,19 +95,19 @@ class ListFragment : Fragment() {
                 }
                 Categories.ELDER_CARE -> {
                     viewModel.getListOfElderCare (
-                            onListFound = { categoryListRecyclerView.adapter = OperatorListAdapter(it, activity!!, viewModel) },
+                            onListFound = { viewModel.operatorMap.postValue(it) },
                             onListEmptyOrNull = { operationHasNoResult.show() }
                     )
                 }
                 Categories.NURSE -> {
                     viewModel.getListOfNurse (
-                            onListFound = { categoryListRecyclerView.adapter = OperatorListAdapter(it, activity!!, viewModel) },
+                            onListFound = { viewModel.operatorMap.postValue(it) },
                             onListEmptyOrNull = { operationHasNoResult.show() }
                     )
                 }
                 Categories.OSS -> {
                     viewModel.getListOfOss(
-                            onListFound = { categoryListRecyclerView.adapter = OperatorListAdapter(it, activity!!, viewModel) },
+                            onListFound = { viewModel.operatorMap.postValue(it) },
                             onListEmptyOrNull = { operationHasNoResult.show() }
                     )
                 }
@@ -112,7 +117,7 @@ class ListFragment : Fragment() {
 
         if (group == Group.DOCTOR){
             viewModel.getListOfDoctors(
-                    onListFound = { categoryListRecyclerView.adapter = OperatorListAdapter(it, activity!!, viewModel) },
+                    onListFound = { viewModel.operatorMap.postValue(it) },
                     onListEmptyOrNull = { operationHasNoResult.show() }
             )
         }
@@ -160,16 +165,37 @@ class ListFragment : Fragment() {
                     Picasso.get().load(operator.image).into(itemView.expandedCardProfileImage)
                     expandedName.text = "${operator.firstName} ${operator.lastName}"
                     expandedAdress.text = "${operator.adressName}, ${operator.city}"
-                    val specList: List<String> = if (operator.group == 0) when (operator.category) {
-                        0 -> PhysiotherapistSpecs.filter { operator.spec!!.contains(it.value) }.keys.toList()
-                        else -> emptyList()
-                    } else emptyList()
-                    var t = ""
-                    specList.forEachIndexed { index, s -> if (index != specList.size - 1) t += s + ", " else t += s }
-                    if (t.length > 100) t = t.substring(0, 100) + "..."
-                    expandedSpecsList.text = t
                     expandedAddToFav.setOnClickListener { activity.toast("should add to fav $operatorId") }
                     expandedViewProfile.setOnClickListener { activity.toast("should go to profile $operatorId") }
+
+                    // expanded -> specs
+                    // ritorna una map di tutte le specializzazioni indipendentemente dai filtri
+                    val specList: Map<String, Int> = when {
+                        operator.group == 0 -> when (operator.category) {
+                            0 -> PhysiotherapistSpecs.filter { operator.spec!!.contains(it.value) }
+                            2 -> NurseSpecs.filter { operator.spec!!.contains(it.value) }
+                            else -> mapOf("Non ha ancora specificato nessuna specializzazione" to -1)
+                        }
+                        operator.group == 1 -> DoctorsSpecs.filter { operator.spec!!.contains(it.value) }
+                        else -> mapOf("Non ha ancora specificato nessuna specializzazione" to -1)
+                    }
+
+                    viewModel.categoryFilters.value?.let { currentFilters ->
+                        // se i filtri non sono null o 0
+                        val orderedSpecList =
+                            if (currentFilters.isNotEmpty()){
+                                val matching : Set<Int> = specList.values.intersect(currentFilters)
+                                val notMatching : Set<Int> = specList.values.subtract(currentFilters)
+                                val listOfMatching = specList.filter { spec -> matching.contains(spec.value) }.keys
+                                val listOfNotMatching = specList.filter { spec -> notMatching.contains(spec.value) }.keys
+
+                                "${listOfMatching.joinToString()},${listOfNotMatching.joinToString()}"
+                            } else specList.keys.joinToString()
+
+                        expandedSpecsList.text = if (orderedSpecList.length > 100) orderedSpecList.substring(0, 100) + Typography.ellipsis
+                                                 else orderedSpecList
+                    }
+
 
                     // collapsed
                     Picasso.get().load(operator.image).into(itemView.cardProfileImage)

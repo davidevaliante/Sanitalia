@@ -90,6 +90,7 @@ class PositionHelper(private val caller : Activity){
         isTrackingPosition=false
     }
 
+
     fun getPositionFromLatLon(latitude : Double, longitude: Double) : Address? {
         val adress =  geocoder.getFromLocation(latitude, longitude, 1)
         return adress[0]
