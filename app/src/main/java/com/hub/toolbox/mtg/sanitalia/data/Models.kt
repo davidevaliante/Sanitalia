@@ -1,5 +1,6 @@
 package com.hub.toolbox.mtg.sanitalia.data
 
+import android.os.Parcelable
 import androidx.annotation.Keep
 import com.hub.toolbox.mtg.sanitalia.constants.DoctorsSpecs
 import com.hub.toolbox.mtg.sanitalia.constants.Group
@@ -7,10 +8,12 @@ import com.hub.toolbox.mtg.sanitalia.constants.NurseSpecs
 import com.hub.toolbox.mtg.sanitalia.constants.PhysiotherapistSpecs
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
+import kotlinx.android.parcel.Parcelize
 
 // localId = 1 è l'utente corrente
 @Keep
 @Entity
+@Parcelize
 data class Operator(
         @Id(assignable = true)
         var localId : Long?=null,
@@ -37,7 +40,7 @@ data class Operator(
         var spec : List<Int>?=null,
         // extra
         var description : String?=null
-)
+) : Parcelable
 
 @Keep
 data class Counter(val count: Int?=null)

@@ -243,16 +243,6 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/circles_stacked"
                     android:orientation="vertical">
-
-                    <!--<com.mikhaellopez.circularimageview.CircularImageView-->
-                    <!--android:id="@+id/cardProfileImage"-->
-                    <!--android:layout_width="76dp"-->
-                    <!--android:layout_height="76dp"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:scaleType="centerCrop"-->
-                    <!--app:civ_border_color="@color/colorPrimaryDark"-->
-                    <!--app:civ_border_width="3dp"-->
-                    <!--app:srcCompat="@drawable/user_icon_white" />-->
                     <ImageView
                         android:id="@+id/imageView3"
                         android:layout_width="76dp"

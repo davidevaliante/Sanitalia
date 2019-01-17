@@ -215,7 +215,7 @@ class ListFragment : Fragment() {
                     expandedName.text = "${operator.firstName} ${operator.lastName}"
                     expandedAdress.text = "${operator.adressName}, ${operator.city}"
                     expandedAddToFav.setOnClickListener { activity.toast("should add to fav $operatorId") }
-                    expandedViewProfile.setOnClickListener { activity.toast("should go to profile $operatorId") }
+                    expandedViewProfile.setOnClickListener { (activity as HomeActivity).showProfileOf(operator) }
 
                     // expanded -> specs
                     // ritorna una map di tutte le specializzazioni indipendentemente dai filtri

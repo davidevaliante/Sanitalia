@@ -20,9 +20,11 @@ import aqua.extensions.*
 import com.github.florent37.kotlin.pleaseanimate.please
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.snackbar.Snackbar
+import com.hub.toolbox.mtg.sanitalia.OperatorProfileDeatiledFragment
 import com.hub.toolbox.mtg.sanitalia.constants.Categories
 import com.hub.toolbox.mtg.sanitalia.constants.FilterCategory
 import com.hub.toolbox.mtg.sanitalia.constants.Group
+import com.hub.toolbox.mtg.sanitalia.data.Operator
 import com.hub.toolbox.mtg.sanitalia.data.Zuldru
 import com.hub.toolbox.mtg.sanitalia.extensions.logger
 import com.ramotion.paperonboarding.PaperOnboardingFragment
@@ -196,6 +198,10 @@ class HomeActivity : AppCompatActivity() {
         fab.setOnClickListener {
             snack("should search")
         }
+    }
+
+    fun showProfileOf(operator : Operator){
+        replaceFragWithAnimation(homeContainer, OperatorProfileDeatiledFragment.newInstance(operator))
     }
 
     private fun setupBottomBar(){
