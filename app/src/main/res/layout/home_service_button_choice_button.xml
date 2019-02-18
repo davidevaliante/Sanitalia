@@ -24,8 +24,8 @@
             android:padding="16dp"
             android:layout_marginEnd="8dp"
             android:layout_gravity="end"
-            android:layout_width="46dp"
-            android:layout_height="46dp" />
+            android:layout_width="36dp"
+            android:layout_height="36dp" />
     </RelativeLayout>
 
     <View

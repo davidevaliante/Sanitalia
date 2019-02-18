@@ -23,6 +23,7 @@ class OperatorProfileViewModel : ViewModel(){
     var physioPickedSpecs = MutableLiveData<MutableList<Pair<String, Int>>>()
     var doctorSpecs = MutableLiveData<MutableList<Pair<String, Int>>>()
     var nurseSpecs = MutableLiveData<MutableList<Pair<String, Int>>>()
+    var psycologistSpecs = MutableLiveData<MutableList<Pair<String, Int>>>()
 
 
     init {
@@ -30,6 +31,7 @@ class OperatorProfileViewModel : ViewModel(){
         physioPickedSpecs.postValue(mutableListOf())
         doctorSpecs.postValue(mutableListOf())
         nurseSpecs.postValue(mutableListOf())
+        psycologistSpecs.postValue(mutableListOf())
         val operatorFromLocal = (Zuldru.getOperatorProfileFromLocal())
         if (operatorFromLocal != null) {
             profileImage.postValue(operatorFromLocal.image)
@@ -140,6 +142,15 @@ class OperatorProfileViewModel : ViewModel(){
         temporaryOperatorProfile.postValue(operator)
     }
 
+    fun setPsycologistAsCategory(){
+        val operator = temporaryOperatorProfile.value
+        operator?.let {
+            operator.category = HomeServiceCategories["Psicologo"]
+            Zuldru.updateOperatorLocallyWithId(operator)
+        }
+        temporaryOperatorProfile.postValue(operator)
+    }
+
     // ------------------------PHYSIOTERAPIST SPECS------------------------------------
     fun addPhysioSpec(spec : Pair<String, Int>){
         val specListToUpdate = physioPickedSpecs.value
@@ -156,6 +167,7 @@ class OperatorProfileViewModel : ViewModel(){
     fun removeAllPickedPhysioSpecs() = physioPickedSpecs.postValue(mutableListOf())
     fun removeAllPickedDoctorsSpecs() = doctorSpecs.postValue(mutableListOf())
     fun removeAllPickedNurseSpecs() = nurseSpecs.postValue(mutableListOf())
+    fun removeAllPickedPsycologistSpecs() = psycologistSpecs.postValue(mutableListOf())
 
     // ------------------------NURSE SPECS---------------------------------------------
     fun addNurseSpec(spec : Pair<String, Int>){
@@ -168,6 +180,19 @@ class OperatorProfileViewModel : ViewModel(){
         val specListToUpdate = nurseSpecs.value
         specListToUpdate?.remove(spec)
         nurseSpecs.postValue(specListToUpdate)
+    }
+
+    // ---------------------PSYCOLOGIST SPECS------------------------------------------
+    fun addPsycologistSpec(spec : Pair<String, Int>){
+        val specListToUpdate = psycologistSpecs.value
+        specListToUpdate?.add(spec)
+        psycologistSpecs.postValue(specListToUpdate)
+    }
+
+    fun removePsycologistSpec(spec: Pair<String, Int>){
+        val specListToUpdate = psycologistSpecs.value
+        specListToUpdate?.remove(spec)
+        psycologistSpecs.postValue(specListToUpdate)
     }
 
     fun updateTemporaryProfile(operator: Operator) = temporaryOperatorProfile.postValue(operator)

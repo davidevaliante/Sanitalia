@@ -61,6 +61,9 @@ class ListFragment : Fragment() {
                 }
             }
             if (group == Group.DOCTOR) changeBottomBarForDoctorListFragment()
+            if (group == Group.STRUCTURE) {
+
+            }
         }
 
         return inflater.inflate(R.layout.fragement_list, container, false)

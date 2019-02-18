@@ -14,6 +14,7 @@ import com.hub.toolbox.mtg.sanitalia.extensions.showSnackBar
 import com.hub.toolbox.mtg.sanitalia.access.data.specializations.DoctorsSpecsFragment
 import com.hub.toolbox.mtg.sanitalia.access.data.specializations.NurseSpecsFragment
 import com.hub.toolbox.mtg.sanitalia.access.data.specializations.PhysiotherapySpecsFragment
+import com.hub.toolbox.mtg.sanitalia.access.data.specializations.PsycologistSpecsFragment
 import com.hub.toolbox.mtg.sanitalia.access.providers.RegistrationActivity
 import getViewModelOf
 import kotlinx.android.synthetic.main.activity_operator_profile.*
@@ -77,6 +78,10 @@ class OperatorProfileActivity : AppCompatActivity() {
                     step_view.go(2, true)
                     val profileDetailsFragment = OperatorProfileDetailsFragment()
                     replaceFragWithAnimation(operatorProfileContainer, profileDetailsFragment)
+                }
+                RegistrationDataStage.PICKING_PSYCOLOGIST_SPECS -> {
+                    val psycologistSpecsFragment = PsycologistSpecsFragment()
+                    psycologistSpecsFragment.show(supportFragmentManager, "PSYCO_SPECS")
                 }
                 else -> {
                     step_view.go(0, true)

@@ -155,6 +155,14 @@ class HomeActivity : AppCompatActivity() {
         replaceFragWithAnimation(homeContainer, ListFragment.newInstance(Group.DOCTOR, Categories.NONE))
     }
 
+    fun listFragForSctructures() {
+        replaceFragWithAnimation(homeContainer, ListFragment.newInstance(Group.STRUCTURE, Categories.NONE))
+    }
+
+    fun geaMedicaFrag(){
+        goTo<GeaMedicaActivity>()
+    }
+
     fun changeBottomBarForPhysioListFragment(){
         bottom_bar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
         fab.setImageDrawable(getDrawable(R.drawable.ic_filter_white))

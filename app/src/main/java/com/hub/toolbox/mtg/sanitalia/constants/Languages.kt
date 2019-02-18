@@ -10,5 +10,6 @@ val HomeServicesStringInItalian = hashMapOf(
         Pair(HomeServices.FISIOTERAPISTA, "Fisioterapista"),
         Pair(HomeServices.ASSISTENZA_ANZIANI, "Assistenza Anziani"),
         Pair(HomeServices.INFERMIERE, "Infermiere/a"),
-        Pair(HomeServices.OSS, "Operatore Socio Sanitario")
+        Pair(HomeServices.OSS, "Operatore Socio Sanitario"),
+        Pair(HomeServices.PSICOLOGO, "Psicologo")
 )

@@ -58,9 +58,10 @@ class HomeServiceChoiceFragment : Fragment() {
                 HomeServices.ASSISTENZA_ANZIANI -> getDrawable(R.drawable.ic_elder_care)
                 HomeServices.OSS -> getDrawable(R.drawable.ic_hands)
                 HomeServices.INFERMIERE -> getDrawable(R.drawable.ic_nurse)
+                HomeServices.PSICOLOGO -> getDrawable(R.drawable.psycologist_icon)
             }
 
-            if(type == HomeServices.ASSISTENZA_ANZIANI) button.findViewById<View>(R.id.buttonChoiceSeparator).visibility = View.GONE
+            if(type == HomeServices.PSICOLOGO) button.findViewById<View>(R.id.buttonChoiceSeparator).visibility = View.GONE
             rootView.registrationHomeServiceButtonGroup.addView(button)
         }
 
@@ -82,6 +83,7 @@ class HomeServiceChoiceFragment : Fragment() {
                 HomeServices.OSS ->  button.setOnClickListener{showMessage("mostrare ui oss")}
                 HomeServices.INFERMIERE ->  button.setOnClickListener{viewModel.stage.postValue(RegistrationDataStage.PICKING_NURSE_SPECS)}
                 HomeServices.ASSISTENZA_ANZIANI ->  button.setOnClickListener{showMessage("mostrare ui assistenza anziani")}
+                HomeServices.PSICOLOGO -> button.setOnClickListener { viewModel.stage.postValue(RegistrationDataStage.PICKING_PSYCOLOGIST_SPECS) }
             }
         }
 

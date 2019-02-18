@@ -8,7 +8,8 @@ enum class HomeServices{
     FISIOTERAPISTA,
     OSS,
     INFERMIERE,
-    ASSISTENZA_ANZIANI
+    ASSISTENZA_ANZIANI,
+    PSICOLOGO
 }
 
 fun HomeServices.getName(language: Language =Language.ITALIAN) : String {
@@ -18,6 +19,7 @@ fun HomeServices.getName(language: Language =Language.ITALIAN) : String {
             HomeServices.OSS -> HomeServicesStringInItalian[HomeServices.OSS]!!
             HomeServices.INFERMIERE -> HomeServicesStringInItalian[HomeServices.INFERMIERE]!!
             HomeServices.ASSISTENZA_ANZIANI -> HomeServicesStringInItalian[HomeServices.ASSISTENZA_ANZIANI]!!
+            HomeServices.PSICOLOGO -> HomeServicesStringInItalian[HomeServices.PSICOLOGO]!!
         }
     }
     return this.name
@@ -30,6 +32,7 @@ fun TextView.getHomeServiceType(language: Language=Language.ITALIAN) : HomeServi
             HomeServicesStringInItalian[HomeServices.OSS] -> HomeServices.OSS
             HomeServicesStringInItalian[HomeServices.INFERMIERE] -> HomeServices.INFERMIERE
             HomeServicesStringInItalian[HomeServices.ASSISTENZA_ANZIANI] -> HomeServices.ASSISTENZA_ANZIANI
+            HomeServicesStringInItalian[HomeServices.PSICOLOGO] -> HomeServices.PSICOLOGO
             else -> HomeServices.FISIOTERAPISTA
         }
     }

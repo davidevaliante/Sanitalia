@@ -51,6 +51,11 @@ class HomeContentFragment : Fragment() {
             (activity as HomeActivity).listFragForDoctors()
         }
 
+        structureFilterButton.setOnClickListener {
+            val structureIntroFrag = StructureIntroFragment()
+            (activity as HomeActivity).replaceFragWithAnimation(activity?.homeContainer as View, structureIntroFrag)
+        }
+
 
     }
 

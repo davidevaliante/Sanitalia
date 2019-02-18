@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/app_bg_hexagons"
+    tools:context=".home.GeaMedicaRicoveroFrag">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="8dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Modalità di ricovero"
+                android:gravity="center"
+                android:textSize="@dimen/bigFontSize"
+                android:fontFamily="@font/ubuntu_bold"
+                android:padding="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <View
+                android:background="@drawable/app_gradient"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"/>
+            <TextView
+                android:text="L’Istituto Europeo di Riabilitazione opera in convenzione con il Servizio Sanitario Nazionale per la riabilitazione intensiva e il ricovero ordinario avviene di norma mediante la richiesta del medico di famiglia o per trasferimento dai reparti ospedalieri per acuti.\n\n
+
+I pazienti che non rientrano nei criteri per la riabilitazione intensiva del Servizio Sanitario Nazionale possono accedere alla struttura con la modalità 'solvente' per la riabilitazione estensiva, anche in modalità di ricovero di lunga durata.\n\n
+
+Possono essere effettuati inoltre cicli di Day-Hospital."
+                android:padding="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="8dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Documenti obbligatori"
+                android:gravity="center"
+                android:textSize="@dimen/bigFontSize"
+                android:fontFamily="@font/ubuntu_bold"
+                android:padding="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <View
+                android:background="@drawable/app_gradient"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"/>
+            <TextView
+                android:text="- carta d'identità\n\n
+- tessera sanitaria regionale\n\n
+- codice fiscale"
+                android:padding="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ubuntu_bold"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:text="Documentazione Sanitaria"
+                    android:textSize="@dimen/bigFontSize" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@drawable/app_gradient" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="- richiesta di ricovero da parte del medico di famiglia o della struttura di provenienza\n\n
+
+- lettera di dimissione con indicazione degli accertamenti già eseguiti e delle terapie consigliate" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="8dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Cosa Portare"
+                    android:gravity="center"
+                    android:textSize="@dimen/bigFontSize"
+                    android:fontFamily="@font/ubuntu_bold"
+                    android:padding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <View
+                    android:background="@drawable/app_gradient"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"/>
+                <TextView
+                    android:text="Il giorno del ricovero è consigliabile essere forniti di :"
+                    android:padding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="Tessera sanitaria\n\n
+Documento di identità\n\n
+Codice fiscale\n\n
+Documentazione clinica relativa alla malattia ed ai ricoveri precedenti\n\n
+Effetti personali necessari alla propria igiene\n\n
+Pigiama o camicia da notte\n\n
+Vestaglia o giacca da camera\n\n
+Calze\n\n
+Mutande\n\n
+Accappatoio\n\n
+Pantofole antiscivolo\n\n
+Scarpe da ginnastica\n\n
+Magliette intime di cotone\n\n
+Tuta da ginnastica\n\n
+Costumi per piscina e cuffia"
+                    android:padding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

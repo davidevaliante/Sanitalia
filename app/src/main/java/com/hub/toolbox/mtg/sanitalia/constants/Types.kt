@@ -19,6 +19,7 @@ enum class Categories : Parcelable {
     NURSE,
     OSS,
     ELDER_CARE,
+    PSYCOLOGIST,
     NONE
 }
 
@@ -46,14 +47,16 @@ val HomeServiceCategories = linkedMapOf(
         Pair("Fisioterapista", 0),
         Pair("Operatore Socio Sanitario", 1),
         Pair("Infermiere", 2),
-        Pair("Assistente Anziani",3)
+        Pair("Assistente Anziani",3),
+        Pair("Psicologo", 4)
 )
 
 val HomeServicesCategoriesWithImages = listOf(
         Pair("Fisioterapista", R.drawable.ic_physiotherapy),
         Pair("Operatore Socio Sanitario", R.drawable.ic_hands),
         Pair("Infermiere", R.drawable.ic_nurse),
-        Pair("Assistente Anziani",R.drawable.ic_elder_care)
+        Pair("Assistente Anziani",R.drawable.ic_elder_care),
+        Pair("Psicologo", R.drawable.psycologist_icon)
 )
 
 val PhysiotherapistSpecs = linkedMapOf(
@@ -71,6 +74,20 @@ val PhysiotherapistSpecs = linkedMapOf(
         Pair("Terapia Manuale", 11),
         Pair("Terapia Cranio Sacrale", 12)
 )
+
+val PsycologistSpecs = linkedMapOf(
+        Pair("Clinico", 0),
+        Pair("Cognitivo", 0),
+        Pair("dell'età evolutiva", 0),
+        Pair("Dinamico", 0),
+        Pair("Forense", 0),
+        Pair("Lavorativo", 0),
+        Pair("Neuropsicologico", 0),
+        Pair("Sessuologico", 0),
+        Pair("Scolastico", 0),
+        Pair("Sociale", 0),
+        Pair("Psicoterapeuta", 0)
+        )
 
 val NurseSpecs = linkedMapOf(
         Pair("Iniezioni Intramuscolari", 0),
