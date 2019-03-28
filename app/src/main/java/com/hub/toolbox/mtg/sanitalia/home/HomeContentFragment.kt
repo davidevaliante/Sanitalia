@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import androidx.lifecycle.Observer
 import aqua.extensions.Do
 import aqua.extensions.inflate
 import aqua.extensions.replaceFragWithAnimation
@@ -17,9 +17,9 @@ import com.github.florent37.kotlin.pleaseanimate.please
 import com.hub.toolbox.mtg.sanitalia.R
 import com.hub.toolbox.mtg.sanitalia.constants.Group
 import com.hub.toolbox.mtg.sanitalia.constants.Provinces
-import com.hub.toolbox.mtg.sanitalia.extensions.logger
+import com.hub.toolbox.mtg.sanitalia.data.Operator_.zoneId
 import com.hub.toolbox.mtg.sanitalia.helpers.PositionHelper
-import com.livinglifetechway.k4kotlin.toast
+import com.hub.toolbox.mtg.sanitalia.home.gea.StructureIntroFragment
 import getViewModelOf
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_home_content.*
@@ -42,21 +42,23 @@ class HomeContentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         startEnterAnimation()
-        homeFilterButton.setOnClickListener {
-            val choiceFrag = CategoryChoiceFragment.newInstance(Group.HOME_SERVICES)
-            (activity as HomeActivity).replaceFragWithAnimation(activity?.homeContainer as View, choiceFrag)
-        }
+        viewModel.zoneId.observe(this, Observer { newZoneId ->
+            if(newZoneId !== null){
+                homeFilterButton.setOnClickListener {
+                    val choiceFrag = CategoryChoiceFragment.newInstance(Group.HOME_SERVICES)
+                    (activity as HomeActivity).replaceFragWithAnimation(activity?.homeContainer as View, choiceFrag)
+                }
 
-        doctorFilterButton.setOnClickListener {
-            (activity as HomeActivity).listFragForDoctors()
-        }
+                doctorFilterButton.setOnClickListener {
+                    (activity as HomeActivity).listFragForDoctors()
+                }
 
-        structureFilterButton.setOnClickListener {
-            val structureIntroFrag = StructureIntroFragment()
-            (activity as HomeActivity).replaceFragWithAnimation(activity?.homeContainer as View, structureIntroFrag)
-        }
-
-
+                structureFilterButton.setOnClickListener {
+                    val structureIntroFrag = StructureIntroFragment()
+                    (activity as HomeActivity).replaceFragWithAnimation(activity?.homeContainer as View, structureIntroFrag)
+                }
+            }
+        })
     }
 
     override fun onStart() {

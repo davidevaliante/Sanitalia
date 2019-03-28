@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/app_bg_hexagons"
-    tools:context=".home.GeaMedicaOrariFragment">
+    tools:context=".home.gea.GeaMedicaOrariFragment">
 
     <LinearLayout
         android:orientation="vertical"

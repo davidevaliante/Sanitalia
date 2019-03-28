@@ -1,7 +1,5 @@
-package com.hub.toolbox.mtg.sanitalia.home
+package com.hub.toolbox.mtg.sanitalia.home.gea
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.hub.toolbox.mtg.sanitalia.R
+import com.hub.toolbox.mtg.sanitalia.home.HomeActivity
 import kotlinx.android.synthetic.main.fragment_structure_intro.*
 
 // TODO: Rename parameter arguments, choose names that match

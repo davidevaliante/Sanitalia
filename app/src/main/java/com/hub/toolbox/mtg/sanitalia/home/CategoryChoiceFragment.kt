@@ -101,6 +101,7 @@ class CategoryChoiceFragment : Fragment() {
                         1 -> (activity as HomeActivity).listFragForOss()
                         2 -> (activity as HomeActivity).listFragForNurse()
                         3 -> (activity as HomeActivity).listFragForElderCare()
+                        4 -> (activity as HomeActivity).listFragForPsycologists()
                     }
                 }
             }

@@ -9,16 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import aqua.extensions.getDrawable
 import aqua.extensions.inflate
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.hub.toolbox.mtg.sanitalia.constants.DoctorsSpecs
 import com.hub.toolbox.mtg.sanitalia.constants.NurseSpecs
 import com.hub.toolbox.mtg.sanitalia.constants.PhysiotherapistSpecs
 import com.hub.toolbox.mtg.sanitalia.data.Operator
 import com.hub.toolbox.mtg.sanitalia.home.HomeActivity
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_base_profile.*
-import kotlinx.android.synthetic.main.fragment_operator_profile_deatiled.*
+import kotlinx.android.synthetic.main.operator_profile_lean_layout.*
 
 
 private const val OPERATOR_KEY = "OPERATOR"
@@ -47,13 +44,19 @@ class OperatorProfileDeatiledFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        (activity as HomeActivity).changeBottomBarForGroupOne()
-        return inflate(R.layout.fragment_operator_profile_deatiled) as ViewGroup
+        (activity as HomeActivity).hideBottomBar()
+        return inflate(R.layout.operator_profile_lean_layout) as ViewGroup
+    }
+
+    override fun onDestroy() {
+        (activity as HomeActivity).restoreBottomBar()
+        super.onDestroy()
     }
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        backTop.setOnClickListener { activity?.onBackPressed() }
         when(operatorToShow?.group){
             0 -> when(operatorToShow?.category){
                     0 -> userTypeImage.setImageDrawable(getDrawable(R.drawable.ic_physiotherapy))
@@ -71,12 +74,8 @@ class OperatorProfileDeatiledFragment : Fragment() {
         operatorProfileAdress.text = operatorToShow?.adressName?.capitalize()
         operatorProfileCity.text = operatorToShow?.city?.capitalize()
         Picasso.get().load(operatorToShow?.image).into(operatorProfilePicture)
-        profilePhoneField.text = "Chiama +39 ${operatorToShow?.phone}"
-        profilePhoneField.setOnClickListener {
-            // chiama
-        }
         operatorProfileDesc.text = if (operatorToShow?.description == null) "${operatorToShow?.firstName} non ha ancora fornito informazioni aggiuntive"
-        else "${operatorToShow?.description}"
+        else operatorToShow?.description
         operatorToShow?.let {
             it.spec.let { specs ->
                 if (specs!=null && specs.isNotEmpty()) operatorProfileSpecs.text = when (it.group){
@@ -85,7 +84,7 @@ class OperatorProfileDeatiledFragment : Fragment() {
                             val operatorSpecs : List<Int>? = it.spec
                             operatorSpecs?.let {
                                 val specIndeciesToShow : Set<Int> = PhysiotherapistSpecs.values.intersect(operatorSpecs.toList())
-                                PhysiotherapistSpecs.filter { pair -> specIndeciesToShow.contains(pair.value) }.keys.joinToString()
+                                PhysiotherapistSpecs.filter { pair -> specIndeciesToShow.contains(pair.value) }.keys.joinToString(separator = "\n")
                             }
                         }
 

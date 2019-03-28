@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/app_bg_hexagons"
-    tools:context=".home.GeaMedicaStrutturaFragm">
+    tools:context=".home.gea.GeaMedicaStrutturaFragm">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -379,24 +379,6 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:padding="8dp"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <ImageView
-                            app:srcCompat="@drawable/ic_checked_styled"
-                            android:layout_marginEnd="16dp"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp" />
-                        <TextView
-                            android:text="Cardiologia"
-                            android:padding="8dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-
-                    </LinearLayout>
 
                     <LinearLayout
                         android:padding="8dp"
@@ -436,24 +418,7 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:padding="8dp"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <ImageView
-                            app:srcCompat="@drawable/ic_checked_styled"
-                            android:layout_marginEnd="16dp"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp" />
-                        <TextView
-                            android:text="Cardiologia"
-                            android:padding="8dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
 
-                    </LinearLayout>
 
                     <LinearLayout
                         android:padding="8dp"

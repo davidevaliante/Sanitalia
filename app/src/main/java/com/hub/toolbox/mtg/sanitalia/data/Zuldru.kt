@@ -88,7 +88,6 @@ object Zuldru {
             else onFailure()
         }
     }
-    // -------------------------------------------GET----------------------------------------------------------
     fun getUserWithId(userId : String, onSuccess : (User?) -> Unit, onFailure : () -> Unit ) {
         fireStore.collection("Users").document(userId).get().addOnSuccessListener { document ->
             if(document.exists()) onSuccess(document.toObject(User::class.java))
@@ -173,6 +172,23 @@ object Zuldru {
                         data?.documents?.forEach { doc ->
                             val operator = doc.toObject(Operator::class.java)
                             list[doc.id] = operator!!
+                        }
+                        if (list.size > 0) onListFound(list)
+                        else onListEmptyOrNull()
+                    }else{
+                        log(it.exception.toString())
+                    }
+                }
+    }
+    fun getListOfPsycologists(onListFound: (LinkedHashMap<String, Operator>) -> Unit = {}, onListEmptyOrNull : () -> Unit = {}){
+        fireStore.collection("Countries").document("IT").collection("Zones").document("IS")
+                .collection("Operators").whereEqualTo("category",4).whereEqualTo("group", 0).get().addOnCompleteListener {
+                    if(it.isSuccessful){
+                        val data = it.result
+                        val list = LinkedHashMap<String, Operator>()
+                        data?.documents?.forEach { phsyc ->
+                            val operator = phsyc.toObject(Operator::class.java)
+                            list[phsyc.id] = operator!!
                         }
                         if (list.size > 0) onListFound(list)
                         else onListEmptyOrNull()

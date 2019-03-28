@@ -57,7 +57,8 @@ class ListFragment : Fragment() {
                 when(category){
                     Categories.PHYSIO -> changeBottomBarForPhysioListFragment()
                     Categories.NURSE -> changeBottomBarForNurseListFragment()
-                    else -> changeBottomBarForGroupOne()
+                    Categories.PSYCHOLOGIST -> changeBottomBarForPhycologistsListFragement()
+                    else -> hideBottomBar()
                 }
             }
             if (group == Group.DOCTOR) changeBottomBarForDoctorListFragment()
@@ -100,13 +101,17 @@ class ListFragment : Fragment() {
                     listTopBarCategoryIcon.background = getDrawable(R.drawable.ic_physiotherapy)
                     listTopBarType.text = "Fisioterapisti"
                 }
+                Categories.PSYCHOLOGIST -> {
+                    listTopBarCategoryIcon.background = getDrawable(R.drawable.psycologist_icon)
+                    listTopBarType.text = "Psicologi"
+                }
             }
         }
-
         if (group == Group.DOCTOR) {
             listTopBarCategoryIcon.background = getDrawable(R.drawable.doctor_colored)
             listTopBarType.text = "Medici"
         }
+
         viewModel.operatorMap.observe(this, Observer { newOperatorMap ->
             (categoryListRecyclerView.adapter as OperatorListAdapter).updateList(newOperatorMap)
             if (newOperatorMap.isEmpty()) operationHasNoResult.show()
@@ -154,6 +159,13 @@ class ListFragment : Fragment() {
                 }
                 Categories.OSS -> {
                     viewModel.getListOfOss(
+                            onListFound = { viewModel.operatorMap.postValue(it) },
+                            onListEmptyOrNull = { operationHasNoResult.show() }
+                    )
+                }
+
+                Categories.PSYCHOLOGIST -> {
+                    viewModel.getListOfPsycologists(
                             onListFound = { viewModel.operatorMap.postValue(it) },
                             onListEmptyOrNull = { operationHasNoResult.show() }
                     )

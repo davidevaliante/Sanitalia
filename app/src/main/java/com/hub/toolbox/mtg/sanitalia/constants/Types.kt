@@ -19,7 +19,7 @@ enum class Categories : Parcelable {
     NURSE,
     OSS,
     ELDER_CARE,
-    PSYCOLOGIST,
+    PSYCHOLOGIST,
     NONE
 }
 
@@ -27,6 +27,7 @@ enum class Categories : Parcelable {
 enum class FilterCategory : Parcelable {
     PHYSIO,
     NURSE,
+    PHYCOLOGIST,
     DOCTOR
 }
 
@@ -76,17 +77,17 @@ val PhysiotherapistSpecs = linkedMapOf(
 )
 
 val PsycologistSpecs = linkedMapOf(
-        Pair("Clinico", 0),
-        Pair("Cognitivo", 0),
-        Pair("dell'età evolutiva", 0),
-        Pair("Dinamico", 0),
-        Pair("Forense", 0),
-        Pair("Lavorativo", 0),
-        Pair("Neuropsicologico", 0),
-        Pair("Sessuologico", 0),
-        Pair("Scolastico", 0),
-        Pair("Sociale", 0),
-        Pair("Psicoterapeuta", 0)
+        Pair("Psicologia Clinica", 0),
+        Pair("Psicologia Cognitiva", 1),
+        Pair("Psicologia dell'età evolutiva", 2),
+        Pair("Psicologia Dinamica", 3),
+        Pair("Psicologia Forense", 4),
+        Pair("Psicologia Lavorativa", 5),
+        Pair("Psicologia Neuropsicologica", 6),
+        Pair("Psicologia Sessuologica", 7),
+        Pair("Psicologia Scolastica", 8),
+        Pair("Psicologia Sociale", 9),
+        Pair("Psicologo, Psicoterapeuta", 10)
         )
 
 val NurseSpecs = linkedMapOf(

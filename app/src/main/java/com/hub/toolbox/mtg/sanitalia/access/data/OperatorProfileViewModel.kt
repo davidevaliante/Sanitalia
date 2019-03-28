@@ -182,7 +182,7 @@ class OperatorProfileViewModel : ViewModel(){
         nurseSpecs.postValue(specListToUpdate)
     }
 
-    // ---------------------PSYCOLOGIST SPECS------------------------------------------
+    // ---------------------PSYCHOLOGIST SPECS------------------------------------------
     fun addPsycologistSpec(spec : Pair<String, Int>){
         val specListToUpdate = psycologistSpecs.value
         specListToUpdate?.add(spec)

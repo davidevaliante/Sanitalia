@@ -61,7 +61,7 @@
         <activity android:name=".DeepLinksActivity" />
         <activity android:name=".home.HomeActivity" />
         <activity
-            android:name=".home.GeaMedicaActivity"
+            android:name=".home.gea.GeaMedicaActivity"
             android:label="@string/title_activity_gea_medica"
             android:theme="@style/AppTheme"></activity>
     </application>

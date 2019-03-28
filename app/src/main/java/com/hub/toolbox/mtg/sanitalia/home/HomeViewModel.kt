@@ -129,4 +129,18 @@ class HomeViewModel : ViewModel(){
                 }
         )
     }
+
+    fun getListOfPsycologists(onListFound : (LinkedHashMap<String, Operator>) -> Unit = {}, onListEmptyOrNull : () -> Unit = {}){
+        isLoading.postValue(true)
+        Zuldru.getListOfPsycologists(
+            onListFound = {  operatorList ->
+                isLoading.postValue(false)
+                operatorMap.postValue(operatorList)
+                onListFound(operatorList)
+            },
+            onListEmptyOrNull = {
+                onListEmptyOrNull()
+            }
+        )
+    }
 }

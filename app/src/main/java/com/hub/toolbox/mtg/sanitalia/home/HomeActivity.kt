@@ -7,8 +7,8 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.view.Gravity
 import android.view.Menu
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
@@ -17,7 +17,6 @@ import com.hub.toolbox.mtg.sanitalia.helpers.PositionHelper
 import kotlinx.android.synthetic.main.activity_home.*
 import androidx.lifecycle.Observer
 import aqua.extensions.*
-import com.github.florent37.kotlin.pleaseanimate.please
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.snackbar.Snackbar
 import com.hub.toolbox.mtg.sanitalia.OperatorProfileDeatiledFragment
@@ -27,10 +26,11 @@ import com.hub.toolbox.mtg.sanitalia.constants.Group
 import com.hub.toolbox.mtg.sanitalia.data.Operator
 import com.hub.toolbox.mtg.sanitalia.data.Zuldru
 import com.hub.toolbox.mtg.sanitalia.extensions.logger
+import com.hub.toolbox.mtg.sanitalia.home.gea.GeaMedicaActivity
 import com.ramotion.paperonboarding.PaperOnboardingFragment
 import com.ramotion.paperonboarding.PaperOnboardingPage
 import getViewModelOf
-import kotlinx.android.synthetic.main.activity_home.view.*
+import kotlinx.android.synthetic.main.activity_gea_medica.*
 import java.util.*
 
 class HomeActivity : AppCompatActivity() {
@@ -81,15 +81,10 @@ class HomeActivity : AppCompatActivity() {
         })
 
         viewModel.zoneId.observe(this, Observer { id ->
-            logger("zoneid -> $id")
+            logger(id)
         })
-        setDefaultFabOnCLickListener()
     }
 
-    override fun onResume() {
-        super.onResume()
-        // enterAnimation()
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -131,8 +126,7 @@ class HomeActivity : AppCompatActivity() {
     private fun initializeHomeUi(){
         removeAllFragments()
         switchFragmentWithAnimation(homeContainer, HomeContentFragment())
-//        bottom_bar.show()
-//        fab.show()
+        bottom_bar.visibility = View.VISIBLE
     }
 
     fun listFragForPhysio(){
@@ -159,98 +153,92 @@ class HomeActivity : AppCompatActivity() {
         replaceFragWithAnimation(homeContainer, ListFragment.newInstance(Group.STRUCTURE, Categories.NONE))
     }
 
+    fun listFragForPsycologists(){
+        replaceFragWithAnimation(homeContainer, ListFragment.newInstance(Group.HOME_SERVICES, Categories.PSYCHOLOGIST))
+    }
+
     fun geaMedicaFrag(){
         goTo<GeaMedicaActivity>()
     }
 
+    fun hideBottomBar() {
+        bottom_bar.visibility = View.GONE
+    }
+
+    fun restoreBottomBar() {
+        bottom_bar.visibility = View.VISIBLE
+    }
+
     fun changeBottomBarForPhysioListFragment(){
-        bottom_bar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
-        fab.setImageDrawable(getDrawable(R.drawable.ic_filter_white))
-        fab.setOnClickListener {
+        bottom_bar.visibility = View.INVISIBLE
+        filterFab.show()
+        filterFab.setOnClickListener {
             FilterFragment.newInstance(FilterCategory.PHYSIO).show(supportFragmentManager, "FILTER_FRAG_PHYSIO")
         }
     }
 
     fun changeBottomBarForNurseListFragment(){
-        bottom_bar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
-        fab.setImageDrawable(getDrawable(R.drawable.ic_filter_white))
-        fab.setOnClickListener {
+        bottom_bar.visibility = View.INVISIBLE
+        filterFab.show()
+        filterFab.setOnClickListener {
             FilterFragment.newInstance(FilterCategory.NURSE).show(supportFragmentManager, "FILTER_FRAG_NURSE")
         }
     }
 
     fun changeBottomBarForDoctorListFragment(){
-        bottom_bar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
-        fab.setImageDrawable(getDrawable(R.drawable.ic_filter_white))
-        fab.setOnClickListener {
+        bottom_bar.visibility = View.INVISIBLE
+        filterFab.show()
+        filterFab.setOnClickListener {
             FilterFragment.newInstance(FilterCategory.DOCTOR).show(supportFragmentManager, "FILTER_FRAG_DOCTOR")
         }
     }
 
-    fun changeBottomBarForGroupOne(){
-        bottom_bar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
-        fab.setImageDrawable(getDrawable(R.drawable.ic_back_arrow_styled))
-        fab.setOnClickListener {
-           super.onBackPressed()
+    fun changeBottomBarForPhycologistsListFragement() {
+        bottom_bar.visibility = View.INVISIBLE
+        filterFab.show()
+        filterFab.setOnClickListener {
+            FilterFragment.newInstance(FilterCategory.PHYCOLOGIST).show(supportFragmentManager, "FILTER_FRAG_DOCTOR")
         }
     }
+
 
     fun restoreBottomBarToOriginal(){
-        bottom_bar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
-        bottom_bar.hideOnScroll=true
-        fab.setImageDrawable(getDrawable(R.drawable.ic_search_white))
-        setDefaultFabOnCLickListener()
+        bottom_bar.visibility = View.VISIBLE
+        filterFab.hide()
     }
 
-    private fun setDefaultFabOnCLickListener(){
-        fab.setOnClickListener {
-            snack("should search")
-        }
-    }
 
     fun showProfileOf(operator : Operator){
         replaceFragWithAnimation(homeContainer, OperatorProfileDeatiledFragment.newInstance(operator))
     }
 
-    private fun setupBottomBar(){
-        setSupportActionBar(bottom_bar as BottomAppBar)
-        bottom_bar.setOnMenuItemClickListener { itemSelected ->
-            when(itemSelected.itemId){
-                R.id.bottomAppBarSettings -> snack("Settings menu clicked")
-                R.id.bottomAppBarContacts -> Snackbar.make(homeRoot, "Settings contacts clicked", Snackbar.LENGTH_SHORT).show()
-                R.id.bottomAppBarPrivacy ->             Zuldru.signOutCurrentUser {  }
 
+    // ------------------------------ BOTTOM BAR ------------------------------------------------
+    private fun setupBottomBar(){
+        bottom_bar.setOnNavigationItemSelectedListener { itemSelected ->
+            when(itemSelected.itemId){
+                R.id.firstBottomItem -> replaceFragWithAnimation(homeContainer, HomeContentFragment())
+                R.id.secondBottomItem -> snack("Siamo in beta ! per il momento non è possibile cambiare posizione")
+                R.id.thirdBottomItem -> Zuldru.signOutCurrentUser {  }
+                R.id.fourthBottomItem -> Zuldru.signOutCurrentUser {  }
             }
             true
         }
-        bottom_bar.setNavigationOnClickListener {
-            val bottomNavDrawerFragment = BottomNavigationDrawerFragment()
-            bottomNavDrawerFragment.show(supportFragmentManager, bottomNavDrawerFragment.tag)
+        bottom_bar.setOnNavigationItemReselectedListener {itemSelected ->
+            when(itemSelected.itemId){
+                R.id.firstBottomItem -> replaceFragWithAnimation(homeContainer, HomeContentFragment())
+                R.id.secondBottomItem -> Snackbar.make(homeRoot, "Settings contacts clicked", Snackbar.LENGTH_SHORT).show()
+                R.id.thirdBottomItem -> Zuldru.signOutCurrentUser {  }
+                R.id.fourthBottomItem -> Zuldru.signOutCurrentUser {  }
+            }
         }
     }
 
-    // ---------------------------------- ANIMATIONS ---------------------------------------------
-//    private fun prepareViewsForEnterAnimation(){
-//        please {
-//            animate(bottom_bar).toBe {
-//                outOfScreen(Gravity.BOTTOM)
-//            }
-//        }.now()
-//    }
-//    private fun enterAnimation(){
-//        Do after 300 milliseconds {
-//            bottom_bar.show()
-//            please(duration = 1300) {
-//                animate(bottom_bar).toBe {
-//                    originalPosition()
-//                }
-//            }.start()
-//        }
-//    }
+
 
     // ---------------------------------- UTILS --------------------------------------------------
     private fun snack(message : String, duration: Int = Snackbar.LENGTH_SHORT){
-        Snackbar.make(homeRoot, message, duration).apply {view.layoutParams = (view.layoutParams as CoordinatorLayout.LayoutParams).apply {setMargins(32, topMargin, 32, (bottom_bar.height+fab.height/2)+8)}}.show()
+        Snackbar.make(homeRoot, message, duration).apply {view.layoutParams = (view.layoutParams as CoordinatorLayout.LayoutParams).apply {setMargins(leftMargin, topMargin, rightMargin, bottom_bar.height)}}.show()
     }
 
     // ------------------------------ ONBOARDING -------------------------------------------------

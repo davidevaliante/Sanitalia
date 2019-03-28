@@ -54,10 +54,12 @@ class FilterFragment : DialogFragment() {
             FilterCategory.PHYSIO -> inflate(R.layout.fragment_physiotherapy_specs) as ViewGroup
             FilterCategory.NURSE -> inflate(R.layout.fragment_physiotherapy_specs) as ViewGroup
             FilterCategory.DOCTOR -> inflate(R.layout.fragment_doctors_filter) as ViewGroup
+            FilterCategory.PHYCOLOGIST -> inflate(R.layout.fragment_physiotherapy_specs) as ViewGroup
         }
 
         if (filterCategory == FilterCategory.PHYSIO) setupFragmentForPhysioteraphistFiltering(rootView, myInflater)
         if (filterCategory == FilterCategory.NURSE) setupFragmentForNurseFiltering(rootView, myInflater)
+        if(filterCategory == FilterCategory.PHYCOLOGIST) setupFragmentForPhycologistFiltering(rootView,myInflater)
         if (filterCategory == FilterCategory.DOCTOR) setupFragmentForDoctorFiltering(rootView, myInflater)
 
         return rootView
@@ -150,6 +152,64 @@ class FilterFragment : DialogFragment() {
             filters?.let {
                 val checkedCheckBoxList = NurseSpecs.values.toList().intersect(filters)
                 if (checkedCheckBoxList.contains(NurseSpecs[string]))
+                    checkBox.isChecked = true
+            }
+            rootView.physioSpecsList.addView(specButton)
+        }
+
+        // handle "Indietro"
+        rootView.physioSpecsBackButton.apply{
+            text = "Chiudi"
+            setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_close_white,0,0,0)
+            compoundDrawablePadding = (32 * resources.displayMetrics.density).toInt()
+            setOnClickListener {
+                viewModel.message.postValue("Selezione delle specializzazioni annullata")
+                viewModel.removeAllFilters()
+                dismiss()
+            }
+        }
+
+        // handle "Conferma"
+        rootView.physioSpecsConfirmButton.apply{
+            text = "Filtra"
+            setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_confirm_white, 0)
+            compoundDrawablePadding = (32 * resources.displayMetrics.density).toInt()
+            setOnClickListener {
+                viewModel.applyFilters()
+                dismiss()
+            }
+        }
+    }
+
+    private fun setupFragmentForPhycologistFiltering(rootView: ViewGroup, myInflater: LayoutInflater){
+        rootView.specChoiceHeader.text = "Seleziona uno o più\nfiltri"
+
+        // creazione del menu di selezione a partire dalla lista
+        PsycologistSpecs.keys.sorted().forEach { string ->
+            val specButton = myInflater.inflate(R.layout.physio_spec_button, null)
+            specButton.findViewById<TextView>(R.id.physioSpecName).apply{
+                text = string
+                setFont(R.font.ubuntu, activity as Activity)
+            }
+            val checkBox =  specButton.findViewById<CheckBox>(R.id.physioSpecCheckBox)
+            specButton.setOnClickListener {
+                // selezione di una specializzazione
+                if(!checkBox.isChecked){
+                    checkBox.isChecked = true
+                    val filterToAdd = Pair(string, PsycologistSpecs[string]!!)
+                    viewModel.addFilter(filterToAdd.second)
+
+                    // deselezione di una specializzazione
+                } else {
+                    checkBox.isChecked = false
+                    val filterToRemove = Pair(string, PsycologistSpecs[string]!!)
+                    viewModel.removeFilter(filterToRemove.second)
+                }
+            }
+            val filters = viewModel.categoryFilters.value
+            filters?.let {
+                val checkedCheckBoxList = PsycologistSpecs.values.toList().intersect(filters)
+                if (checkedCheckBoxList.contains(PsycologistSpecs[string]))
                     checkBox.isChecked = true
             }
             rootView.physioSpecsList.addView(specButton)

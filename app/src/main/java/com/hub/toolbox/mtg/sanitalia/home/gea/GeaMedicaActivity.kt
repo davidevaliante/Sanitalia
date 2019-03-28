@@ -1,4 +1,4 @@
-package com.hub.toolbox.mtg.sanitalia.home
+package com.hub.toolbox.mtg.sanitalia.home.gea
 
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar

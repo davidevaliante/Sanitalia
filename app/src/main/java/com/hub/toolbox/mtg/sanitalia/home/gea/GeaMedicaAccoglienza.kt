@@ -1,4 +1,4 @@
-package com.hub.toolbox.mtg.sanitalia.home
+package com.hub.toolbox.mtg.sanitalia.home.gea
 
 
 import android.os.Bundle
@@ -6,8 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 
 import com.hub.toolbox.mtg.sanitalia.R
 
@@ -20,15 +18,13 @@ private const val ARG_PARAM2 = "param2"
  * A simple [Fragment] subclass.
  *
  */
-class GeaMedicaRicoveroFrag : Fragment() {
+class GeaMedicaAccoglienza : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_gea_medica_ricovero, container, false)
+        return inflater.inflate(R.layout.fragment_gea_medica_accoglienza, container, false)
     }
 
 
 }
-
-
