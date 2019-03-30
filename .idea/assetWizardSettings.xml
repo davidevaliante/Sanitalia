@@ -19,8 +19,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="verified_icon_deep_green" />
-                            <entry key="sourceFile" value="C:\Users\akain\Desktop\verified.svg" />
+                            <entry key="outputName" value="ic_phone_accent" />
+                            <entry key="sourceFile" value="C:\Users\akain\Desktop\phone-receiver.svg" />
                           </map>
                         </option>
                       </PersistentState>

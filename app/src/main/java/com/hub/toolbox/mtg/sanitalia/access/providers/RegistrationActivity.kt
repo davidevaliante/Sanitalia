@@ -23,7 +23,7 @@ import com.hub.toolbox.mtg.sanitalia.constants.UserType
 import com.hub.toolbox.mtg.sanitalia.extensions.logger
 import com.hub.toolbox.mtg.sanitalia.home.HomeActivity
 import getViewModelOf
-import kotlinx.android.synthetic.main.abc_tooltip.*
+
 
 
 @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")

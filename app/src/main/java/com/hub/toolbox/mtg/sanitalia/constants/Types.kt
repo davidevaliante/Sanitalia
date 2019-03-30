@@ -6,6 +6,24 @@ import com.hub.toolbox.mtg.sanitalia.constants.homeservices.HomeServices
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
+enum class ListType : Parcelable{
+    DEFAULT,
+    FAVORITES
+}
+
+@Parcelize
+enum class Relationship : Parcelable{
+    OPERATOR_IS_FAVORITED,
+    OPERATOR_IS_NOT_FAVORITED
+}
+
+@Parcelize
+enum class RegistrationRequiredFor : Parcelable{
+    VIEW_OPERATOR_PROFILE,
+    ADD_OPERATOR_TO_FAVOURITES
+}
+
+@Parcelize
 enum class Group : Parcelable {
     HOME_SERVICES,
     DOCTOR,
@@ -45,7 +63,7 @@ val GroupsValues = linkedMapOf(
 )
 
 val HomeServiceCategories = linkedMapOf(
-        Pair("Fisioterapista", 0),
+        Pair("Fisioterapista / Osteopata", 0),
         Pair("Operatore Socio Sanitario", 1),
         Pair("Infermiere", 2),
         Pair("Assistente Anziani",3),
@@ -53,7 +71,7 @@ val HomeServiceCategories = linkedMapOf(
 )
 
 val HomeServicesCategoriesWithImages = listOf(
-        Pair("Fisioterapista", R.drawable.ic_physiotherapy),
+        Pair("Fisioterapista / Osteopata", R.drawable.ic_physiotherapy),
         Pair("Operatore Socio Sanitario", R.drawable.ic_hands),
         Pair("Infermiere", R.drawable.ic_nurse),
         Pair("Assistente Anziani",R.drawable.ic_elder_care),

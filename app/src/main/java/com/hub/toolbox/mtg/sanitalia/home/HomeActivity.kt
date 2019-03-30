@@ -17,20 +17,21 @@ import com.hub.toolbox.mtg.sanitalia.helpers.PositionHelper
 import kotlinx.android.synthetic.main.activity_home.*
 import androidx.lifecycle.Observer
 import aqua.extensions.*
-import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.snackbar.Snackbar
-import com.hub.toolbox.mtg.sanitalia.OperatorProfileDeatiledFragment
+import com.hub.toolbox.mtg.sanitalia.OperatorProfileDetailedFragment
+import com.hub.toolbox.mtg.sanitalia.access.UserTypeChoiceActivity
 import com.hub.toolbox.mtg.sanitalia.constants.Categories
 import com.hub.toolbox.mtg.sanitalia.constants.FilterCategory
 import com.hub.toolbox.mtg.sanitalia.constants.Group
+import com.hub.toolbox.mtg.sanitalia.constants.RegistrationRequiredFor
 import com.hub.toolbox.mtg.sanitalia.data.Operator
 import com.hub.toolbox.mtg.sanitalia.data.Zuldru
 import com.hub.toolbox.mtg.sanitalia.extensions.logger
+import com.hub.toolbox.mtg.sanitalia.extensions.withColor
 import com.hub.toolbox.mtg.sanitalia.home.gea.GeaMedicaActivity
 import com.ramotion.paperonboarding.PaperOnboardingFragment
 import com.ramotion.paperonboarding.PaperOnboardingPage
 import getViewModelOf
-import kotlinx.android.synthetic.main.activity_gea_medica.*
 import java.util.*
 
 class HomeActivity : AppCompatActivity() {
@@ -38,6 +39,7 @@ class HomeActivity : AppCompatActivity() {
     private val viewModel by lazy { getViewModelOf<HomeViewModel>(this) }
     private val onboardingPages by lazy { prepareOnBoardingForPositionPermission() }
     private lateinit var onboardingFragment: PaperOnboardingFragment
+    lateinit var registrationPromptSnackBar : Snackbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,11 +79,15 @@ class HomeActivity : AppCompatActivity() {
         })
 
         viewModel.userType.observe(this, Observer { userType ->
-            logger(userType.name)
+            logger("User type is now ${userType.name}")
         })
 
         viewModel.zoneId.observe(this, Observer { id ->
-            logger(id)
+            // logger("Updated Zone Id changed to ${id}, userType is ${viewModel.userType.value}")
+        })
+
+        viewModel.message.observe(this, Observer { message ->
+            snack(message)
         })
     }
 
@@ -108,6 +114,21 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    // ------------------------------ CALL TO ACTION ---------------------------------------------
+    fun showRegistrationPrompt(case : RegistrationRequiredFor){
+        val message = when(case){
+            RegistrationRequiredFor.VIEW_OPERATOR_PROFILE -> "E' necessario registrarsi per proseguire"
+            RegistrationRequiredFor.ADD_OPERATOR_TO_FAVOURITES -> "E' necessario registrarsi per questa funzionalità"
+        }
+        registrationPromptSnackBar = Snackbar.make(filterFab, message, Snackbar.LENGTH_INDEFINITE)
+                                     .withColor(findColor(R.color.colorPrimaryDark))
+        registrationPromptSnackBar.apply {
+            setActionTextColor(findColor(R.color.verified_green))
+            setAction("Registrati") { goTo<UserTypeChoiceActivity>() }
+            show()
+        }
+    }
+
     // ------------------------------ PERMISSIONS ------------------------------------------------
     private fun hasLocationPermissions():Boolean{
         return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
@@ -120,6 +141,47 @@ class HomeActivity : AppCompatActivity() {
         val uri = Uri.fromParts("package", packageName, null)
         intent.data = uri
         startActivity(intent)
+    }
+
+    // ------------------------------ BOTTOM BAR ------------------------------------------------
+    private fun setupBottomBar(){
+        bottom_bar.setOnNavigationItemSelectedListener { itemSelected ->
+            when(itemSelected.itemId){
+                R.id.firstBottomItem -> replaceFragWithAnimation(homeContainer, HomeContentFragment())
+                R.id.secondBottomItem -> snackWithBottomBar("Siamo in beta ! per il momento non è possibile cambiare posizione")
+                R.id.thirdBottomItem -> replaceFragWithAnimation(homeContainer, ListFragment.asFavouriteList())
+                R.id.fourthBottomItem -> Zuldru.signOutCurrentUser { snackWithBottomBar("Log Out effettuato") }
+            }
+            true
+        }
+        bottom_bar.setOnNavigationItemReselectedListener {itemSelected ->
+            when(itemSelected.itemId){
+                R.id.firstBottomItem -> replaceFragWithAnimation(homeContainer, HomeContentFragment())
+                R.id.secondBottomItem -> Snackbar.make(homeRoot, "Settings contacts clicked", Snackbar.LENGTH_SHORT).show()
+                R.id.thirdBottomItem -> replaceFragWithAnimation(homeContainer, ListFragment.asFavouriteList())
+                R.id.fourthBottomItem -> Zuldru.signOutCurrentUser {  }
+            }
+        }
+    }
+
+
+
+    // ---------------------------------- UTILS --------------------------------------------------
+    private fun snackWithBottomBar(message : String, duration: Int = Snackbar.LENGTH_SHORT){
+        Snackbar.make(homeRoot, message, duration)
+                .withColor(findColor(R.color.colorPrimaryDark))
+                .apply {view.layoutParams = (view.layoutParams as CoordinatorLayout.LayoutParams)
+                .apply {setMargins(leftMargin, topMargin, rightMargin, bottom_bar.height)}}.show()
+    }
+
+    private fun snack(message : String, duration: Int = Snackbar.LENGTH_SHORT){
+        Snackbar.make(homeRoot, message, duration)
+                .withColor(findColor(R.color.colorPrimaryDark)).show()
+    }
+
+
+    fun dismissRegistrationPromptSnackBar(){
+        if(::registrationPromptSnackBar.isInitialized) registrationPromptSnackBar.dismiss()
     }
 
     // ----------------------------------- UI ----------------------------------------------------
@@ -208,37 +270,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
 
-    fun showProfileOf(operator : Operator){
-        replaceFragWithAnimation(homeContainer, OperatorProfileDeatiledFragment.newInstance(operator))
-    }
-
-
-    // ------------------------------ BOTTOM BAR ------------------------------------------------
-    private fun setupBottomBar(){
-        bottom_bar.setOnNavigationItemSelectedListener { itemSelected ->
-            when(itemSelected.itemId){
-                R.id.firstBottomItem -> replaceFragWithAnimation(homeContainer, HomeContentFragment())
-                R.id.secondBottomItem -> snack("Siamo in beta ! per il momento non è possibile cambiare posizione")
-                R.id.thirdBottomItem -> Zuldru.signOutCurrentUser {  }
-                R.id.fourthBottomItem -> Zuldru.signOutCurrentUser {  }
-            }
-            true
-        }
-        bottom_bar.setOnNavigationItemReselectedListener {itemSelected ->
-            when(itemSelected.itemId){
-                R.id.firstBottomItem -> replaceFragWithAnimation(homeContainer, HomeContentFragment())
-                R.id.secondBottomItem -> Snackbar.make(homeRoot, "Settings contacts clicked", Snackbar.LENGTH_SHORT).show()
-                R.id.thirdBottomItem -> Zuldru.signOutCurrentUser {  }
-                R.id.fourthBottomItem -> Zuldru.signOutCurrentUser {  }
-            }
-        }
-    }
-
-
-
-    // ---------------------------------- UTILS --------------------------------------------------
-    private fun snack(message : String, duration: Int = Snackbar.LENGTH_SHORT){
-        Snackbar.make(homeRoot, message, duration).apply {view.layoutParams = (view.layoutParams as CoordinatorLayout.LayoutParams).apply {setMargins(leftMargin, topMargin, rightMargin, bottom_bar.height)}}.show()
+    fun showProfileOf(operator : Operator, operatorId : String){
+        replaceFragWithAnimation(homeContainer, OperatorProfileDetailedFragment.newInstance(operator, operatorId))
     }
 
     // ------------------------------ ONBOARDING -------------------------------------------------

@@ -35,16 +35,7 @@ class DoctorsSpecsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         startEnterAnimations()
-        val specList : MutableList<Chip> = mutableListOf()
-
-        DoctorsSpecs.forEach { pair ->
-            val specName = pair.key
-            val value = ""
-            val c = Chip(specName, value)
-            specList.add(c)
-        }
-
-        chips_input.filterableList = specList
+        chips_input.filterableList = DoctorsSpecs.map { pair -> Chip(pair.key, "") } as MutableList<Chip>
 
         doctorsSpecsConfirmButton.setOnClickListener {
             val selectedSpecs = chips_input.selectedChipList

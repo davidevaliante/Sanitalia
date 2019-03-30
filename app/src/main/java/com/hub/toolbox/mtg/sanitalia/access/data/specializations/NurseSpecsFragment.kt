@@ -55,8 +55,7 @@ class NurseSpecsFragment : DialogFragment() {
                     checkBox.isChecked = true
                     val specToAdd = Pair(string, NurseSpecs[string]!!)
                     viewModel.addNurseSpec(specToAdd)
-
-                    // deselezione di una specializzazione
+                // deselezione di una specializzazione
                 } else {
                     checkBox.isChecked = false
                     val specToRemove = Pair(string, NurseSpecs[string]!!)

@@ -4,6 +4,7 @@ import android.location.Location
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.hub.toolbox.mtg.sanitalia.constants.Page
+import com.hub.toolbox.mtg.sanitalia.constants.Relationship
 import com.hub.toolbox.mtg.sanitalia.constants.UserType
 import com.hub.toolbox.mtg.sanitalia.data.Zuldru
 import com.hub.toolbox.mtg.sanitalia.data.Operator
@@ -141,6 +142,47 @@ class HomeViewModel : ViewModel(){
             onListEmptyOrNull = {
                 onListEmptyOrNull()
             }
+        )
+    }
+
+    fun getFavouriteList(onListFound: (LinkedHashMap<String, Operator>) -> Unit, onListEmptyOrNull: () -> Unit){
+        Zuldru.getListOfFavourites(
+                onListFound = { list -> onListFound(list)},
+                onListEmptyOrNull = { onListEmptyOrNull() }
+        )
+    }
+
+    fun isFavorited(operatorId: String, onResult : (Boolean) -> Unit) {
+        Zuldru.getFavouriteRelationShip(operatorId,
+                onRelationship = {
+                    if(it == Relationship.OPERATOR_IS_FAVORITED) onResult(true)
+                    if(it == Relationship.OPERATOR_IS_NOT_FAVORITED) onResult(false)
+                })
+    }
+
+    fun addToFavorites(operatorId : String, operator: Operator, onSuccess : () -> Unit, onFailure : () -> Unit = {}){
+        Zuldru.linkFavouriteRelationShip(operatorId, operator,
+                onSuccess = {
+                    message.postValue("Aggiunto ai preferiti")
+                    onSuccess()
+                },
+                onFailure = {
+                    message.postValue("Controlla la tua connessione e riprova")
+                    onFailure()
+                }
+        )
+    }
+
+    fun removeFromFavorites(operatorId : String, operator: Operator, onSuccess : () -> Unit, onFailure : () -> Unit = {}){
+        Zuldru.unlinkFavouriteRelationShip(operatorId, operator,
+                onSuccess = {
+                    message.postValue("Rimosso dai preferiti")
+                    onSuccess()
+                },
+                onFailure = {
+                    message.postValue("Controlla la tua connessione e riprova")
+                    onFailure()
+                }
         )
     }
 }

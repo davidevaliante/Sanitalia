@@ -129,13 +129,15 @@ class BioInfoFragment : Fragment() {
                 pickedPlace?.let {
                     val currentUserState = viewModel.temporaryOperatorProfile.value
                     currentUserState?.let{ userState ->
-                        userState.zoneId = provinceId
-                        userState.city = Provinces[provinceId]?.first?.toLowerCase()
-                        userState.region = Provinces[provinceId]?.second?.toLowerCase()
-                        userState.adressName = pickedPlace.name.toString().toLowerCase()
-                        userState.fullAdress = pickedPlace.address.toString().toLowerCase()
-                        userState.lat = pickedPlace.latLng.latitude
-                        userState.lon = pickedPlace.latLng.longitude
+                        userState.apply {
+                            zoneId = provinceId
+                            city = Provinces[provinceId]?.first?.toLowerCase()
+                            region = Provinces[provinceId]?.second?.toLowerCase()
+                            adressName = pickedPlace.name.toString().toLowerCase()
+                            fullAdress = pickedPlace.address.toString().toLowerCase()
+                            lat = pickedPlace.latLng.latitude
+                            lon = pickedPlace.latLng.longitude
+                        }
                         viewModel.updateTemporaryProfile(currentUserState)
                     }
                 }

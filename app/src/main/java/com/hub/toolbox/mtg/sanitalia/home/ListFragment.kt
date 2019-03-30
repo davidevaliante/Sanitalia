@@ -20,11 +20,12 @@ import aqua.extensions.show
 import com.hub.toolbox.mtg.sanitalia.R
 import com.hub.toolbox.mtg.sanitalia.constants.*
 import com.hub.toolbox.mtg.sanitalia.data.Operator
+import com.livinglifetechway.k4kotlin.toast
 import com.squareup.picasso.Picasso
 import getViewModelOf
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragement_list.*
 import kotlinx.android.synthetic.main.list_card.view.*
-import org.jetbrains.anko.toast
 
 
 private const val GROUP_STRING = "param1"
@@ -34,6 +35,7 @@ class ListFragment : Fragment() {
 
     private var group: Group = Group.ALL
     private var category: Categories = Categories.NONE
+    private var listType = ListType.DEFAULT
     val viewModel by lazy { getViewModelOf<HomeViewModel>(activity!!) }
 
     companion object {
@@ -45,6 +47,12 @@ class ListFragment : Fragment() {
                     putParcelable(CATEGORY_STRING, category)
                 }
             }
+
+        @JvmStatic
+        fun asFavouriteList() =
+                ListFragment().apply {
+                    listType = ListType.FAVORITES
+                }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -65,6 +73,8 @@ class ListFragment : Fragment() {
             if (group == Group.STRUCTURE) {
 
             }
+            if (listType == ListType.FAVORITES) hideBottomBar()
+
         }
 
         return inflater.inflate(R.layout.fragement_list, container, false)
@@ -75,6 +85,20 @@ class ListFragment : Fragment() {
         categoryListRecyclerView.layoutManager = LinearLayoutManager(activity)
 
         categoryListRecyclerView.adapter = OperatorListAdapter(linkedMapOf(), activity!!, viewModel)
+        if(listType == ListType.DEFAULT) (activity as HomeActivity).filterFab.apply{
+            categoryListRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    if(dy > 0 && isShown) hide()
+                    super.onScrolled(recyclerView, dx, dy)
+                }
+
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    if (newState==RecyclerView.SCROLL_STATE_IDLE && !isShown) show()
+                    super.onScrollStateChanged(recyclerView, newState)
+                }
+            })
+        }
+
 
         val currentZoneId = viewModel.zoneId.value
         listTopBarPosition.text = Provinces[currentZoneId]?.first
@@ -112,6 +136,12 @@ class ListFragment : Fragment() {
             listTopBarType.text = "Medici"
         }
 
+        // solo per la lista dei favoriti
+        if(listType == ListType.FAVORITES){
+            listTopBarCategoryIcon.background = getDrawable(R.drawable.ic_star)
+            listTopBarType.text = "Preferiti"
+        }
+
         viewModel.operatorMap.observe(this, Observer { newOperatorMap ->
             (categoryListRecyclerView.adapter as OperatorListAdapter).updateList(newOperatorMap)
             if (newOperatorMap.isEmpty()) operationHasNoResult.show()
@@ -136,6 +166,7 @@ class ListFragment : Fragment() {
                 else operationHasNoResult.hide()
             }
         })
+
 
         if (group == Group.HOME_SERVICES){
             when(category){
@@ -180,11 +211,19 @@ class ListFragment : Fragment() {
                     onListEmptyOrNull = { operationHasNoResult.show() }
             )
         }
+
+        if (listType == ListType.FAVORITES){
+            viewModel.getFavouriteList(
+                    onListFound = { viewModel.operatorMap.postValue(it) },
+                    onListEmptyOrNull = { operationHasNoResult.show() }
+            )
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         (activity as HomeActivity).restoreBottomBarToOriginal()
+        (activity as HomeActivity).dismissRegistrationPromptSnackBar()
         viewModel.removeAllFilters()
     }
 
@@ -229,8 +268,21 @@ class ListFragment : Fragment() {
                     Picasso.get().load(operator.image).into(itemView.expandedCardProfileImage)
                     expandedName.text = "${operator.firstName} ${operator.lastName}"
                     expandedAdress.text = "${operator.adressName}, ${operator.city}"
-                    expandedAddToFav.setOnClickListener { activity.toast("should add to fav $operatorId") }
-                    expandedViewProfile.setOnClickListener { (activity as HomeActivity).showProfileOf(operator) }
+
+//                    expandedAddToFav.apply{
+//                        if(viewModel.userType.value!! != UserType.ANONYMOUS){
+//                            if (!viewModel.favouriteOperators.value!!.containsKey(operatorId)) setOnClickListener { viewModel.addToFavorites(operatorId, operator) }
+//                            else {
+//                                text = "Rimuovi dai\npreferiti"
+//                                setOnClickListener { viewModel.removeFromFavorites(operatorId, operator) }
+//                            }
+//                        }
+//                        else (activity as HomeActivity).showRegistrationPrompt(RegistrationRequiredFor.ADD_OPERATOR_TO_FAVOURITES)
+//                    }
+                    expandedViewProfile.setOnClickListener {
+                        if(viewModel.userType.value!! != UserType.ANONYMOUS) (activity as HomeActivity).showProfileOf(operator, operatorId)
+                        else (activity as HomeActivity).showRegistrationPrompt(RegistrationRequiredFor.VIEW_OPERATOR_PROFILE)
+                    }
 
                     // expanded -> specs
                     // ritorna una map di tutte le specializzazioni indipendentemente dai filtri
@@ -263,7 +315,7 @@ class ListFragment : Fragment() {
 
                     // collapsed
                     Picasso.get().load(operator.image).into(itemView.cardProfileImage)
-                    cardProfileName.text = "${operator.firstName?.capitalize()} ${operator?.lastName?.capitalize()}"
+                    cardProfileName.text = "${operator.firstName?.capitalize()} ${operator.lastName?.capitalize()}"
                     cardProfileAdress.text = "${operator.adressName?.capitalize()}, ${operator.city?.capitalize()}"
                     cardProfileDistance.text = selfLocation.distanceTo(operatorLocation).toString().split(".")[0] + " m"
 

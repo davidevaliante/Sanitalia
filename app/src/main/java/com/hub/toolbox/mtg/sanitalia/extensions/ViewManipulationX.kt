@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Rect
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +13,7 @@ import androidx.core.view.marginLeft
 import androidx.recyclerview.widget.RecyclerView
 import androidx.annotation.DimenRes
 import androidx.annotation.NonNull
-
+import androidx.core.view.ViewCompat
 
 
 fun AppCompatActivity.hideActionBar(){
@@ -107,4 +108,13 @@ class ItemOffsetDecoration(private val mItemOffset: Int) : RecyclerView.ItemDeco
         super.getItemOffsets(outRect, view, parent, state)
         outRect.set(mItemOffset, mItemOffset, mItemOffset, mItemOffset)
     }
+}
+
+fun View.setViewBackgroundWithoutResettingPadding(background: Drawable) {
+    val paddingBottom = this.paddingBottom
+    val paddingStart = ViewCompat.getPaddingStart(this)
+    val paddingEnd = ViewCompat.getPaddingEnd(this)
+    val paddingTop = this.paddingTop
+    this.background = background
+    this.setPadding(paddingStart, paddingTop, paddingEnd, paddingBottom)
 }

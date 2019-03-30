@@ -22,6 +22,7 @@ import com.hub.toolbox.mtg.sanitalia.constants.PostError
 import com.hub.toolbox.mtg.sanitalia.constants.RegistrationProviders
 import com.hub.toolbox.mtg.sanitalia.data.local.ObjectBoxsingleton
 import com.hub.toolbox.mtg.sanitalia.access.providers.RegistrationActivity
+import com.hub.toolbox.mtg.sanitalia.constants.Relationship
 import com.hub.toolbox.mtg.sanitalia.constants.UserType
 import com.hub.toolbox.mtg.sanitalia.data.Operator_.zoneId
 import com.hub.toolbox.mtg.sanitalia.data.Zuldru.fireStore
@@ -199,19 +200,49 @@ object Zuldru {
     }
     fun getNumberOfOperatorsForZoneId(zoneId : String, onSuccess: (HashMap<String,Int>) -> Unit = {}){
         fireStore.collection("Counters").document("IT").collection(zoneId).get().addOnSuccessListener {
-            if (it.documents != null) {
-                val values = hashMapOf<String,Int>()
-                for (doc in it.documents){
-                    val counter = doc.toObject(Counter::class.java)
-                    log(counter.toString())
-                    val type = doc.id
+            val values = hashMapOf<String,Int>()
+            for (doc in it.documents){
+                val counter = doc.toObject(Counter::class.java)
+                log(counter.toString())
+                val type = doc.id
 
-                    if(counter?.count!=null) values[type] = counter.count
-                }
-                onSuccess(values)
+                if(counter?.count!=null) values[type] = counter.count
+            }
+            onSuccess(values)
+        }
+    }
+    fun getListOfFavourites(onListFound: (LinkedHashMap<String, Operator>) -> Unit = {}, onListEmptyOrNull : () -> Unit = {}){
+        val firebaseId = firebaseAuth.currentUser?.uid
+        if(firebaseId != null) {
+            fireStore.collection("Users").document(firebaseId).collection("favs").get().addOnCompleteListener {
+                        if(it.isSuccessful){
+                            val data = it.result
+                            val list = LinkedHashMap<String, Operator>()
+                            data?.documents?.forEach { element ->
+                                val operator = element.toObject(Operator::class.java)
+                                list[element.id] = operator!!
+                            }
+                            if (list.size > 0) onListFound(list)
+                            else onListEmptyOrNull()
+                        }else{
+                            log(it.exception.toString())
+                        }
+                    }
+        } else {
+            onListEmptyOrNull()
+        }
+    }
+
+    fun getFavouriteRelationShip(operatorId: String, onRelationship: (Relationship) -> Unit ){
+        val firebaseId = firebaseAuth.currentUser?.uid
+        if(firebaseId != null) {
+            fireStore.collection("Users").document(firebaseId).collection("favs").document(operatorId).get().addOnCompleteListener { task ->
+                if (task.isSuccessful && task.result!!.exists()) onRelationship(Relationship.OPERATOR_IS_FAVORITED)
+                else onRelationship(Relationship.OPERATOR_IS_NOT_FAVORITED)
             }
         }
     }
+
     fun foo (){
         fireStore.collection("Operators")
                 .whereEqualTo("authProvider", "G")
@@ -299,6 +330,29 @@ object Zuldru {
             onFailure(PostError.FIREBASE_ID_IS_NULL)
         }
     }
+
+    fun linkFavouriteRelationShip(operatorId : String, operator : Operator, onSuccess: () -> Unit, onFailure: (PostError) -> Unit){
+        val firebaseId = firebaseAuth.currentUser?.uid
+        if(firebaseId != null) {
+            fireStore.collection("Users").document(firebaseId).collection("favs").document(operatorId).set(operator).addOnCompleteListener { task ->
+                if(task.isSuccessful) onSuccess() else onFailure(PostError.FIREBASE_INTERNAL_ERROR)
+            }
+        } else {
+            onFailure(PostError.FIREBASE_ID_IS_NULL)
+        }
+    }
+
+    fun unlinkFavouriteRelationShip(operatorId : String, operator : Operator, onSuccess: () -> Unit, onFailure: (PostError) -> Unit){
+        val firebaseId = firebaseAuth.currentUser?.uid
+        if(firebaseId != null) {
+            fireStore.collection("Users").document(firebaseId).collection("favs").document(operatorId).delete().addOnCompleteListener { task ->
+                if(task.isSuccessful) onSuccess() else onFailure(PostError.FIREBASE_INTERNAL_ERROR)
+            }
+        } else {
+            onFailure(PostError.FIREBASE_ID_IS_NULL)
+        }
+    }
+
 
     // ------------------------------------------UPDATE--------------------------------------------------------
     fun updateOperatorLocallyWithId(operator : Operator) = operatorBox.put(operator)

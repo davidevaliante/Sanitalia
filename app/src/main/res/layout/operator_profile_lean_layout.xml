@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -29,7 +30,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="230dp"
-                    android:background="@color/colorPrimary">
+                    android:background="@drawable/app_gradient">
 
                     <xyz.schwaab.avvylib.AvatarView
                         android:id="@+id/operatorProfilePicture"
@@ -39,8 +40,8 @@
                         android:layout_marginTop="40dp"
                         android:scaleType="centerCrop"
                         app:avvy_border_color="@color/grey"
-                        app:avvy_border_highlight_color="@color/colorPrimary"
-                        app:avvy_border_highlight_color_end="@color/colorAccent"
+                        app:avvy_border_highlight_color="@color/white"
+                        app:avvy_border_highlight_color_end="@color/white"
                         app:avvy_border_thickness="2dp"
                         app:avvy_border_thickness_highlight="3dp"
                         app:avvy_distance_to_border="5dp"
@@ -55,22 +56,23 @@
 
             <ImageView
                 android:id="@+id/backTop"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:padding="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_back_arrow_styled" />
 
             <ImageView
                 android:id="@+id/starTop"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="16dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/backTop"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/backTop"
                 app:srcCompat="@drawable/white_start_empty" />
 
             <androidx.cardview.widget.CardView
@@ -117,7 +119,7 @@
                             android:layout_width="56dp"
                             android:layout_height="56dp"
                             android:scaleType="centerCrop"
-                            app:civ_border_color="@color/colorPrimaryDark"
+                            app:civ_border_color="@color/white"
                             app:civ_border_width="2dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -295,14 +297,14 @@
             </androidx.cardview.widget.CardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
     <RelativeLayout
+        android:id="@+id/operatorProfileCallButton"
         android:padding="8dp"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:background="@drawable/app_gradient"
         android:layout_height="46dp">
-
-
         <TextView
             android:id="@+id/callNowText"
             android:text="Chiama Subito"

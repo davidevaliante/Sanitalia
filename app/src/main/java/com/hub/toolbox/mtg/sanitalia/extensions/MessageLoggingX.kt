@@ -4,10 +4,13 @@ import android.app.Activity
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.ColorInt
 import androidx.fragment.app.Fragment
 import com.andrognito.flashbar.Flashbar
 import com.andrognito.flashbar.anim.FlashAnim
+import com.google.android.material.snackbar.Snackbar
 import com.hub.toolbox.mtg.sanitalia.R
+import com.hub.toolbox.mtg.sanitalia.data.Zuldru
 
 infix fun String.log(tag : String) = Log.d(tag,this)
 
@@ -16,6 +19,10 @@ fun Fragment.logger(message : String, tag : String="CUSTOM_LOGGER") {
 }
 
 fun Activity.logger(message : String, tag : String="CUSTOM_LOGGER") {
+    Log.d("$tag@${this::class.java.simpleName}" ,message)
+}
+
+fun Zuldru.logger(message : String, tag : String="CUSTOM_LOGGER") {
     Log.d("$tag@${this::class.java.simpleName}" ,message)
 }
 
@@ -76,4 +83,9 @@ fun Activity.showSnackBar(message:String, duration : Long = 1800){
                     .slideFromRight()
                     .accelerate())
             .build().show()
+}
+
+fun Snackbar.withColor(@ColorInt colorInt: Int): Snackbar{
+    this.view.setBackgroundColor(colorInt)
+    return this
 }

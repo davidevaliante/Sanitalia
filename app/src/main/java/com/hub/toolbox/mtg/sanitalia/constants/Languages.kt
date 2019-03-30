@@ -7,7 +7,7 @@ enum class Language{
 }
 
 val HomeServicesStringInItalian = hashMapOf(
-        Pair(HomeServices.FISIOTERAPISTA, "Fisioterapista"),
+        Pair(HomeServices.FISIOTERAPISTA, "Fisioterapista / Osteopata"),
         Pair(HomeServices.ASSISTENZA_ANZIANI, "Assistenza Anziani"),
         Pair(HomeServices.INFERMIERE, "Infermiere/a"),
         Pair(HomeServices.OSS, "Operatore Socio Sanitario"),
